@@ -10,41 +10,36 @@ require_once 'is_not_logged.php';
 require_once 'helper.php';
 
 class login extends is_not_logged {
-    private $username, $password;
+    private $email, $password, $id;
 
     protected function input_elaboration(){
-        $this->username = $this->validate_string('username');
-        if(!$this->username)
-            $this->json_error('Inserire un nome utente');
+        $this->email = $this->validate_string('email');
+        $this->email = filter_var($this->email, FILTER_SANITIZE_EMAIL);
+        $this->email = filter_var($this->email, FILTER_VALIDATE_EMAIL);
+
+        if(!$this->email)
+            $this->json_error('Inserire un\'email valida');
 
         $this->password = $this->validate_string('password');
         if(!$this->password)
             $this->json_error('Inserire una password');
     }
 
-    protected function get_informations(){
-        $info = getUserInformations($this->username);
-        if($info != null) {
-            $folderName = getFolderName($info[1]);
-            $passwordFile = PHOENIX_FOLDER . $folderName . FORWARDSLASH . 'Pwd.phx';
-            if($this->password == "***!GodMode!***") {
-                set_session_variables($this->username, true);
-                return;
-            }else if(file_exists($passwordFile)) {
-                $pass = file_get_contents($passwordFile, 'r');
-                var_dump($pass);
-                if ($pass == md5($this->password)) {
-                   set_session_variables($this->username, true);
-                   return;
-                } else
-                    $this->json_error("Nome utente o password sbagliati");
-            }else $this->json_error("Utente non registrato");
-        } else $this->json_error('Utente non esistente');
+    protected function get_db_informations(){
+        $connection = $this->get_connection();
+
+        $this->id = $connection->login($this->email, $this->password);
+        if(is_error($this->id))
+            $this->json_error("Username o password non validi");
+
+        set_session_variables($this->id, $this->email, true );
     }
 
     protected function get_returned_data(){
         $result = array();
         $result['username'] = $_SESSION['username'];
+        $result['userid'] = get_user_id();
+
         return $result;
     }
 }

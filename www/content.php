@@ -1,9 +1,3 @@
-/**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 25/09/18
- * Time: 19.44
- */
 <!DOCTYPE html>
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

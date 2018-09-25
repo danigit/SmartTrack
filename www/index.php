@@ -32,14 +32,53 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <link rel="stylesheet" type="text/css" href="css/index_page.css">
+        <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+
+
+        <script src="../node_modules/material-design-lite/material.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="js/default/jquery.mobile-1.4.5.min.js"></script>
+
+        <title>Smart Track</title>
     </head>
     <body>
-    <div data-role="page" id="login">
-        <div data-role="content" id="login-content">
-            <img src="img/logo.png" class="login-image">
+        <div data-role="page" id="login">
+            <div data-role="content" id="login-content">
+                <div class="login-image-container">
+                    <img src="img/login_image.png" class="login-image">
+                    <br><br><br><br><br><br><br><br>
+                    <p class="lorem-impsum">Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem
+                        Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo
+                        tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È
+                        sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione,
+                        pervenendoci sostanzialmente inalterato.
+                    </p>
+                </div>
+                <div class="login-form-container">
+                    <h1 class="login-text">Login</h1>
+                    <form data-ajax="false" id="login-form">
+                        <fieldset id="login-fielset">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input center-text font-large" type="text" name="email" id="email">
+                                <label class="mdl-textfield__label center-text font-large" for="email">Inserisci email</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input center-text font-large" type="password" name="password" id="password">
+                                <label class="mdl-textfield__label center-text font-large" for="password">Inserisci password</label>
+                            </div>
+<!--                            <br><br><br><br><br>-->
+                            <input type="submit" id="submit-login" data-inline="true" value="Login">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
+        <script src="js/login.js"></script>
+        <script src="js/helper.js"></script>
     </body>
 </html>

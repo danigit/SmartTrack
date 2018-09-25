@@ -76,3 +76,4 @@ class db_error{
         }
     }
 }
+
