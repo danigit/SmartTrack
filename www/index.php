@@ -1,3 +1,17 @@
+<?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: Daniel Surpanu
+ * Date: 8/24/2018
+ * Time: 4:53 AM
+ */
+
+if (!isset($_SESSION))
+    session_start();
+
+if (isset($_SESSION['secure'], $_SESSION['username']))
+    header('Location: content.php');
+?>
 <!DOCTYPE html>
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
