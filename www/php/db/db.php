@@ -165,6 +165,35 @@ class Connection{
         return $result_array;
     }
 
+    function create_kit($description, $data){
+
+        $this->connection->autocommit(false);
+        $errors = array();
+
+        $query = 'INSERT INTO kit (description, creation_date) VALUES (?, now())';
+        $resultInsert = $this->parse_and_execute_insert($query, "s", $description);
+
+        if($resultInsert == false){
+            array_push($errors, 'insert');
+        }
+
+        $id = $this->connection->insert_id;
+
+        foreach ($data as $datum) {
+            $query = "UPDATE object SET kit_id = ? WHERE cod = ?";
+            $resultUpdate = $this->parse_and_execute_select($query, "ii", $id, $datum);
+
+            if($resultUpdate == false){
+                array_push($errors, 'update');
+            }
+        }
+
+        if(!empty($errors)){
+            $this->connection->rollback();
+        }
+
+        $this->connection->commit();
+    }
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati

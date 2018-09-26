@@ -13,6 +13,24 @@
     width: 100% !important;
 }
 
+#create-kit-fielset div.ui-input-text{
+    background: #f9f9f9;
+    border: none!important;
+    box-shadow: none!important;
+}
+
+#create-kit-fielset .mdl-textfield{
+    line-height: 3!important;
+}
+
+#create-kit-fielset .mdl-textfield{
+    width: 99% !important;
+}
+
+#create-kit-fielset input{
+    border-bottom: 2px solid #6AB8C1;
+    border-radius: 0;
+}
 /*main page*/
 
 thead tr{
@@ -50,4 +68,24 @@ thead tr{
 
 .object-list-label{
     margin: 50px 20px;
+}
+
+.create-kit-button{
+    background: #3dc235;
+    margin: 50px 60px;
+    border-radius: 10px;
+}
+.create-kit-button a{
+    background: #3dc235!important;
+    border-radius: 10px!important;
+    text-shadow: none!important;
+    color: #FFFFFF!important;
+}
+
+.kit-description-container{
+    margin: 0 100px;
+}
+
+#error-msg-create-kit{
+    margin: 0 100px;
 }

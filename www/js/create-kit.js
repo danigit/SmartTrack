@@ -41,19 +41,20 @@ function createKit() {
                     typeListUl.empty();
 
                     $.each(data[0], function (key, value) {
-                        let button = $('<a href="#" id="' + value['name'] + '">Aggiungi al kit</a>').on('click', function () {
-                            let name = $(this).attr('id');
+                        let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '">Aggiungi al kit</a>').on('click', function () {
+                            let cod = $(this).attr('id');
                             let isPresent = false;
-
+                            // console.log($(button).attr('data-name'));
                             $.each($('#object-list-ul').children(), function (key, value) {
-                                if ($(value).text() === name) {
+                                if ($(value).attr('id') === cod) {
                                     isPresent = true;
                                 }
                             });
 
                             if(!isPresent){
-                                $('#object-list-ul').append('<li>' + name );
+                                $('#object-list-ul').append('<li id="' + cod + '" class="font-large">' + value['name'] );
                                 $('#object-list-ul').listview('refresh');
+                                $('.create-kit-button a').removeClass('ui-disabled');
                             }
                         });
                         list.append('<a href="#">' + value['name'] + '</a>');
@@ -65,5 +66,35 @@ function createKit() {
                 }
             }
         )
+    });
+
+    $('#create-kit-submit').on('click', function () {
+        let createKitForm = new FormData();
+        let count  = 0;
+        if($('#description').val() === ""){
+            let message = $('<div class="center-text error-message"><span>Inserire una descrizione per il kit</span></div>');
+            if ($('.error-message').length !== 0)
+                $('#error-msg-create-kit').find('.error-message').remove();
+            $('#error-msg-create-kit').append(message);
+        }else {
+            $.each($('#object-list-ul').children(), function (key, value) {
+                let obj = $(value).attr('id');
+                createKitForm.append(key, obj);
+                count++;
+            });
+
+            createKitForm.append('count', "" + count);
+            createKitForm.append('description', $('#description').val());
+
+
+            let createKitPromise = httpPost('php/ajax/create_kit.php', createKitForm, 'POST');
+            createKitPromise.then(
+                function (data) {
+                    if (data.result) {
+                        console.log("kit creato: " + data);
+                    }
+                }
+            )
+        }
     })
 }

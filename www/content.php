@@ -49,6 +49,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/index_page.css">
         <link rel="stylesheet" type="text/css" href="css/content.css">
         <link rel="stylesheet" type="text/css" href="css/helper.css">
         <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
@@ -123,6 +124,18 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 <ul data-role="listview" id="object-list-ul">
 
                 </ul>
+            </div>
+            <div class="kit-description-container">
+                <fieldset id="create-kit-fielset">
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input center-text font-large" type="text" name="description" id="description">
+                        <label class="mdl-textfield__label center-text font-large" for="description">Inserisci la descrizione del kit</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div id="error-msg-create-kit"></div>
+            <div class="create-kit-button">
+                <a href="#" id="create-kit-submit" class="ui-btn ui-disabled">Crea kit</a>
             </div>
         </div>
     <script src="js/helper.js"></script>
