@@ -148,6 +148,23 @@ class Connection{
         return $result_array;
     }
 
+    function get_objects_by_type($type){
+        $query = "SELECT cod, name FROM object WHERE obj_type=? AND kit_id IS NULL";
+        $statement = $this->parse_and_execute_select($query, "s", $type);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        $result = $statement->get_result();
+        $result_array = array();
+
+        while ($row = $result->fetch_array()) {
+            $result_array[] = array("cod" => $row['cod'], "name" => $row['name']);
+        }
+
+        return $result_array;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati

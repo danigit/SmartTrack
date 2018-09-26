@@ -104,9 +104,25 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                         <select id="type-select" data-inset="true">
                             <option>Seleziona un oggetto...</option>
                         </select>
-
                     </fieldset>
                 </form>
+            </div>
+            <div class="type-list-container">
+                <form class="ui-filterable">
+                    <input id="filterBasic-input" data-type="search">
+                </form>
+                <ul id="type-list-ul" data-role="listview" data-split-icon="plus" data-filter="true" data-input="#filterBasic-input">
+
+                </ul>
+            </div>
+
+            <div class="kit-objects-container">
+                <div class="object-list-label">
+                    <p class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>
+                </div>
+                <ul data-role="listview" id="object-list-ul">
+
+                </ul>
             </div>
         </div>
     <script src="js/helper.js"></script>

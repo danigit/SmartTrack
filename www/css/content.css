@@ -39,3 +39,15 @@ thead tr{
 .select-container{
     margin: 0 20px;
 }
+
+.type-list-container{
+    margin: 0 60px;
+}
+
+.kit-objects-container{
+    margin: 0 20px;
+}
+
+.object-list-label{
+    margin: 50px 20px;
+}

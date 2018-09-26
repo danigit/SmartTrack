@@ -22,7 +22,7 @@ class register extends is_not_logged {
             $this->json_error('Accettare il trattamento dei dati');
     }
 
-    protected function get_informations(){
+    protected function get_db_informations(){
         $info = getUserInformations($this->username);
         if($info != null){
             $pass = createRandomPassword(6);
