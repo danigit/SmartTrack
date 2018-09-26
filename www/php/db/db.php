@@ -114,18 +114,23 @@ class Connection{
 //        }
 //        return $result_array;
 //    }
-//    function get_all_articles(){
-//        $query = "SELECT type, name, description, file_path, images_path FROM articles";
-//        $result = $this->connection->query($query);
-//        if ($result === false )
-//            return new DbError(DbError::$ERROR_GET_ARTICLES);
-//        $result_array = array();
-//        //todo da mettere dove serve htmlspecialchars
-//        while ($row = mysqli_fetch_assoc($result)) {
-//            $result_array[] = array('type' => $row['type'], 'title' => htmlspecialchars($row['name']), "description" => $row['description'], "images_path" => $row['images_path'], "file_path" => $row['file_path']);
-//        }
-//        return $result_array;
-//    }
+    function get_open_kits(){
+        $query = "SELECT kit_id, description, creation_date FROM kit WHERE closing_date IS NULL";
+        $result = $this->connection->query($query);
+        if ($result === false )
+            return new db_error(db_error::$ERROR_GET_ARTICLES);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
+                "creation_date" => date('d/m/Y', strtotime($row['creation_date'])), "spedisci" => $row['kit_id'],
+                "chiudi" => $row['kit_id']);
+        }
+
+        return $result_array;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati

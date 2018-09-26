@@ -1,0 +1,21 @@
+.ui-loader{
+    display: none!important;
+}
+
+
+/*main page*/
+
+thead tr{
+    background-color: #FFBC58!important;
+    color: #FFFFFF;
+}
+
+.table-label{
+    margin-top: 100px;
+    padding: 0 20px;
+}
+
+.table-container{
+    margin-top: 30px;
+    padding: 0 10px;
+}

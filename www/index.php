@@ -35,6 +35,7 @@
 
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/index_page.css">
+        <link rel="stylesheet" type="text/css" href="css/helper.css">
         <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">

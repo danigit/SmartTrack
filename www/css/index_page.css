@@ -17,15 +17,20 @@
 }
 
 #login-fielset div.ui-input-btn{
-    width: 82% !important;
+    width: 98% !important;
     height: 25px!important;
-    margin-top: 50px!important;
+    padding: 15px 0!important;
+    margin-top: 80px!important;
     border: none;
     background: #6AB8C1!important;
     color: #FFFFFF!important;
     border-radius: 10px;
     font-size: x-large!important;
     text-align: center;
+}
+
+#login-fielset .mdl-textfield{
+    width: 99% !important;
 }
 
 /*end jquery mobile*/
@@ -57,10 +62,7 @@
 
 #login-fielset input{
     border-bottom: 2px solid #6AB8C1;
-}
-
-#login-fielset input[type=submit]{
-
+    border-radius: 0;
 }
 
 fieldset{
@@ -69,33 +71,3 @@ fieldset{
 
 
 /*css generici*/
-.lorem-impsum{
-    padding: 10px;
-}
-
-.center-text{
-    text-align: center!important;
-}
-
-.font-large{
-    font-size: large!important;
-}
-
-.font-x-large{
-    font-size: x-large!important;
-}
-
-.error-message{
-    border: 2px solid #E52612;
-    padding: 15px;
-    margin-right: 8px;
-    border-radius: 7px;
-    margin-bottom: 50px;
-}
-
-.error-message span{
-    color: #E52612;
-    font-size: large;
-    font-weight: bold;
-    text-shadow: none;
-}

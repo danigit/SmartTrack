@@ -3,7 +3,6 @@
  */
 let submitLogin = $('#submit-login');
 let loginForm = $('#login-form');
-console.log('loaded login');
 submitLogin.on('click', function (event) {
     console.log('preventing default');
     event.preventDefault();
@@ -12,9 +11,9 @@ submitLogin.on('click', function (event) {
     logingFormInput.append('email', $('#email').val());
     logingFormInput.append('password', $('#password').val());
 
-    let promise = httpPost('php/ajax/login.php', logingFormInput, "POST");
+    let loginPromise = httpPost('php/ajax/login.php', logingFormInput, "POST");
 
-    promise.then(
+    loginPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {

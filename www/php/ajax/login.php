@@ -18,7 +18,7 @@ class login extends is_not_logged {
         $this->email = filter_var($this->email, FILTER_VALIDATE_EMAIL);
 
         if(!$this->email)
-            $this->json_error('Inserire un\'email valida');
+            $this->json_error('Email non valida');
 
         $this->password = $this->validate_string('password');
         if(!$this->password)

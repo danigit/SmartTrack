@@ -33,8 +33,15 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
 
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/content.css">
+        <link rel="stylesheet" type="text/css" href="css/helper.css">
+        <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+
+        <script src="../node_modules/material-design-lite/material.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
         <script src="js/default/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -42,8 +49,37 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <title>Smart Track</title>
     </head>
     <body>
-    <div data-role="page" id="login">
+        <div data-role="page" id="main-content">
+            <div class="navbar-container">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" id="crea-kit" class="ui-btn font-large">Crea kit</a></li>
+                        <li><a href="#" class="ui-btn font-large">Recupera kit</a></li>
+                        <li><a href="#" class="ui-btn font-large">Crea da template</a></li>
+                        <li><a href="#" class="ui-btn font-large">Visualizza kit</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="error-msg"></div>
+            <div class="table-label"><p class="font-x-large blue-color"><b>Tabella kit disponibili</b></p></div>
+            <div class="table-container">
+                <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">Kit id</th>
+                            <th data-priority="2">Descrizione</th>
+                            <th data-priority="3">Data creazione</th>
+                            <th data-priority="4"></th>
+                            <th data-priority="5"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="open-kit-body">
 
-    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <script src="js/helper.js"></script>
+    <script src="js/content.js"></script>
     </body>
 </html>
