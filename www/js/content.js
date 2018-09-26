@@ -3,9 +3,9 @@
  */
 
 function populateOpenKits() {
-    let creaKitPromise = httpPost('php/ajax/get_open_kits.php');
+    let openKitsPromise = httpPost('php/ajax/get_open_kits.php', '', 'GET');
 
-    creaKitPromise.then(
+    openKitsPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
@@ -13,7 +13,6 @@ function populateOpenKits() {
                 $.each(data[0], function (key, value) {
                     tableRow += '<tr>';
                     $.each(value, function (innerKey, innerValue) {
-                        console.log(innerKey);
                         if(innerKey === 'kit_id' || innerKey === 'description' || innerKey === 'creation_date') {
                             tableRow += '<td class="font-x-large">' + innerValue + '</td>';
                         }else if(innerKey === 'spedisci'){

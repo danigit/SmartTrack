@@ -25,6 +25,9 @@ var app = {
     bind: function(){
         document.addEventListener('deviceready', this.deviceready, false);
 
+        $('#crea-kit-page').on('pageinit', function () {
+            createKit();
+        });
     }
 };
 

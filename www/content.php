@@ -67,7 +67,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#" id="crea-kit" class="ui-btn font-large">Crea kit</a></li>
+                        <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large">Crea kit</a></li>
                         <li><a href="#" class="ui-btn font-large">Recupera kit</a></li>
                         <li><a href="#" class="ui-btn font-large">Crea da template</a></li>
                         <li><a href="#" class="ui-btn font-large">Visualizza kit</a></li>
@@ -93,7 +93,24 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
         </div>
+        <div data-role="page" id="crea-kit-page">
+            <div class="kit-create-label">
+                <p class="font-x-large blue-color">Creazione kit</p>
+            </div>
+            <div class="select-container">
+                <form>
+                    <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">
+                        <label for="type-select-fieldset" class="font-large">Seleziona una tipologia di oggetti</label>
+                        <select id="type-select" data-inset="true">
+                            <option>Seleziona un oggetto...</option>
+                        </select>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
     <script src="js/helper.js"></script>
     <script src="js/content.js"></script>
+    <script src="js/create-kit.js"></script>
     </body>
 </html>

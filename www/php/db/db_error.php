@@ -13,7 +13,7 @@ class db_error{
     public static $ERROR_ON_REGISTER                = 3;
     public static $EMAIL_ALREADY_REGISTERED         = 4;
     public static $ERROR_ON_GETTING_EMAIL           = 5;
-    public static $ERROR_ON_INSERT_ARTICLE          = 6;
+    public static $ERROR_ON_GET_TYPES          = 6;
     public static $ERROR_GET_ARTICLES               = 7;
     public static $ERROR_ON_GETTING_THE_ARTICLE     = 8;
     public static $INSERT_EDIT_ARTICLE              = 18;

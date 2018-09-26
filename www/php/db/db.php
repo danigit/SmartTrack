@@ -131,6 +131,23 @@ class Connection{
         return $result_array;
     }
 
+    function get_types(){
+        $query = "SELECT DISTINCT obj_type FROM object";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GET_TYPES);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('type' => $row['obj_type']);
+        }
+
+        return $result_array;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati
@@ -214,11 +231,4 @@ class Connection{
 }
 
 //$obj = new Connection();
-//var_dump($obj->login('d@gmail.com', 'dani'));
-//var_dump($obj->get_article_by_title('EMDR: LE 8 FASI DEL TRATTAMENTO'));
-//var_dump($obj->insert_article("dani", "danii", "antani", 'stuzica', "scapelli", 2, 3, 4));
-//echo "" . $obj->login("ds.acconto@gmail.com", "dani");
-//echo "" . $obj->get_username_by_id(4);
-//var_dump($obj->get_username_by_id(1));
-//$array = array("antani", "scapelli", "stuzica", "come se fosse");
-//var_dump($obj->get_all_articles());
+//var_dump($obj->get_types());
