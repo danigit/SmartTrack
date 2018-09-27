@@ -52,9 +52,10 @@ function createKit() {
                             });
 
                             if(!isPresent){
-                                $('#object-list-ul').append('<li id="' + cod + '" class="font-large">' + value['name'] );
+                                $('#object-list-ul').append('<li id="' + cod + '" class="font-large">' + value['name'] + '</li>');
                                 $('#object-list-ul').listview('refresh');
-                                $('.create-kit-button a').removeClass('ui-disabled');
+                                $('.create-kit-button-submit a').removeClass('ui-disabled');
+                                $('.create-kit-button-suspend a').removeClass('ui-disabled');
                             }
                         });
                         list.append('<a href="#">' + value['name'] + '</a>');
@@ -96,5 +97,64 @@ function createKit() {
                 }
             )
         }
+    });
+
+    $('#create-kit-suspend').on('click', function () {
+        let suspendKitForm = new FormData();
+        let count  = 0;
+
+        $.each($('#object-list-ul').children(), function (key, value) {
+            let obj = $(value).attr('id');
+            suspendKitForm.append(key, obj);
+            count++;
+        });
+
+        suspendKitForm.append('count', "" + count);
+
+        let createKitPromise = httpPost('php/ajax/suspend_kit.php', suspendKitForm, 'POST');
+        createKitPromise.then(
+            function (data) {
+                if (data.result) {
+                    $('#object-list-ul').empty();
+                    $('#type-list-ul').empty();
+                    $('#type-select option:eq(0)').prop('selected', true);
+                    $('#type-select').selectmenu('refresh');
+                    $('#create-kit-submit').addClass('ui-disabled');
+                    $('.create-kit-button-suspend').addClass('display-none');
+                    $('.create-kit-button-recover').removeClass('display-none');
+                    console.log("kit creato: " + data);
+                }
+            }
+        )
+    });
+
+    $('#create-kit-recover').on('click', function () {
+        let recoverKitPromise = httpPost('php/ajax/recover_kit.php', '', 'GET');
+        recoverKitPromise.then(
+            function (data) {
+                if (data.result) {
+                    $('.create-kit-button-recover').addClass('display-none');
+                    $('.create-kit-button-suspend').removeClass('display-none');
+                    $('#create-kit-submit').removeClass('ui-disabled');
+                    $.each(data[0], function (key, value) {
+                        $('#object-list-ul').append('<li id="' + value['cod'] + '" class="font-large">' + value['name'] + '</li>');
+                    })
+                    $('#object-list-ul').listview('refresh');
+                }
+            }
+        )
     })
+}
+
+function controlRecoverKit() {
+    let controlRecoverKitPromise = httpPost('php/ajax/control_recover_kit.php', '', 'GET');
+    controlRecoverKitPromise.then(
+        function (data) {
+            if (data.result) {
+                $('.create-kit-button-suspend').addClass('display-none');
+                $('.create-kit-button-recover').removeClass('display-none');
+                $('#create-kit-submit').addClass('ui-disabled');
+            }
+        }
+    )
 }

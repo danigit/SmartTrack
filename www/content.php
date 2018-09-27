@@ -134,9 +134,22 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </fieldset>
             </div>
             <div id="error-msg-create-kit"></div>
-            <div class="create-kit-button">
-                <a href="#" id="create-kit-submit" class="ui-btn ui-disabled">Crea kit</a>
-            </div>
+
+            <div data-role="footer" data-id="foo1" data-position="fixed">
+                <div data-role="navbar" class="footer-navbar">
+                    <ul class="create-kit-footer-ul">
+                        <li class="create-kit-button-suspend margin-r-5" data-inline="true">
+                            <a href="#" id="create-kit-suspend" class="ui-btn ui-disabled font-large">Sospendi kit</a>
+                        </li>
+                        <li class="create-kit-button-recover margin-r-5 display-none" data-inline="true">
+                            <a href="#" id="create-kit-recover" class="ui-btn font-large">Recupera kit</a>
+                        </li>
+                        <li class="create-kit-button-submit margin-l-5" data-inline="true">
+                            <a href="#" id="create-kit-submit" class="ui-btn ui-disabled font-large">Crea kit</a>
+                        </li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
         </div>
     <script src="js/helper.js"></script>
     <script src="js/content.js"></script>

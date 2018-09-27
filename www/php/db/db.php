@@ -193,7 +193,66 @@ class Connection{
         }
 
         $this->connection->commit();
+
+        return $id;
     }
+
+    function suspend_kit($data){
+
+        $this->connection->autocommit(false);
+        $errors = array();
+
+        foreach ($data as $datum) {
+            $query = 'INSERT INTO suspended_kit (object_id) VALUES (?)';
+            $resultInsert = $this->parse_and_execute_insert($query, "s", $datum);
+
+
+            if($resultInsert == false){
+                array_push($errors, 'insert');
+            }
+        }
+
+        if(!empty($errors)){
+            $this->connection->rollback();
+        }
+
+        $this->connection->commit();
+
+        return $errors;
+    }
+
+    function recover_kit(){
+        $this->connection->autocommit(false);
+        $error = false;
+
+        $query = "SELECT cod, name FROM object JOIN suspended_kit ON cod = object_id";
+        $queryEmtyTable = "TRUNCATE suspended_kit";
+
+        $result = $this->connection->query($query);
+        $resultEmtyTable = $this->connection->query($queryEmtyTable);
+
+        if($result == false || $resultEmtyTable == false){
+            $error = true;
+        }
+
+        if($error){
+            $this->connection->rollback();
+        }else {
+
+            $this->connection->commit();
+
+            $result_array = array();
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $result_array[] = array('name' => $row['name'], 'cod' => $row['cod']);
+            }
+
+            return $result_array;
+        }
+
+        return new db_error(db_error::$UPDATE_ARTICLE_ERROR);
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati

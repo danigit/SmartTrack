@@ -27,6 +27,7 @@ var app = {
 
         $('#crea-kit-page').on('pageinit', function () {
             createKit();
+            controlRecoverKit();
         });
     }
 };

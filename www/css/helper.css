@@ -42,3 +42,7 @@
 .blue-color{
     color: #6AB8C1!important;
 }
+
+.display-none {
+    display: none !important;
+}

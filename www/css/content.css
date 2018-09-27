@@ -31,6 +31,12 @@
     border-bottom: 2px solid #6AB8C1;
     border-radius: 0;
 }
+
+.ui-footer{
+    margin-bottom: 10px!important;
+    border: none!important;
+}
+
 /*main page*/
 
 thead tr{
@@ -70,13 +76,46 @@ thead tr{
     margin: 50px 20px;
 }
 
-.create-kit-button{
+.create-kit-button-submit{
     background: #3dc235;
-    margin: 50px 60px;
+    width: 45%!important;
     border-radius: 10px;
+    border: none!important;
+    box-shadow: none!important;
 }
-.create-kit-button a{
+
+.create-kit-button-submit a{
     background: #3dc235!important;
+    border-radius: 10px!important;
+    text-shadow: none!important;
+    color: #FFFFFF!important;
+}
+
+.create-kit-button-suspend{
+    background: #FFBC58!important;
+    width: 45%!important;
+    border-radius: 10px;
+    border: none!important;
+    box-shadow: none!important;
+}
+
+.create-kit-button-suspend a{
+    background: #FFBC58!important;
+    border-radius: 10px!important;
+    text-shadow: none!important;
+    color: #FFFFFF!important;
+}
+
+.create-kit-button-recover{
+    background: #FFBC58!important;
+    width: 45%!important;
+    border-radius: 10px;
+    border: none!important;
+    box-shadow: none!important;
+}
+
+.create-kit-button-recover a{
+    background: #FFBC58!important;
     border-radius: 10px!important;
     text-shadow: none!important;
     color: #FFFFFF!important;
@@ -88,4 +127,21 @@ thead tr{
 
 #error-msg-create-kit{
     margin: 0 100px;
+}
+
+.create-kit-footer-ul{
+    width: 70%!important;
+    margin: auto!important;
+}
+
+.margin-r-5{
+    margin-right: 5%!important;
+}
+
+.margin-l-5{
+    margin-left: 5%!important;
+}
+
+.footer-navbar{
+    background: #FFFFFF!important;
 }
