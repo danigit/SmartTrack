@@ -9,7 +9,9 @@
 require_once 'cs_interaction.php';
 require_once 'helper.php';
 
-
+/**
+ * Classe che recupera il kit sospeso in precedenza
+ */
 class recover_kit extends cs_interaction{
     private $result;
 
@@ -21,7 +23,7 @@ class recover_kit extends cs_interaction{
         $this->result = $connection->recover_kit();
 
         if(is_error($this->result))
-            $this->json_error("Errore nel recupero dei kit aperti");
+            $this->json_error("Errore nel recupero del kit sospesso");
     }
 
     protected function get_returned_data(){

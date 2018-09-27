@@ -8,6 +8,9 @@
 require_once 'helper.php';
 require_once 'cs_interaction.php';
 
+/**
+ * Classe che gestisce la sospensione del kit
+ */
 class suspend_kit extends cs_interaction {
 
     private $count, $data, $result;
@@ -24,7 +27,7 @@ class suspend_kit extends cs_interaction {
         $this->result = $connection->suspend_kit($this->data);
 
         if(is_error($this->result))
-            $this->json_error("Errore nel recupero degli oggetti");
+            $this->json_error("Errore nella sospensione del kit");
     }
 
     protected function get_returned_data(){

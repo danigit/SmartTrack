@@ -9,7 +9,9 @@
 require_once 'cs_interaction.php';
 require_once 'helper.php';
 
-
+/**
+ * Classe che recupera tutti i tipi degli oggetti
+ */
 class get_types extends cs_interaction{
     private $result;
 

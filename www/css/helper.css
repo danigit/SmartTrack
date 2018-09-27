@@ -26,23 +26,58 @@
     margin: 0!important;
 }
 .error-message{
-    border: 2px solid #E52612;
-    padding: 15px;
-    margin: 0 8px 30px 0;
+    border: 1px solid #E52612;
+    padding: 10px;
+    margin: 0 8px 0 0;
     border-radius: 7px;
 }
 
 .error-message span{
     color: #E52612;
-    font-size: large;
-    font-weight: bold;
+    font-size: medium;
     text-shadow: none;
+}
+
+#error-msg-create-kit{
+    margin: 0 100px;
 }
 
 .blue-color{
     color: #6AB8C1!important;
 }
 
+.white-color{
+    color: #FFFFFF!important;
+}
+
 .display-none {
     display: none !important;
+}
+
+.blue-background{
+    background-color: #6AB8C1!important;
+}
+
+.orange-background{
+    background-color: #ED653F!important;
+}
+
+.yellow-background{
+    background-color: #FFBC58!important;
+}
+
+.green-background{
+    background-color: #3dc235!important;
+}
+
+.red-background{
+    background-color: #CF3D44!important;
+}
+
+.margin-r-5{
+    margin-right: 5%!important;
+}
+
+.margin-l-5{
+    margin-left: 5%!important;
 }

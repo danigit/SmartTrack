@@ -17,29 +17,38 @@
 }
 
 #login-fielset div.ui-input-btn{
-    width: 98% !important;
+    width: 40% !important;
     height: 25px!important;
-    padding: 15px 0!important;
-    margin-top: 80px!important;
+    display: block;
+    margin: 30px auto!important;
     border: none;
     background: #6AB8C1!important;
     color: #FFFFFF!important;
     border-radius: 10px;
-    font-size: x-large!important;
+    font-size: large!important;
     text-align: center;
 }
 
 #login-fielset .mdl-textfield{
-    width: 99% !important;
+    width: 70% !important;
+    display: block;
+    margin: auto;
 }
 
 /*end jquery mobile*/
 
+
+/*login page*/
 .login-image-container{
-    width: 69%;
-    height: 100vh;
+    width: 74%;
+    /*height: 100vh;*/
     float: left;
-    border-right: 3px solid #6AB8C1;
+}
+
+.login-image-container p{
+    width: 74%;
+    margin: auto;
+    text-align: justify;
 }
 
 .login-image{
@@ -49,12 +58,13 @@
 }
 
 .login-form-container{
-    width: 30%;
+    margin: 100px auto;
+    width: 26%;
     float: right;
 }
 
 .login-text{
-    margin: 200px auto 100px;
+    margin: 100px auto 25px;
     font-weight: bold;
     font-size: xx-large;
     color: #6AB8C1;
@@ -69,5 +79,4 @@ fieldset{
     border: none;
 }
 
-
-/*css generici*/
+/*end login page*/

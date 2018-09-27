@@ -8,12 +8,16 @@
 require_once 'helper.php';
 require_once 'cs_interaction.php';
 
+/**
+ * Classe che recupera tutti gli oggetti di un certo tipo
+ */
 class get_objects_by_type extends cs_interaction {
 
     private $type, $result;
 
     protected function input_elaboration(){
         $this->type = $this->validate_string('type');
+
         if(!$this->type)
             $this->json_error("Nessun tipo ricevuto");
 

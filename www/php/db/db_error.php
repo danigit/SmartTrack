@@ -13,11 +13,14 @@ class db_error{
     public static $ERROR_ON_REGISTER                = 3;
     public static $EMAIL_ALREADY_REGISTERED         = 4;
     public static $ERROR_ON_GETTING_EMAIL           = 5;
-    public static $ERROR_ON_GET_TYPES          = 6;
-    public static $ERROR_GET_ARTICLES               = 7;
-    public static $ERROR_ON_GETTING_THE_ARTICLE     = 8;
-    public static $INSERT_EDIT_ARTICLE              = 18;
-    public static $UPDATE_ARTICLE_ERROR             = 19;
+    public static $ERROR_ON_GET_TYPES               = 6;
+    public static $ERROR_ON_CLOSING_KIT             = 7;
+    public static $ERROR_ON_CONTROLLING_RECOVER_KIT = 8;
+    public static $ERROR_ON_GETTING_OBJECTS         = 9;
+    public static $ERROR_ON_RECOVERING_KIT          = 10;
+    public static $ERROR_ON_SUSPENDING_KIT          = 11;
+    public static $ERROR_ON_CREATING_KIT            = 18;
+    public static $ERROR_ON_GETTING_KIT             = 19;
     public static $WRONG_NUMBER_OF_PARAMETERS       = 32;
 
     private $error;

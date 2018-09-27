@@ -2,17 +2,17 @@
 /**
  * Created by IntelliJ IDEA.
  * User: surpa
- * Date: 26/09/18
- * Time: 16.56
+ * Date: 27/09/18
+ * Time: 18.29
  */
 
 require_once 'cs_interaction.php';
 require_once 'helper.php';
 
 /**
- * Classe che recupera i kit aperti
+ * Classe che recupera tutti i kit
  */
-class get_open_kits extends cs_interaction{
+class get_all_kits extends cs_interaction{
     private $result;
 
     protected function input_elaboration(){}
@@ -20,10 +20,10 @@ class get_open_kits extends cs_interaction{
     protected function get_db_informations(){
 
         $connection = $this->get_connection();
-        $this->result = $connection->get_open_kits();
+        $this->result = $connection->get_all_kits();
 
         if(is_error($this->result))
-            $this->json_error("Errore nel recupero dei kit aperti");
+            $this->json_error("Errore nel recupero dei kit");
     }
 
     protected function get_returned_data(){
@@ -31,5 +31,5 @@ class get_open_kits extends cs_interaction{
     }
 }
 
-$get_open_kits = new get_open_kits();
-$get_open_kits->execute();
+$get_all_kits = new get_all_kits();
+$get_all_kits->execute();

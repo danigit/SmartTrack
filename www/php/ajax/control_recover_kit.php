@@ -9,7 +9,9 @@
 require_once 'cs_interaction.php';
 require_once 'helper.php';
 
-
+/**
+ * Classe che controlla se c'e' un kit da recuperare
+ */
 class control_recover_kit extends cs_interaction{
     private $result;
 
@@ -21,7 +23,7 @@ class control_recover_kit extends cs_interaction{
         $this->result = $connection->control_recover_kit();
 
         if(is_error($this->result))
-            $this->json_error("Errore nel recupero dei kit aperti");
+            $this->json_error("Errore nel controllare se c'e' un kit da recuperare");
     }
 
     protected function get_returned_data(){

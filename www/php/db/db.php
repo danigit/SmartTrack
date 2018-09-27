@@ -33,8 +33,13 @@ class Connection{
         if ($statement instanceof db_error)
             return $statement;
 
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_LOGIN);
+        }
+
         $statement->bind_result($res_user_id, $res_pass);
         $fetch = $statement->fetch();
+
         $statement->close();
 
         if ($fetch && password_verify($password, $res_pass)) {
@@ -43,25 +48,13 @@ class Connection{
 
         return new db_error(db_error::$ERROR_ON_LOGIN);
     }
-//
-//    function get_username_by_id($id){
-//
-//        $query = "SELECT email FROM users WHERE user_id=?";
-//        $statement = $this->parse_and_execute_select($query, "i", $id);
-//
-//        if ($statement instanceof DbError)
-//            return $statement;
-//
-//        $statement->bind_result($res_username);
-//        $fetch = $statement->fetch();
-//        $statement->close();
-//
-//        if ($fetch) {
-//            return $res_username;
-//        }
-//
-//        return new db_error(db_error::$ERROR_ON_GETTING_EMAIL);
-//    }
+
+    /**
+     * Funzione che registra un nuovo utente
+     * @param $email - l'email dell'utente
+     * @param $password - la password dell'utente
+     * @return bool|db_error|mixed
+     */
     function register($email, $password){
 
         $hash_pass = "" . password_hash($password, PASSWORD_BCRYPT);
@@ -74,63 +67,38 @@ class Connection{
         } else if ($result) {
             return $this->connection->insert_id;
         }
+
         return new db_error(db_error::$ERROR_ON_REGISTER);
     }
-//    function insert_article($type, $name, $description, $path, $images_path, $visualizzations, $likes, $dislikes)
-//    {
-//        $query = 'INSERT INTO articles (type, name, description, file_path, images_path, visualizzations, likes, dislikes ) VALUES (?, ?, ?, ?, ?, ?, ?, ? )';
-//        $result = $this->parse_and_execute_insert($query, "sssssiii", $type, $name, $description, $path, $images_path, $visualizzations, $likes, $dislikes);
-//        var_dump($result);
-//        if ($result instanceof DbError){
-//            return $result;
-//        } else if ($result) {
-//            return $this->connection->insert_id;
-//        }
-//        return new DbError(DbError::$ERROR_ON_REGISTER);
-//    }
-//    function get_articles($type){
-//        $query = "SELECT name, description, file_path, images_path FROM articles WHERE type=? ";
-//        $statement = $this->parse_and_execute_select($query, "s", $type);
-//        if ($statement instanceof DbError)
-//            return $statement;
-//        $result = $statement->get_result();
-//        $result_array = array();
-//        //todo da mettere dove serve htmlspecialchars
-//        while ($row = $result->fetch_array()) {
-//            $result_array[] = array('title' => htmlspecialchars($row['name']), "description" => $row['description'], "file_path" => $row['file_path'], "images_path" => $row['images_path']);
-//        }
-//        return $result_array;
-//    }
-//    function get_article_by_title($title){
-//        $query = "SELECT description, images_path FROM articles WHERE name=?";
-//        $statement = $this->parse_and_execute_select($query, "s", $title);
-//        if ($statement instanceof DbError)
-//            return $statement;
-//        $result = $statement->get_result();
-//        $result_array = array();
-//        //todo da mettere dove serve htmlspecialchars
-//        while ($row = $result->fetch_array()) {
-//            $result_array[] = array('antani' => 'antaniscapelli', "description" => $row['description'], "images_path" => $row['images_path']);
-//        }
-//        return $result_array;
-//    }
+
+    /**
+     * Funzione che recupera tutti i kit aperti
+     * @return array|db_error - l'array dei kit recuperati oppure un errore
+     */
     function get_open_kits(){
-        $query = "SELECT kit_id, description, creation_date FROM kit WHERE closing_date IS NULL";
+        $query = "SELECT kit_id, description, is_sent, creation_date FROM kit WHERE closing_date IS NULL";
         $result = $this->connection->query($query);
+
         if ($result === false )
-            return new db_error(db_error::$ERROR_GET_ARTICLES);
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
 
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
+            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'], "is_sent" => $row['is_sent'],
                 "creation_date" => date('d/m/Y', strtotime($row['creation_date'])), "spedisci" => $row['kit_id'],
                 "chiudi" => $row['kit_id']);
         }
 
+        $result->close();
+
         return $result_array;
     }
 
+    /**
+     * Funzione che recupera tutte le tipologie degli oggetti
+     * @return array|db_error
+     */
     function get_types(){
         $query = "SELECT DISTINCT obj_type FROM object";
 
@@ -145,15 +113,26 @@ class Connection{
             $result_array[] = array('type' => $row['obj_type']);
         }
 
+        $result->close();
+
         return $result_array;
     }
 
+    /**
+     * Funzione che recupera gli oggetti del tipo passato come parametro
+     * @param $type - il tipo degli oggetti da recuperare
+     * @return array|db_error|mysqli_stmt - l'array degli oggetti recuperati o un errore
+     */
     function get_objects_by_type($type){
         $query = "SELECT cod, name FROM object WHERE obj_type=? AND kit_id IS NULL";
         $statement = $this->parse_and_execute_select($query, "s", $type);
 
         if ($statement instanceof db_error)
             return $statement;
+
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
 
         $result = $statement->get_result();
         $result_array = array();
@@ -162,9 +141,17 @@ class Connection{
             $result_array[] = array("cod" => $row['cod'], "name" => $row['name']);
         }
 
+        $statement->close();
+
         return $result_array;
     }
 
+    /**
+     * Funzione che crea un nuovo kit inserendolo nella tabella kit
+     * @param $description - la descrizione del kit
+     * @param $data - gli altri campi del kit
+     * @return mixed - l'id del kit inserito oppure un errore
+     */
     function create_kit($description, $data){
 
         $this->connection->autocommit(false);
@@ -173,7 +160,7 @@ class Connection{
         $query = 'INSERT INTO kit (description, creation_date) VALUES (?, now())';
         $resultInsert = $this->parse_and_execute_insert($query, "s", $description);
 
-        if($resultInsert == false){
+        if($resultInsert === false){
             array_push($errors, 'insert');
         }
 
@@ -190,6 +177,7 @@ class Connection{
 
         if(!empty($errors)){
             $this->connection->rollback();
+            return new db_error(db_error::$ERROR_ON_CREATING_KIT);
         }
 
         $this->connection->commit();
@@ -197,6 +185,11 @@ class Connection{
         return $id;
     }
 
+    /**
+     * Funzione che sospende un kit
+     * @param $data - i dati del kit da sospendere
+     * @return int | db_error
+     */
     function suspend_kit($data){
 
         $this->connection->autocommit(false);
@@ -214,13 +207,18 @@ class Connection{
 
         if(!empty($errors)){
             $this->connection->rollback();
+            return new db_error(db_error::$ERROR_ON_SUSPENDING_KIT);
         }
 
         $this->connection->commit();
 
-        return $errors;
+        return $this->connection->affected_rows;
     }
 
+    /**
+     * Funzione che recupera un kit sospeso in precedenza
+     * @return array|db_error - il kit sospesso in precedenza oppure un errore
+     */
     function recover_kit(){
         $this->connection->autocommit(false);
         $error = false;
@@ -237,6 +235,7 @@ class Connection{
 
         if($error){
             $this->connection->rollback();
+            return new db_error(db_error::$ERROR_ON_RECOVERING_KIT);
         }else {
 
             $this->connection->commit();
@@ -249,19 +248,82 @@ class Connection{
 
             return $result_array;
         }
-
-        return new db_error(db_error::$UPDATE_ARTICLE_ERROR);
     }
 
+    /**
+     * Funzione che controlla se c'e un kit da recuperare, controllando se c'e' almeno una riga
+     * nella tabella suspended_kit
+     * @return bool|db_error|mysqli_result - il risultato della query oppure un errore
+     */
     function control_recover_kit(){
         $query = "SELECT * FROM suspended_kit LIMIT 1";
 
         $result = $this->connection->query($query);
 
         if($result->num_rows == 0)
-            return new db_error(db_error::$WRONG_NUMBER_OF_PARAMETERS);
+            return new db_error(db_error::$ERROR_ON_CONTROLLING_RECOVER_KIT);
 
-        return $result;
+        return $result->num_rows;
+    }
+
+    /**
+     * Funzione che segna un kit come spedito
+     * @param $id - l'id del kit spedito
+     * @return db_error|int|mysqli_stmt -
+     */
+    function send_kit($id){
+        $query = "UPDATE kit SET is_sent = TRUE WHERE kit_id = ?";
+        $resultUpdate = $this->parse_and_execute_select($query, "i", $id);
+
+        if($resultUpdate instanceof db_error){
+            return $resultUpdate;
+        }else if($resultUpdate === false)
+            return new db_error(db_error::$UPDATE_ARTICLE_ERROR);
+
+        return $this->connection->affected_rows;
+    }
+
+    /**
+     * Funzione che chiude un kit aggiurnando il campo closing date della tabella kit inserendo la data corrente
+     * @param $id - l'id del kit da chiudere
+     * @return db_error|int - il valore restituito in caso di errore o di successo
+     */
+    function close_kit($id){
+        $query = "UPDATE kit SET closing_date = now() WHERE kit_id = ?";
+
+        $resultUpdate = $this->parse_and_execute_select($query, "i", $id);
+
+        if($resultUpdate instanceof db_error)
+            return $resultUpdate;
+
+        if($resultUpdate === false)
+            return new db_error(db_error::$ERROR_ON_CLOSING_KIT);
+
+        return $this->connection->affected_rows;
+    }
+
+    /**
+     * Funzione che recupera tutti i kit
+     * @return array|db_error - l'array contenente i kit oppure un errore
+     */
+    function get_all_kits(){
+        $query = "SELECT kit_id, description, creation_date, closing_date FROM kit";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
+                "creation_date" => date('d/m/Y', strtotime($row['creation_date'])), "closing_date" => $row['closing_date'],);
+        }
+
+        $result->close();
+
+        return $result_array;
     }
 
     /**
@@ -277,7 +339,6 @@ class Connection{
             }
         } //else if ($errors['errno'] === 1452)
         //return new DbError(DbError::$FOREIGN_KEY_ERROR);
-        var_dump('antani');
         return new db_error(db_error::$ERROR_ON_EXECUTE);
     }
 

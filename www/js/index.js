@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+let app = {
     // Application Constructor
     initialize: function() {
         this.bind();
@@ -28,6 +28,10 @@ var app = {
         $('#crea-kit-page').on('pageinit', function () {
             createKit();
             controlRecoverKit();
+        });
+
+        $('#all-kits').on('pageinit', function () {
+            seeAllKits();
         });
     }
 };

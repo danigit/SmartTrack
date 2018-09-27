@@ -68,11 +68,10 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large">Crea kit</a></li>
-                        <li><a href="#" class="ui-btn font-large">Recupera kit</a></li>
-                        <li><a href="#" class="ui-btn font-large">Crea da template</a></li>
-                        <li><a href="#" class="ui-btn font-large">Visualizza kit</a></li>
-                        <li><a href="#" id="logout" class="ui-btn font-large">Logout</a></li>
+                        <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
+                        <li><a href="#" class="ui-btn font-large orange-background white-color">Crea da template</a></li>
+                        <li><a href="#all-kits" class="ui-btn font-large yellow-background white-color">Visualizza kit</a></li>
+                        <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,7 +101,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div class="select-container">
                 <form>
                     <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">
-                        <label for="type-select-fieldset" class="font-large">Seleziona una tipologia di oggetti</label>
+                        <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
                         <select id="type-select" data-inset="true">
                             <option>Seleziona un oggetto...</option>
                         </select>
@@ -129,8 +128,8 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div class="kit-description-container">
                 <fieldset id="create-kit-fielset">
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input center-text font-large" type="text" name="description" id="description">
-                        <label class="mdl-textfield__label center-text font-large" for="description">Inserisci la descrizione del kit</label>
+                        <input class="mdl-textfield__input font-large" type="text" name="description" id="description">
+                        <label class="mdl-textfield__label font-large" for="description">Inserisci la descrizione del kit</label>
                     </div>
                 </fieldset>
             </div>
@@ -152,9 +151,34 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </div><!-- /navbar -->
             </div><!-- /footer -->
         </div>
+
+        <div data-role="page" id="all-kits">
+            <div class="kit-create-label">
+                <p class="font-x-large blue-color">Tutti i kit</p>
+            </div>
+            <div id="all-kit-error-message"></div>
+            <div class="table-label"><p class="font-x-large blue-color"><b>Tabella di tutti i kit</b></p></div>
+            <div class="table-container">
+                <table data-role="table" id="all-kit-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr>
+                        <th data-priority="1">Kit id</th>
+                        <th data-priority="2">Descrizione</th>
+                        <th data-priority="4">Data creazione</th>
+                        <th data-priority="5">Kit chiuso</th>
+                    </tr>
+                    </thead>
+                    <tbody id="all-kit-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     <script src="js/helper.js"></script>
     <script src="js/content.js"></script>
     <script src="js/create-kit.js"></script>
     <script src="js/logout.js"></script>
+    <script src="js/close-kit.js"></script>
+    <script src="js/all-kits.js"></script>
     </body>
 </html>

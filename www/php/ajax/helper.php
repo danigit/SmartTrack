@@ -7,7 +7,6 @@
  */
 
 
-define('FORWARDSLASH', '/');
 require_once "../db/db_error.php";
 
 
@@ -15,8 +14,7 @@ function is_error($value){
     return is_a($value, "db_error");
 }
 
-function json_result($values)
-{
+function json_result($values){
     $output = ob_get_contents();
     ob_end_clean();
     $values["phperrors"] = $output;
@@ -45,13 +43,13 @@ function json_error($msg, $error_code = 0)
     $this->json_result($obj);
 }
 
+
 /**
  * Escape ricorsivo di tutti gli elementi nell'array che non sono ne interi
  * ne booleani
  * @param $var mixed
  * @return array|mixed
  */
-
 function escape_array($var)
 {
     if (is_numeric($var) || is_bool($var))
@@ -67,16 +65,12 @@ function escape_array($var)
     return $var;
 }
 
-
-
-function get_user_id()
-{
+function get_user_id(){
     return $_SESSION['id'];
 }
 
 
-function set_session_variables($id, $username, $is_secure)
-{
+function set_session_variables($id, $username, $is_secure){
     session_start();
     session_regenerate_id();
     $_SESSION = array();

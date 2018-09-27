@@ -2,9 +2,8 @@
  * Funzione che esegue il login dell'utente
  */
 let submitLogin = $('#submit-login');
-let loginForm = $('#login-form');
+
 submitLogin.on('click', function (event) {
-    console.log('preventing default');
     event.preventDefault();
 
     let logingFormInput = new FormData();

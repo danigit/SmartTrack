@@ -1,4 +1,6 @@
-
+/**
+ * Funzione che effettua il logout
+ */
 $('#logout').on('click', function () {
     let logoutPromise = httpPost('php/ajax/logout.php');
     logoutPromise.then(

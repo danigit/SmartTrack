@@ -1,3 +1,4 @@
+/*jquery mobile*/
 .ui-loader{
     display: none!important;
 }
@@ -7,10 +8,20 @@
     width: 100% !important;
     margin: 20px 0!important;
     color: #FFBC58!important;
+    font-weight: bold!important;
 }
 
 .ui-select{
     width: 100% !important;
+}
+
+#create-kit-fielset{
+    width: 37% !important;
+}
+
+.ui-footer{
+    margin-bottom: 10px!important;
+    border: none!important;
 }
 
 #create-kit-fielset div.ui-input-text{
@@ -32,10 +43,8 @@
     border-radius: 0;
 }
 
-.ui-footer{
-    margin-bottom: 10px!important;
-    border: none!important;
-}
+/*end jquery mobile*/
+
 
 /*main page*/
 
@@ -54,26 +63,43 @@ thead tr{
     padding: 0 10px;
 }
 
+/*end main page*/
+
+
+
 /*kit create*/
 
 .kit-create-label{
-    margin: 70px 50px 0;
+    background-color: #6AB8C1!important;
+    padding: 31px!important;
+}
+
+.kit-create-label p{
+    color: white!important;
+    font-weight: bold!important;
+    font-size: xx-large!important;
+    text-align: center;
+    margin: 0;
 }
 
 .select-container{
-    margin: 0 20px;
+    margin: 0 50px;
 }
 
 .type-list-container{
-    margin: 0 60px;
+    margin: 0 100px;
 }
 
 .kit-objects-container{
-    margin: 0 20px;
+    margin: 0 50px;
 }
 
 .object-list-label{
-    margin: 50px 20px;
+    margin: 50px 5px;
+}
+
+.object-list-label p{
+    font-weight: bold;
 }
 
 .create-kit-button-submit{
@@ -122,11 +148,7 @@ thead tr{
 }
 
 .kit-description-container{
-    margin: 0 100px;
-}
-
-#error-msg-create-kit{
-    margin: 0 100px;
+    margin: 0 50px;
 }
 
 .create-kit-footer-ul{
@@ -134,14 +156,19 @@ thead tr{
     margin: auto!important;
 }
 
-.margin-r-5{
-    margin-right: 5%!important;
-}
-
-.margin-l-5{
-    margin-left: 5%!important;
-}
-
 .footer-navbar{
     background: #FFFFFF!important;
 }
+
+.ui-icon-greenbtn:after {
+    background-image: url("../img/plus_icon.png")!important;
+    background-size: 24px 24px!important;
+}
+
+.ui-icon-redminus:after {
+    background-image: url("../img/incon-minus.png")!important;
+    background-size: 24px 24px!important;
+}
+
+
+/*end create kig*/

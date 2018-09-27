@@ -7,11 +7,12 @@
  */
 require_once 'is_logged.php';
 
+/**
+ * Classe che gestisce il logout dell'utente
+ */
 class logout extends is_logged {
 
-    protected function input_elaboration(){
-        // TODO: Implement input_elaboration() method.
-    }
+    protected function input_elaboration(){}
 
     protected function get_db_informations(){
         session_start();

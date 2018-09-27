@@ -9,6 +9,9 @@
 require_once 'is_not_logged.php';
 require_once 'helper.php';
 
+/**
+ * Classe che effettua il login di un utente
+ */
 class login extends is_not_logged {
     private $email, $password, $id;
 
@@ -21,6 +24,7 @@ class login extends is_not_logged {
             $this->json_error('Email non valida');
 
         $this->password = $this->validate_string('password');
+
         if(!$this->password)
             $this->json_error('Inserire una password');
     }
@@ -29,6 +33,7 @@ class login extends is_not_logged {
         $connection = $this->get_connection();
 
         $this->id = $connection->login($this->email, $this->password);
+
         if(is_error($this->id))
             $this->json_error("Username o password non validi");
 
