@@ -13,7 +13,7 @@ class logout extends is_logged {
         // TODO: Implement input_elaboration() method.
     }
 
-    protected function get_informations(){
+    protected function get_db_informations(){
         session_start();
         $_SESSION = array();
         session_regenerate_id();

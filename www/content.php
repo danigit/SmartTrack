@@ -72,6 +72,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                         <li><a href="#" class="ui-btn font-large">Recupera kit</a></li>
                         <li><a href="#" class="ui-btn font-large">Crea da template</a></li>
                         <li><a href="#" class="ui-btn font-large">Visualizza kit</a></li>
+                        <li><a href="#" id="logout" class="ui-btn font-large">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -154,5 +155,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
     <script src="js/helper.js"></script>
     <script src="js/content.js"></script>
     <script src="js/create-kit.js"></script>
+    <script src="js/logout.js"></script>
     </body>
 </html>
