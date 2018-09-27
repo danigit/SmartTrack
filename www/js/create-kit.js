@@ -122,6 +122,7 @@ function createKit() {
                     $('#create-kit-submit').addClass('ui-disabled');
                     $('.create-kit-button-suspend').addClass('display-none');
                     $('.create-kit-button-recover').removeClass('display-none');
+                    $('#type-select-fieldset div').addClass('ui-disabled');
                     console.log("kit creato: " + data);
                 }
             }
@@ -136,6 +137,7 @@ function createKit() {
                     $('.create-kit-button-recover').addClass('display-none');
                     $('.create-kit-button-suspend').removeClass('display-none');
                     $('#create-kit-submit').removeClass('ui-disabled');
+                    $('#type-select-fieldset div').removeClass('ui-disabled');
                     $.each(data[0], function (key, value) {
                         $('#object-list-ul').append('<li id="' + value['cod'] + '" class="font-large">' + value['name'] + '</li>');
                     })
@@ -154,6 +156,7 @@ function controlRecoverKit() {
                 $('.create-kit-button-suspend').addClass('display-none');
                 $('.create-kit-button-recover').removeClass('display-none');
                 $('#create-kit-submit').addClass('ui-disabled');
+                $('#type-select-fieldset div').addClass('ui-disabled');
             }
         }
     )

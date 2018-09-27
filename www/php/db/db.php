@@ -253,6 +253,17 @@ class Connection{
         return new db_error(db_error::$UPDATE_ARTICLE_ERROR);
     }
 
+    function control_recover_kit(){
+        $query = "SELECT * FROM suspended_kit LIMIT 1";
+
+        $result = $this->connection->query($query);
+
+        if($result->num_rows == 0)
+            return new db_error(db_error::$WRONG_NUMBER_OF_PARAMETERS);
+
+        return $result;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati
