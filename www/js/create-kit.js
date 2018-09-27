@@ -52,7 +52,13 @@ function createKit() {
                             });
 
                             if(!isPresent){
-                                $('#object-list-ul').append('<li id="' + cod + '" class="font-large">' + value['name'] + '</li>');
+                                let objectList = $('<li id="' + cod + '" class="font-large"><a href="#" >' + value['name'] + '</a></li>');
+                                let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '">Elimina dal kit</a>').on('click', function () {
+                                    $(this).parent().remove();
+                                });
+
+                                objectList.append(deleteElem);
+                                $('#object-list-ul').append(objectList);
                                 $('#object-list-ul').listview('refresh');
                                 $('.create-kit-button-submit a').removeClass('ui-disabled');
                                 $('.create-kit-button-suspend a').removeClass('ui-disabled');
@@ -139,8 +145,13 @@ function createKit() {
                     $('#create-kit-submit').removeClass('ui-disabled');
                     $('#type-select-fieldset div').removeClass('ui-disabled');
                     $.each(data[0], function (key, value) {
-                        $('#object-list-ul').append('<li id="' + value['cod'] + '" class="font-large">' + value['name'] + '</li>');
-                    })
+                        let objectList = $('<li id="' + value['cod'] + '" class="font-large"><a href="#" >' + value['name'] + '</a></li>');
+                        let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '">Elimina dal kit</a>').on('click', function () {
+                            $(this).parent().remove();
+                        });
+                        objectList.append(deleteElem);
+                        $('#object-list-ul').append(objectList);
+                    });
                     $('#object-list-ul').listview('refresh');
                 }
             }
