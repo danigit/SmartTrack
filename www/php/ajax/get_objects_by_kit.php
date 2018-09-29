@@ -2,33 +2,34 @@
 /**
  * Created by IntelliJ IDEA.
  * User: surpa
- * Date: 27/09/18
- * Time: 18.04
+ * Date: 28/09/18
+ * Time: 11.08
  */
 
 require_once 'helper.php';
 require_once 'cs_interaction.php';
 
 /**
- * Classe che gestisce la chiusura di un kit
+ * Classe che recupera tutti gli oggetti di un certo tipo
  */
-class close_kit extends cs_interaction {
+class get_objects_by_kit extends cs_interaction {
 
     private $id, $result;
 
     protected function input_elaboration(){
         $this->id = $this->validate_string('id');
-        if(!$this->id){
-            $this->json_error('Impossibile recuperare l\'id');
-        }
+
+        if(!$this->id)
+            $this->json_error("Nessun id ricevuto");
+
     }
 
     protected function get_db_informations(){
         $connection = $this->get_connection();
-        $this->result = $connection->close_kit($this->id);
+        $this->result = $connection->get_objects_by_kit($this->id);
 
         if(is_error($this->result))
-            $this->json_error("Errore nella chiusuro del kit");
+            $this->json_error("Errore nel recupero degli oggetti");
     }
 
     protected function get_returned_data(){
@@ -36,5 +37,5 @@ class close_kit extends cs_interaction {
     }
 }
 
-$close_kit = new close_kit();
-$close_kit->execute();
+$get_objects_by_kit = new get_objects_by_kit();
+$get_objects_by_kit->execute();

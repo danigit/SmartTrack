@@ -147,6 +147,34 @@ class Connection{
     }
 
     /**
+     * Funzione che recupera gli oggetti del kit passato come parametro
+     * @param $id - l'id del kit al quale gli oggetti apartengano
+     * @return array|db_error|mysqli_stmt - l'array degli oggetti recuperati o un errore
+     */
+    function get_objects_by_kit($id){
+        $query = "SELECT cod, obj_type, name FROM object WHERE kit_id=?";
+        $statement = $this->parse_and_execute_select($query, "s", $id);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
+
+        $result = $statement->get_result();
+        $result_array = array();
+
+        while ($row = $result->fetch_array()) {
+            $result_array[] = array("cod" => $row['cod'], "obj_type" => $row['obj_type'], "name" => $row['name'], "id" => $id);
+        }
+
+        $statement->close();
+
+        return $result_array;
+    }
+
+    /**
      * Funzione che crea un nuovo kit inserendolo nella tabella kit
      * @param $description - la descrizione del kit
      * @param $data - gli altri campi del kit
@@ -160,12 +188,14 @@ class Connection{
         $query = 'INSERT INTO kit (description, creation_date) VALUES (?, now())';
         $resultInsert = $this->parse_and_execute_insert($query, "s", $description);
 
+
         if($resultInsert === false){
             array_push($errors, 'insert');
         }
 
         $id = $this->connection->insert_id;
 
+        //TODO fo schifo usare join (forse)
         foreach ($data as $datum) {
             $query = "UPDATE object SET kit_id = ? WHERE cod = ?";
             $resultUpdate = $this->parse_and_execute_select($query, "ii", $id, $datum);
@@ -182,7 +212,7 @@ class Connection{
 
         $this->connection->commit();
 
-        return $id;
+        return $errors;
     }
 
     /**
@@ -194,7 +224,7 @@ class Connection{
 
         $this->connection->autocommit(false);
         $errors = array();
-
+        //TODO fa schifo usare join (forse)
         foreach ($data as $datum) {
             $query = 'INSERT INTO suspended_kit (object_id) VALUES (?)';
             $resultInsert = $this->parse_and_execute_insert($query, "s", $datum);
@@ -326,6 +356,48 @@ class Connection{
         return $result_array;
     }
 
+    function close_kit_and_save($kit_id, $data){
+        $this->connection->autocommit(false);
+        $errors = array();
+
+        $query = "UPDATE kit SET closing_date = now() WHERE kit_id = ?";
+
+        $resultUpdate = $this->parse_and_execute_select($query, "i", $kit_id);
+
+        if($resultUpdate === false){
+            array_push($errors, 'update');
+        }
+
+
+        foreach ($data as $datum) {
+            $query = 'INSERT INTO incomplete_kit (kit_id, object_id) VALUES (?, ?)';
+            $resultInsert = $this->parse_and_execute_insert($query, "ss", $kit_id, $datum);
+
+            if($resultInsert == false){
+                array_push($errors, 'insert');
+            }
+        }
+
+        $query = "UPDATE object LEFT JOIN `incomplete_kit` ON object.cod=incomplete_kit.object_id  
+                  SET object.kit_id = NULL
+                  WHERE incomplete_kit.object_id IS NULL AND object.kit_id = ?";
+
+        $resultUpdateObjects = $this->parse_and_execute_select($query, "i", $kit_id);
+
+        if($resultUpdateObjects === false){
+            array_push($errors, 'update');
+        }
+
+        if(!empty($errors)){
+            $this->connection->rollback();
+            return new db_error(db_error::$ERROR_ON_CLOSING_KIT);
+        }
+
+        $this->connection->commit();
+
+        return $this->connection->affected_rows;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati
@@ -409,3 +481,4 @@ class Connection{
 
 //$obj = new Connection();
 //var_dump($obj->get_types());
+//var_dump($obj->create_kit('kitn', [1, 3, 4]));

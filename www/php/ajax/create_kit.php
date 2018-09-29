@@ -27,7 +27,6 @@ class create_kit extends cs_interaction {
     protected function get_db_informations(){
         $connection = $this->get_connection();
         $this->result = $connection->create_kit($this->description, $this->data);
-
         if(is_error($this->result))
             $this->json_error("Errore nel creare il kit");
     }

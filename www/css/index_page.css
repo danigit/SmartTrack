@@ -5,40 +5,46 @@
 .ui-content{
     padding: 0!important;
 }
-
-#login-fielset div.ui-input-text{
-    background: #f9f9f9;
-    border: none!important;
-    box-shadow: none!important;
-}
-
-#login-fielset .mdl-textfield{
-    line-height: 3!important;
-}
-
-#login-fielset div.ui-input-btn{
-    width: 40% !important;
-    height: 25px!important;
-    display: block;
-    margin: 30px auto!important;
-    border: none;
-    background: #6AB8C1!important;
+::placeholder{
     color: #FFFFFF!important;
-    border-radius: 10px;
-    font-size: large!important;
+    text-shadow: none!important;
     text-align: center;
 }
 
-#login-fielset .mdl-textfield{
-    width: 70% !important;
+#login-fielset div.ui-input-text{
+    background: #4081AD;
+    border: none!important;
+    color: #FFFFFF!important;
+    box-shadow: none!important;
+}
+
+#login-fielset div.ui-input-btn{
+    width: 76% !important;
+    height: 22px!important;
     display: block;
-    margin: auto;
+    margin: 75px auto!important;
+    border: none;
+    background: #FFFFFF!important;
+    color: #4081AD!important;
+    border-radius: 10px;
+    font-size: large!important;
+    text-align: center;
 }
 
 /*end jquery mobile*/
 
 
 /*login page*/
+
+#login{
+    background: url("../img/login.jpg") top;
+}
+
+.input-container{
+    width: 90% !important;
+    margin: 35px auto!important;
+}
+
 .login-image-container{
     width: 74%;
     /*height: 100vh;*/
@@ -52,13 +58,18 @@
 }
 
 .login-image{
-    width: 90%;
+    width: 95%;
     display: block;
-    margin: 150px auto auto;
+    margin: 212px auto;
+}
+
+.login-image-container{
+    background: url("../img/image-back.png") center;
+    background-size: cover;
 }
 
 .login-form-container{
-    margin: 100px auto;
+    margin: 100px auto auto;
     width: 26%;
     float: right;
 }
@@ -67,16 +78,25 @@
     margin: 100px auto 25px;
     font-weight: bold;
     font-size: xx-large;
-    color: #6AB8C1;
+    color: #FFFFFF;
 }
 
 #login-fielset input{
-    border-bottom: 2px solid #6AB8C1;
-    border-radius: 0;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    border-radius: 10px!important;
 }
 
 fieldset{
     border: none;
+}
+
+#login-content{
+    margin: 15%;
+    border-radius: 40px;
+    background-color: #4081AD;
+    box-shadow: 0 0 20px 2px #4081ad;
+    background-size: contain;
 }
 
 /*end login page*/

@@ -125,6 +125,16 @@ thead tr{
     box-shadow: none!important;
 }
 
+.close-kit-button{
+    background: #3dc235!important;
+    color: #FFFFFF!important;
+    width: 90%!important;
+    margin: auto!important;
+    border-radius: 10px!important;
+    border: none!important;
+    box-shadow: none!important;
+}
+
 .create-kit-button-suspend a{
     background: #FFBC58!important;
     border-radius: 10px!important;

@@ -25,6 +25,11 @@ let app = {
     bind: function(){
         document.addEventListener('deviceready', this.deviceready, false);
 
+        $('#main-content').on('pagebeforeshow', function () {
+            $('#open-kit-body').empty();
+            populateOpenKits();
+        });
+
         $('#crea-kit-page').on('pageinit', function () {
             createKit();
             controlRecoverKit();
@@ -32,6 +37,10 @@ let app = {
 
         $('#all-kits').on('pageinit', function () {
             seeAllKits();
+        });
+
+        $('#close-kit').on('pageinit', function () {
+            closeKit();
         });
     }
 };

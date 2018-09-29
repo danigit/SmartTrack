@@ -2,6 +2,8 @@
  * Recupero e visualizzo i kit aperti
  */
 
+var closeKitObject = {};
+
 function populateOpenKits() {
     let openKitsPromise = httpPost('php/ajax/get_open_kits.php', '', 'GET');
 
@@ -35,15 +37,15 @@ function populateOpenKits() {
                             tableRow.append(tableCol);
                         }else if(innerKey === 'chiudi'){
                             let tableCol = $('<td></td>');
-                            let sendButton = $('<a href="#" class="ui-btn font-small red-background white-color" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
-                                closeKit($(this).attr('data-name'), $(this).parent().parent());
+                            let sendButton = $('<a href="#close-kit?name=daniel&surname=surpanu" class="ui-btn font-small red-background white-color" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
+                                closeKitObject['id'] = $(this).attr('data-name');
+                                // closeKitObject['row'] = $(this).parent().parent();
                             });
                             tableCol.append(sendButton);
                             tableRow.append(tableCol);
                         }
                     });
                     $('#open-kit-body').append(tableRow).trigger('create');
-
                 });
             } else {
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');

@@ -136,6 +136,12 @@ function createKitSubmit() {
                 function (data) {
                     if (data.result) {
                         //TODO mostrare il messaggio che il kit e' statto creato e ripristinare la pagina
+                        $('#object-list-ul').empty();
+                        $('#type-list-ul').empty();
+                        $('.kit-description-container input').val('');
+                        $('.kit-description-container input').trigger('create');
+                        $('#type-select option:eq(0)').prop('selected', true);
+                        $('#type-select').selectmenu('refresh');
                     }else {
                         let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                         if ($('.error-message').length !== 0)

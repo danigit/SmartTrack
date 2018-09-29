@@ -174,6 +174,39 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
         </div>
+
+        <div data-role="page" id="close-kit">
+            <div class="kit-create-label">
+                <p class="font-x-large blue-color">Chiusura kit</p>
+            </div>
+
+            <div class="table-label"><p class="font-x-large blue-color"><b>Tabella degli oggetti presenti nel kit</b></p></div>
+            <div class="table-container">
+                <table data-role="table" id="close-kit-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr>
+                        <th data-priority="1">Object id</th>
+                        <th data-priority="2">Object type</th>
+                        <th data-priority="4">Object name</th>
+                        <th data-priority="5"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="close-kit-body">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
+                <div data-role="navbar" class="footer-navbar">
+                    <ul class="create-kit-footer-ul">
+                        <li data-inline="true">
+                            <a href="#" id="close-kit-and-save-button" class="ui-btn font-large close-kit-button">Close kit</a>
+                        </li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div>
     <script src="js/helper.js"></script>
     <script src="js/content.js"></script>
     <script src="js/create-kit.js"></script>
