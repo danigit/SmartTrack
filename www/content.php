@@ -67,25 +67,25 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <div data-role="page" id="main-content">
             <div class="navbar-container">
                 <div data-role="navbar">
-                    <ul>
+                    <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
-                        <li><a href="#" class="ui-btn font-large orange-background white-color">Crea da template</a></li>
-                        <li><a href="#all-kits" class="ui-btn font-large yellow-background white-color">Visualizza kit</a></li>
+                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>
+                        <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
             </div>
             <div id="error-msg"></div>
-            <div class="table-label"><p class="font-x-large blue-color"><b>Tabella kit disponibili</b></p></div>
+            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella kit disponibili</b></p></div>
             <div class="table-container">
                 <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                         <tr>
-                            <th data-priority="1">Kit id</th>
-                            <th data-priority="2">Descrizione</th>
-                            <th data-priority="3">Data creazione</th>
-                            <th data-priority="4"></th>
-                            <th data-priority="5"></th>
+                            <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
+                            <th data-priority="3" class="border-right-no-color font-x-large padding-10">Data creazione</th>
+                            <th data-priority="4" ></th>
+                            <th data-priority="5" ></th>
                         </tr>
                     </thead>
                     <tbody id="open-kit-body">
@@ -94,8 +94,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
         </div>
+
         <div data-role="page" id="crea-kit-page">
-            <div class="kit-create-label">
+            <div class="kit-create-label box-shadow-bottom">
                 <p class="font-x-large blue-color">Creazione kit</p>
             </div>
             <div class="select-container">
@@ -103,7 +104,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                     <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">
                         <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
                         <select id="type-select" data-inset="true">
-                            <option>Seleziona un oggetto...</option>
+                            <option>Seleziona una tipologia...</option>
                         </select>
                     </fieldset>
                 </form>
@@ -127,12 +128,12 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             </div>
             <div class="kit-description-container">
                 <fieldset id="create-kit-fielset">
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input font-large" type="text" name="description" id="description">
-                        <label class="mdl-textfield__label font-large" for="description">Inserisci la descrizione del kit</label>
+                    <div class="">
+                        <input class="font-large" type="text" name="description" id="description" placeholder="Inserisci la descrizione del kit">
                     </div>
                 </fieldset>
             </div>
+
             <div id="error-msg-create-kit"></div>
 
             <div data-role="footer" data-id="foo1" data-position="fixed">
@@ -152,20 +153,78 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             </div><!-- /footer -->
         </div>
 
+<!--        <div data-role="page" id="crea-kit-from-template-page">-->
+<!--            <div class="kit-create-from-templatelabel box-shadow-bottom">-->
+<!--                <p class="font-x-large blue-color">Creazione kit da template</p>-->
+<!--            </div>-->
+<!--            <div class="select-container">-->
+<!--                <form>-->
+<!--                    <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">-->
+<!--                        <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>-->
+<!--                        <select id="type-select" data-inset="true">-->
+<!--                            <option>Seleziona un oggetto...</option>-->
+<!--                        </select>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="type-list-container">-->
+<!--                <form class="ui-filterable">-->
+<!--                    <input id="filterBasic-input" data-type="search">-->
+<!--                </form>-->
+<!--                <ul id="type-list-ul" data-role="listview" data-split-icon="plus" data-filter="true" data-input="#filterBasic-input">-->
+<!---->
+<!--                </ul>-->
+<!--            </div>-->
+<!---->
+<!--            <div class="kit-objects-container">-->
+<!--                <div class="object-list-label">-->
+<!--                    <p class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>-->
+<!--                </div>-->
+<!--                <ul data-role="listview" id="object-list-ul">-->
+<!---->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="kit-description-container">-->
+<!--                <fieldset id="create-kit-fielset">-->
+<!--                    <div class="mdl-textfield mdl-js-textfield">-->
+<!--                        <input class="mdl-textfield__input font-large" type="text" name="description" id="description">-->
+<!--                        <label class="mdl-textfield__label font-large" for="description">Inserisci la descrizione del kit</label>-->
+<!--                    </div>-->
+<!--                </fieldset>-->
+<!--            </div>-->
+<!--            <div id="error-msg-create-kit"></div>-->
+<!---->
+<!--            <div data-role="footer" data-id="foo1" data-position="fixed">-->
+<!--                <div data-role="navbar" class="footer-navbar">-->
+<!--                    <ul class="create-kit-footer-ul">-->
+<!--                        <li class="create-kit-button-suspend margin-r-5" data-inline="true">-->
+<!--                            <a href="#" id="create-kit-suspend" class="ui-btn ui-disabled font-large">Sospendi kit</a>-->
+<!--                        </li>-->
+<!--                        <li class="create-kit-button-recover margin-r-5 display-none" data-inline="true">-->
+<!--                            <a href="#" id="create-kit-recover" class="ui-btn font-large">Recupera kit</a>-->
+<!--                        </li>-->
+<!--                        <li class="create-kit-button-submit margin-l-5" data-inline="true">-->
+<!--                            <a href="#" id="create-kit-submit" class="ui-btn ui-disabled font-large">Crea kit</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div><!-- /navbar -->
+<!--            </div><!-- /footer -->
+<!--        </div>-->
+
         <div data-role="page" id="all-kits">
             <div class="kit-create-label">
                 <p class="font-x-large blue-color">Tutti i kit</p>
             </div>
             <div id="all-kit-error-message"></div>
-            <div class="table-label"><p class="font-x-large blue-color"><b>Tabella di tutti i kit</b></p></div>
+            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit</b></p></div>
             <div class="table-container">
                 <table data-role="table" id="all-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr>
-                        <th data-priority="1">Kit id</th>
-                        <th data-priority="2">Descrizione</th>
-                        <th data-priority="4">Data creazione</th>
-                        <th data-priority="5">Kit chiuso</th>
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Data creazione</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10">Kit chiuso</th>
                     </tr>
                     </thead>
                     <tbody id="all-kit-body">
@@ -180,21 +239,26 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 <p class="font-x-large blue-color">Chiusura kit</p>
             </div>
 
-            <div class="table-label"><p class="font-x-large blue-color"><b>Tabella degli oggetti presenti nel kit</b></p></div>
+            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella degli oggetti presenti nel kit</b></p></div>
             <div class="table-container">
                 <table data-role="table" id="close-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr>
-                        <th data-priority="1">Object id</th>
-                        <th data-priority="2">Object type</th>
-                        <th data-priority="4">Object name</th>
-                        <th data-priority="5"></th>
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Object id</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Object type</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Object name</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10"></th>
                     </tr>
                     </thead>
                     <tbody id="close-kit-body">
 
                     </tbody>
                 </table>
+            </div>
+
+            <div id="error-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">
+                <p class="error-title"></p>
+                <p class="error-content"></p>
             </div>
 
             <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
@@ -207,6 +271,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </div><!-- /navbar -->
             </div><!-- /footer -->
         </div>
+
     <script src="js/helper.js"></script>
     <script src="js/content.js"></script>
     <script src="js/create-kit.js"></script>

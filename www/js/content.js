@@ -12,8 +12,13 @@ function populateOpenKits() {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 let tableRow;
+                let i = 0;
                 $.each(data[0], function (key, value) {
-                    tableRow = $('<tr></tr>');
+                    if((i++ % 2) === 0) {
+                        tableRow = $('<tr></tr>');
+                    }else{
+                        tableRow = $('<tr class="gray-background"></tr>')
+                    }
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'kit_id' || innerKey === 'description' || innerKey === 'creation_date') {
                             tableRow.append('<td class="font-x-large">' + innerValue + '</td>');
@@ -21,13 +26,13 @@ function populateOpenKits() {
                             let tableCol = $('<td></td>');
                             let sendButton;
                             if(value['is_sent'] === "1") {
-                                sendButton = $('<a href="#" class="ui-btn font-small green-background white-color ui-disabled" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
+                                sendButton = $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color ui-disabled border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
                                     $(this).css('background', 'red');
                                     sendKit($(this).attr('data-name'));
                                     $(this).addClass('ui-disabled');
                                 });
                             }else{
-                                sendButton = $('<a href="#" class="ui-btn font-small green-background white-color" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
+                                sendButton = $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
                                     $(this).css('background', 'red');
                                     sendKit($(this).attr('data-name'));
                                     $(this).addClass('ui-disabled');
@@ -37,7 +42,7 @@ function populateOpenKits() {
                             tableRow.append(tableCol);
                         }else if(innerKey === 'chiudi'){
                             let tableCol = $('<td></td>');
-                            let sendButton = $('<a href="#close-kit?name=daniel&surname=surpanu" class="ui-btn font-small red-background white-color" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
+                            let sendButton = $('<a href="#close-kit?name=daniel&surname=surpanu" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
                                 closeKitObject['id'] = $(this).attr('data-name');
                                 // closeKitObject['row'] = $(this).parent().parent();
                             });
@@ -68,6 +73,7 @@ function sendKit(id) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 console.log('kit send registered');
+                showError("Kit spedito", "Il kit e' stato spedito", "success");
             }
         }
     );

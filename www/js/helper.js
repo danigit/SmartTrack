@@ -21,3 +21,26 @@ function httpPost(url, input, type) {
         httpReq.send(input);
     });
 }
+
+function showError(title, content, type) {
+    let elem = $('#error-popup');
+    if(type === 'success') {
+        elem.removeClass('error-popup');
+        elem.addClass('success-popup');
+        $('.error-title').text(title);
+        $('.error-content').text(content);
+        elem.popup();
+        elem.popup("open");
+
+    }else if(type === 'error'){
+        elem.removeClass('success-popup');
+        elem.addClass('error-popup');
+        $('.error-title').text(title);
+        $('.error-content').text(content);
+        elem.popup();
+        elem.popup("open");
+    }
+    setTimeout(function () {
+        elem.popup("close");
+    }, 2000);
+}

@@ -25,6 +25,12 @@ class Connection{
         $this->connection->close();
     }
 
+    /**
+     * Funzione che effettua il login
+     * @param $email
+     * @param $password
+     * @return db_error|mysqli_stmt
+     */
     function login( $email, $password ){
 
         $query = "SELECT user_id, password FROM users WHERE email=? ";
@@ -185,7 +191,9 @@ class Connection{
         $this->connection->autocommit(false);
         $errors = array();
 
-        $query = 'INSERT INTO kit (description, creation_date) VALUES (?, now())';
+        $now_date = date('Y-m-d H:i:s');
+        var_dump($now_date);
+        $query = "INSERT INTO kit (description, creation_date) VALUES (?, '$now_date')";
         $resultInsert = $this->parse_and_execute_insert($query, "s", $description);
 
 

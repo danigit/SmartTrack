@@ -16,8 +16,13 @@ function closeKit() {
         function (data) {
             if(data.result){
                 let tableRow;
+                let i = 0;
                 $.each(data[0], function (key, value) {
-                    tableRow = $('<tr></tr>');
+                    if((i++ % 2) === 0) {
+                        tableRow = $('<tr></tr>');
+                    }else{
+                        tableRow = $('<tr class="gray-background"></tr>')
+                    }
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey !== 'id'){
                             tableRow.append('<td class="font-x-large">' + innerValue + '</td>');
@@ -25,7 +30,7 @@ function closeKit() {
                             let tableCol = $('<td></td>');
                             let sendButton;
 
-                            sendButton = $('<a href="#" class="ui-btn font-small red-background white-color" data-name="' + value['cod'] + '">Rimuovi oggetto</a>').on('click', function () {
+                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + value['cod'] + '">Rimuovi oggetto</a>').on('click', function () {
                                 missingObjects.push($(this).attr('data-name'));
                                 $(this).parent().parent().remove();
                             });

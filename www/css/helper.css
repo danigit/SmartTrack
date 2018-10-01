@@ -22,19 +22,28 @@
     font-size: x-large!important;
 }
 
+.font-xx-large{
+    font-size: xx-large!important;
+}
+
+.line-height-3{
+    line-height: 3!important;
+}
+
 .no-margin{
     margin: 0!important;
 }
 .error-message{
+    width: 80% !important;
+    margin: auto!important;
     border: 1px solid #E52612;
     padding: 10px;
-    margin: 0 8px 0 0;
     border-radius: 7px;
 }
 
 .error-message span{
     color: #E52612;
-    font-size: medium;
+    font-size: small;
     text-shadow: none;
 }
 
@@ -80,4 +89,63 @@
 
 .margin-l-5{
     margin-left: 5%!important;
+}
+
+.border-right-no-color{
+    border-right: 1px solid!important;
+}
+
+.padding-10{
+    padding: 10px!important;
+}
+
+.border-radius-10{
+    border-radius: 10px!important;
+}
+
+.gray-background{
+    background-color: #DBDBDB!important;
+}
+
+.margin-bottom-5{
+    margin-bottom: 5px!important;
+}
+
+.border-orange-1{
+    border: 1px solid #ED653F!important;
+}
+
+.border-green-1{
+    border: 1px solid #5DB553!important;
+}
+
+.border-red-1{
+    border: 1px solid #E52612!important;
+}
+
+.box-shadow-bottom{
+    box-shadow: 0 5px 10px 0 #808080!important;
+}
+
+.error-popup{
+    border: 1px solid #FFFFFF!important;
+    background: #E52612!important;
+    color: white!important;
+    box-shadow: 0 0 10px 7px #E52612!important;
+}
+
+.success-popup{
+    border: 3px solid #5DB553!important;
+    background: #5DB553!important;
+    color: white!important;
+    box-shadow: 0 0 16px 7px #5DB553!important;
+}
+
+.error-title{
+    border-bottom: 3px solid #FFFFFF;
+    padding: 5px;
+}
+
+.error-content{
+    padding: 10px;
 }

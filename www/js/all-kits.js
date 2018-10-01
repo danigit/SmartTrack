@@ -9,8 +9,13 @@ function seeAllKits() {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 let tableRow;
+                let i = 0;
                 $.each(data[0], function (key, value) {
-                    tableRow = $('<tr></tr>');
+                    if((i++ % 2) === 0) {
+                        tableRow = $('<tr></tr>');
+                    }else{
+                        tableRow = $('<tr class="gray-background"></tr>')
+                    }
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'kit_id' || innerKey === 'description' || innerKey === 'creation_date') {

@@ -45,11 +45,11 @@ function createKit() {
                     typeListUl.empty();
 
                     $.each(data[0], function (key, value) {
-                        list  = $('<li></li>');
-                        let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn">Aggiungi al kit</a>').on('click', function () {
+                        list  = $('<li class="margin-bottom-5"></li>');
+                        let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 border-radius-10">Aggiungi al kit</a>').on('click', function () {
                             let cod = $(this).attr('id');
                             let isPresent = false;
-                            $(this).parent().remove();
+                            // $(this).parent().remove();
                             //controllo se l'oggetto e' gia' presente nella lista
                             $.each($('#object-list-ul').children(), function (key, value) {
                                 if ($(value).attr('id') === cod) {
@@ -59,8 +59,8 @@ function createKit() {
 
                             //se l'oggetto e' gia' presente non lo inserisco piu'
                             if(!isPresent){
-                                let objectList = $('<li id="' + cod + '" class="font-large"><a href="#" >' + value['name'] + '</a></li>');
-                                let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus">Elimina dal kit</a>').on('click', function () {
+                                let objectList = $('<li id="' + cod + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+                                let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                                     $(this).parent().remove();
                                 });
 
@@ -69,10 +69,13 @@ function createKit() {
                                 $('#object-list-ul').listview('refresh');
                                 $('.create-kit-button-submit a').removeClass('ui-disabled');
                                 $('.create-kit-button-suspend a').removeClass('ui-disabled');
+                            }else{
+                                showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
                             }
+
                         });
 
-                        list.append('<a href="#">' + value['name'] + '</a>');
+                        list.append('<a href="#" class="border-orange-1 border-radius-10">' + value['name'] + '</a>');
                         list.append(button);
                         typeListUl.append(list);
                     });
@@ -100,6 +103,8 @@ function controlRecoverKit() {
                 $('.create-kit-button-recover').removeClass('display-none');
                 $('#create-kit-submit').addClass('ui-disabled');
                 $('#type-select-fieldset div').addClass('ui-disabled');
+            }else{
+
             }
         }
     )
@@ -142,6 +147,7 @@ function createKitSubmit() {
                         $('.kit-description-container input').trigger('create');
                         $('#type-select option:eq(0)').prop('selected', true);
                         $('#type-select').selectmenu('refresh');
+                        $('#error-msg-create-kit').empty();
                     }else {
                         let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                         if ($('.error-message').length !== 0)
@@ -185,6 +191,7 @@ function createKitSuspend() {
                     $('.create-kit-button-suspend').addClass('display-none');
                     $('.create-kit-button-recover').removeClass('display-none');
                     $('#type-select-fieldset div').addClass('ui-disabled');
+                    $('.kit-description-container input').val("");
                 }else{
                     let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                     if ($('.error-message').length !== 0)
@@ -213,8 +220,8 @@ function createKitRecover() {
                     $('#type-select-fieldset div').removeClass('ui-disabled');
 
                     $.each(data[0], function (key, value) {
-                        let objectList = $('<li id="' + value['cod'] + '" class="font-large"><a href="#" >' + value['name'] + '</a></li>');
-                        let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus">Elimina dal kit</a>').on('click', function () {
+                        let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+                        let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                             $(this).parent().remove();
                         });
                         objectList.append(deleteElem);
