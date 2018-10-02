@@ -33,6 +33,7 @@
 .no-margin{
     margin: 0!important;
 }
+
 .error-message{
     width: 80% !important;
     margin: auto!important;
@@ -45,10 +46,6 @@
     color: #E52612;
     font-size: small;
     text-shadow: none;
-}
-
-#error-msg-create-kit{
-    margin: 0 100px;
 }
 
 .blue-color{
@@ -148,4 +145,16 @@
 
 .error-content{
     padding: 10px;
+}
+
+.float-left{
+    float: left;
+}
+
+.float-right{
+    float: right;
+}
+
+.red-color{
+    color: #ED653F!important;
 }

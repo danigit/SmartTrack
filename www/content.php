@@ -69,8 +69,10 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
-                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>
+<!--                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>-->
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
+                        <li><a href="#" id="insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
+                        <li><a href="#" id="insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
@@ -261,6 +263,46 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 <p class="error-content"></p>
             </div>
 
+            <div id="insert-type-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
+                <form data-ajax="false" id="insert-type-form">
+                    <h3>Inserimento tipologia</h3>
+
+                    <fieldset id="input-type-fielset">
+                        <div class="input-type-container">
+                            <input class="" type="text" name="type" id="type" placeholder="Inserisci tipologia">
+                        </div>
+                        <div class="input-type-container">
+                            <input type="submit" id="submit-input-type" data-inline="true" class="mdl-typography--font-bold" value="AGGIUNGI TIPOLOGIA">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div id="insert-object-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
+                <form data-ajax="false" id="insert-object-form">
+                    <h3>Inserimento oggetto</h3>
+
+                    <fieldset id="input-object-fielset">
+                        <select id="object-type-select" data-inset="true" data-icon="carat-d">
+                            <option>Seleziona una tipologia...</option>
+                        </select>
+
+                        <div class="input-type-container">
+                            <input class="" type="text" name="object" id="object" placeholder="Inserisci descrizione oggetto">
+                        </div>
+
+                        <div id="insert-object-message"></div>
+
+                        <div class="input-type-container">
+                            <input type="submit" id="submit-input-object" data-inline="true" class="mdl-typography--font-bold float-left" value="AGGIUNGI OGGETTO">
+                        </div>
+                        <div class="input-type-container">
+                            <input type="button" id="close-input-object" data-inline="true" class="mdl-typography--font-bold float-right red-color" value="CHIUDI">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
             <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
                 <div data-role="navbar" class="footer-navbar">
                     <ul class="create-kit-footer-ul">
@@ -278,5 +320,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
     <script src="js/logout.js"></script>
     <script src="js/close-kit.js"></script>
     <script src="js/all-kits.js"></script>
+    <script src="js/insert-type.js"></script>
+    <script src="js/insert-object.js"></script>
     </body>
 </html>

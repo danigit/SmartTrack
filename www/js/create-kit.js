@@ -49,6 +49,7 @@ function createKit() {
                         let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 border-radius-10">Aggiungi al kit</a>').on('click', function () {
                             let cod = $(this).attr('id');
                             let isPresent = false;
+                            //TODO prendo l'oggetto eliminato da qui e lo aggiungo alla lista degli oggetti iniziale
                             // $(this).parent().remove();
                             //controllo se l'oggetto e' gia' presente nella lista
                             $.each($('#object-list-ul').children(), function (key, value) {
@@ -120,7 +121,9 @@ function createKitSubmit() {
 
         //controllo se il kit ha una descrizione
         if($('#description').val() === ""){
-            let message = $('<div class="center-text error-message"><span>Inserire una descrizione per il kit</span></div>');
+            $('html, body').animate({scrollTop: $(document).height()}, 1000);
+            $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
+            let message = $('<div class="error-message"><span>Inserire una descrizione per il kit</span></div>');
             if ($('.error-message').length !== 0)
                 $('#error-msg-create-kit').find('.error-message').remove();
             $('#error-msg-create-kit').append(message);
@@ -141,13 +144,17 @@ function createKitSubmit() {
                 function (data) {
                     if (data.result) {
                         //TODO mostrare il messaggio che il kit e' statto creato e ripristinare la pagina
-                        $('#object-list-ul').empty();
-                        $('#type-list-ul').empty();
-                        $('.kit-description-container input').val('');
-                        $('.kit-description-container input').trigger('create');
-                        $('#type-select option:eq(0)').prop('selected', true);
-                        $('#type-select').selectmenu('refresh');
-                        $('#error-msg-create-kit').empty();
+                        // $('#object-list-ul').empty();
+                        // $('#type-list-ul').empty();
+                        // $('.kit-description-container input').val('');
+                        // $('.kit-description-container input').trigger('create');
+                        // $('#type-select option:eq(0)').prop('selected', true);
+                        // $('#type-select').selectmenu('refresh');
+                        // $('#error-msg-create-kit').empty();
+                        // $('.create-kit-button-submit a').addClass('ui-disabled');
+                        // $('.create-kit-button-suspend a').addClass('ui-disabled');
+                        // $('#create-kit-fielset input').css('border-bottom', '1px solid #6AB8C1');
+                        document.location.href = 'content.php';
                     }else {
                         let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                         if ($('.error-message').length !== 0)
@@ -183,15 +190,16 @@ function createKitSuspend() {
             function (data) {
                 if (data.result) {
                     //ripristino la pagina
-                    $('#object-list-ul').empty();
-                    $('#type-list-ul').empty();
-                    $('#type-select option:eq(0)').prop('selected', true);
-                    $('#type-select').selectmenu('refresh');
-                    $('#create-kit-submit').addClass('ui-disabled');
-                    $('.create-kit-button-suspend').addClass('display-none');
-                    $('.create-kit-button-recover').removeClass('display-none');
-                    $('#type-select-fieldset div').addClass('ui-disabled');
-                    $('.kit-description-container input').val("");
+                    // $('#object-list-ul').empty();
+                    // $('#type-list-ul').empty();
+                    // $('#type-select option:eq(0)').prop('selected', true);
+                    // $('#type-select').selectmenu('refresh');
+                    // $('#create-kit-submit').addClass('ui-disabled');
+                    // $('.create-kit-button-suspend').addClass('display-none');
+                    // $('.create-kit-button-recover').removeClass('display-none');
+                    // $('#type-select-fieldset div').addClass('ui-disabled');
+                    // $('.kit-description-container input').val("");
+                    document.location.href = 'content.php';
                 }else{
                     let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                     if ($('.error-message').length !== 0)

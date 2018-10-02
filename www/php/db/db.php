@@ -92,7 +92,7 @@ class Connection{
 
         while ($row = mysqli_fetch_assoc($result)) {
             $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'], "is_sent" => $row['is_sent'],
-                "creation_date" => date('d/m/Y', strtotime($row['creation_date'])), "spedisci" => $row['kit_id'],
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), "spedisci" => $row['kit_id'],
                 "chiudi" => $row['kit_id']);
         }
 
@@ -106,7 +106,7 @@ class Connection{
      * @return array|db_error
      */
     function get_types(){
-        $query = "SELECT DISTINCT obj_type FROM object";
+        $query = "SELECT type_id, description FROM object_type";
 
         $result = $this->connection->query($query);
 
@@ -116,7 +116,7 @@ class Connection{
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('type' => $row['obj_type']);
+            $result_array[] = array('id' => $row['type_id'], 'type' => $row['description']);
         }
 
         $result->close();
@@ -192,7 +192,6 @@ class Connection{
         $errors = array();
 
         $now_date = date('Y-m-d H:i:s');
-        var_dump($now_date);
         $query = "INSERT INTO kit (description, creation_date) VALUES (?, '$now_date')";
         $resultInsert = $this->parse_and_execute_insert($query, "s", $description);
 
@@ -327,7 +326,8 @@ class Connection{
      * @return db_error|int - il valore restituito in caso di errore o di successo
      */
     function close_kit($id){
-        $query = "UPDATE kit SET closing_date = now() WHERE kit_id = ?";
+        $now_date = date('Y-m-d H:i:s');
+        $query = "UPDATE kit SET closing_date = '$now_date' WHERE kit_id = ?";
 
         $resultUpdate = $this->parse_and_execute_select($query, "i", $id);
 
@@ -356,7 +356,7 @@ class Connection{
 
         while ($row = mysqli_fetch_assoc($result)) {
             $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
-                "creation_date" => date('d/m/Y', strtotime($row['creation_date'])), "closing_date" => $row['closing_date'],);
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), "closing_date" => $row['closing_date'],);
         }
 
         $result->close();
@@ -404,6 +404,45 @@ class Connection{
         $this->connection->commit();
 
         return $this->connection->affected_rows;
+    }
+
+    /**
+     * Funzione che inserisce un nuovo tipo di oggetto
+     * @param $type - la descrizione del tipo
+     * @return bool|db_error|mixed - un errore oppure l'id del tipo inserito
+     */
+    function insert_type($type){
+        var_dump($type);
+        $query = 'INSERT INTO object_type (description) VALUES (?)';
+        $result = $this->parse_and_execute_insert($query, "s", $type);
+
+        if ($result instanceof db_error) {
+            return $result;
+        } else if ($result) {
+            return $this->connection->insert_id;
+        }
+
+        return new db_error(db_error::$ERROR_ON_REGISTER);
+    }
+
+    /**
+     * Funzione che inserisce un nuovo oggetto
+     * @param $type - il tipo dell'oggetto
+     * @param $object - la descrizione dell'oggetto
+     * @return bool|db_error|mixed - un errore oppure l'id del tipo inserito
+     */
+    function insert_object($type, $object){
+        var_dump($type);
+        $query = 'INSERT INTO object (type_id, name) VALUES (?, ?)';
+        $result = $this->parse_and_execute_insert($query, "ss", $type, $object);
+
+        if ($result instanceof db_error) {
+            return $result;
+        } else if ($result) {
+            return $this->connection->insert_id;
+        }
+
+        return new db_error(db_error::$ERROR_ON_REGISTER);
     }
 
     /**
