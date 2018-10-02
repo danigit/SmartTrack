@@ -320,7 +320,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div id="view-types-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
                 <div id="view-types-container">
                     <h3>Tipologie di oggetti</h3>
-                    <ul id="view-types-ul">
+                    <ul id="view-types-ul" data-filter="true">
 
                     </ul>
                 </div>
@@ -329,7 +329,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div id="view-objects-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
                 <div id="view-objects-container">
                     <h3>Lista degli oggetti</h3>
-                    <ul id="view-objects-ul">
+                    <ul id="view-objects-ul" data-filter="true">
 
                     </ul>
                 </div>

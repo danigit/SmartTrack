@@ -1,6 +1,7 @@
 $('#insert-type').on('click', function () {
     console.log('insert type pressed');
 
+    $('#type').val("");
     $('#insert-type-menu').popup('close');
     setTimeout(function () {
         $('#insert-type-popup').popup();

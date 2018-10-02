@@ -113,7 +113,7 @@ thead tr{
 }
 
 #view-types-ul{
-    padding: 40px 40px 10px 40px;
+    padding: 0 40px 10px 40px;
 }
 
 #view-types-ul li{
@@ -122,6 +122,10 @@ thead tr{
     border: 2px solid #FFFFFF;
     margin-bottom: 3px;
     border-radius: 10px;
+}
+
+#view-types-popup-popup .ui-input-search{
+    margin-top: 40px;
 }
 
 #view-objects-popup{
@@ -142,7 +146,7 @@ thead tr{
 }
 
 #view-objects-ul{
-    padding: 40px 40px 10px 40px;
+    padding: 0 40px 10px 40px;
 }
 
 #view-objects-ul li{
@@ -153,6 +157,9 @@ thead tr{
     border-radius: 10px;
 }
 
+#view-objects-popup-popup .ui-input-search{
+    margin-top: 40px;
+}
 
 /*end main page*/
 
