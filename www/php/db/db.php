@@ -125,12 +125,35 @@ class Connection{
     }
 
     /**
+     * Funzione che recupera tutti gli oggetti
+     * @return array|db_error
+     */
+    function get_objects(){
+        $query = "SELECT name FROM object";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GET_TYPES);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('name' => $row['name']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    /**
      * Funzione che recupera gli oggetti del tipo passato come parametro
      * @param $type - il tipo degli oggetti da recuperare
      * @return array|db_error|mysqli_stmt - l'array degli oggetti recuperati o un errore
      */
     function get_objects_by_type($type){
-        $query = "SELECT cod, name FROM object WHERE obj_type=? AND kit_id IS NULL";
+        $query = "SELECT cod, name FROM object WHERE type_id=? AND kit_id IS NULL";
         $statement = $this->parse_and_execute_select($query, "s", $type);
 
         if ($statement instanceof db_error)

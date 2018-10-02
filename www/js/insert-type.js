@@ -1,6 +1,14 @@
 $('#insert-type').on('click', function () {
-   $('#insert-type-popup').popup();
-   $('#insert-type-popup').popup('open');
+    console.log('insert type pressed');
+
+    $('#insert-type-menu').popup('close');
+    setTimeout(function () {
+        $('#insert-type-popup').popup();
+        $('#insert-type-popup').popup('open');
+    }, 500);
+   // if($('#insert-type-popup') && !$('#insert-type-popup').closed){
+   //     alert('not closed');
+   // }
 });
 
 $('#submit-input-type').on('click', function (e) {

@@ -1,4 +1,5 @@
 $('#insert-object').on('click', function () {
+    $('#insert-object-menu').popup('close');
     $('#object-type-select').children('option:not(:first)').remove();
 
     let getTypesInsertObjectPromise = httpPost('php/ajax/get_types.php', '', 'GET');
@@ -15,10 +16,12 @@ $('#insert-object').on('click', function () {
                 $('#object-type-select').append(select);
 
 
-                $('#insert-object-popup').popup();
-                $('#object-type-select').listview();
-                $('#insert-object-popup').popup('open');
-                $('#object-type-select').listview('refresh');
+                setTimeout(function () {
+                    $('#insert-object-popup').popup();
+                    $('#insert-object-popup').popup('open');
+                    $('#object-type-select').listview();
+                    $('#object-type-select').listview('refresh');
+                }, 500);
             } else {
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                 if ($('.error-message').length !== 0)

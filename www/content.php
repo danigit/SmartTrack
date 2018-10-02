@@ -71,8 +71,8 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
 <!--                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>-->
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
-                        <li><a href="#" id="insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
-                        <li><a href="#" id="insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
+                        <li><a href="#insert-type-menu" data-rel="popup" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
+                        <li><a href="#insert-object-menu" data-rel="popup" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
@@ -94,6 +94,20 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
                     </tbody>
                 </table>
+            </div>
+
+            <div data-role="popup" id="insert-type-menu" data-history="false">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;">
+                    <li><a href="#" id="insert-type">Inserisci tipologia</a></li>
+                    <li><a href="#" id="view-types">Visualizza le tipologie</a></li>
+                </ul>
+            </div>
+
+            <div data-role="popup" id="insert-object-menu" data-history="false">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;">
+                    <li><a href="#" id="insert-object">Inserisci oggetto</a></li>
+                    <li><a href="#" id="view-objects">Visualizza oggetti</a></li>
+                </ul>
             </div>
         </div>
 
@@ -303,6 +317,24 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </form>
             </div>
 
+            <div id="view-types-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
+                <div id="view-types-container">
+                    <h3>Tipologie di oggetti</h3>
+                    <ul id="view-types-ul">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div id="view-objects-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
+                <div id="view-objects-container">
+                    <h3>Lista degli oggetti</h3>
+                    <ul id="view-objects-ul">
+
+                    </ul>
+                </div>
+            </div>
+
             <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
                 <div data-role="navbar" class="footer-navbar">
                     <ul class="create-kit-footer-ul">
@@ -322,5 +354,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
     <script src="js/all-kits.js"></script>
     <script src="js/insert-type.js"></script>
     <script src="js/insert-object.js"></script>
+    <script src="js/view-types.js"></script>
+    <script src="js/view-objects.js"></script>
     </body>
 </html>

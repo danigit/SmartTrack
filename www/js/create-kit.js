@@ -16,7 +16,7 @@ function createKit() {
                 let select = '';
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
-                    select += '<option>' + value['type'] + '</option>';
+                    select += '<option id="' + value['id'] + '">' + value['type'] + '</option>';
                 });
                 typesSelect.append(select);
             } else {
@@ -29,7 +29,7 @@ function createKit() {
     );
 
     typesSelect.on('change', function () {
-        selectedType = this.value;
+        selectedType = $('#type-select').find(':selected').attr('id');
 
         let getObjectsForm = new FormData();
         getObjectsForm.append('type', selectedType);
