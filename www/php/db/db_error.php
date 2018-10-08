@@ -22,6 +22,7 @@ class db_error{
     public static $ERROR_ON_CREATING_KIT            = 18;
     public static $ERROR_ON_GETTING_KIT             = 19;
     public static $WRONG_NUMBER_OF_PARAMETERS       = 32;
+    public static $DELETE_TYPE_ERROR                = 33;
 
     private $error;
 

@@ -280,7 +280,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                     <ul class="box-shadow-bottom">
                         <li><a href="#" id="crea-kit" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
                         <li><a href="#" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
-                        <li><a href="#" class="ui-btn font-large blue-background white-color">Cancella tipologia</a></li>
                     </ul>
                 </div>
             </div>

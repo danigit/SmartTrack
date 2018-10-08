@@ -455,7 +455,6 @@ class Connection{
      * @return bool|db_error|mixed - un errore oppure l'id del tipo inserito
      */
     function insert_object($type, $object){
-        var_dump($type);
         $query = 'INSERT INTO object (type_id, name) VALUES (?, ?)';
         $result = $this->parse_and_execute_insert($query, "ss", $type, $object);
 
@@ -468,6 +467,15 @@ class Connection{
         return new db_error(db_error::$ERROR_ON_REGISTER);
     }
 
+    function delete_type($id){
+        $query = "DELETE FROM object_type WHERE type_id = ?";
+        $statement = $this->parse_and_execute_select($query, "s", $id);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
+    }
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati
