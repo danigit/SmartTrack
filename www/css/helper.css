@@ -56,6 +56,9 @@
     color: #FFFFFF!important;
 }
 
+.orange-color{
+    color: #ED653F;
+}
 .display-none {
     display: none !important;
 }
@@ -157,4 +160,13 @@
 
 .red-color{
     color: #ED653F!important;
+}
+
+.margin-lr-auto{
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.width-90{
+    width: 90% !important;
 }

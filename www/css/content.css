@@ -443,3 +443,25 @@ thead tr{
 }
 
 /*end insert object*/
+
+
+/*insert type*/
+
+.list-type-container{
+    margin: 50px 50px 20px 50px;
+}
+
+.list-type-container .ui-input-search{
+    border: 1px solid #6AB8C1!important;
+}
+
+.list-type-label{
+    margin: 50px auto auto 50px;
+}
+
+
+
+
+
+
+/*end insert type*/

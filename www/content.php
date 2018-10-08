@@ -71,8 +71,8 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
 <!--                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>-->
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
-                        <li><a href="#insert-type-menu" data-rel="popup" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
-                        <li><a href="#insert-object-menu" data-rel="popup" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
+                        <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
+                        <li><a href="#insert-object" data-rel="popup" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
@@ -94,20 +94,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
                     </tbody>
                 </table>
-            </div>
-
-            <div data-role="popup" id="insert-type-menu" data-history="false">
-                <ul data-role="listview" data-inset="true" style="min-width:210px;">
-                    <li><a href="#" id="insert-type">Inserisci tipologia</a></li>
-                    <li><a href="#" id="view-types">Visualizza le tipologie</a></li>
-                </ul>
-            </div>
-
-            <div data-role="popup" id="insert-object-menu" data-history="false">
-                <ul data-role="listview" data-inset="true" style="min-width:210px;">
-                    <li><a href="#" id="insert-object">Inserisci oggetto</a></li>
-                    <li><a href="#" id="view-objects">Visualizza oggetti</a></li>
-                </ul>
             </div>
         </div>
 
@@ -272,69 +258,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
 
-            <div id="error-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">
-                <p class="error-title"></p>
-                <p class="error-content"></p>
-            </div>
-
-            <div id="insert-type-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
-                <form data-ajax="false" id="insert-type-form">
-                    <h3>Inserimento tipologia</h3>
-
-                    <fieldset id="input-type-fielset">
-                        <div class="input-type-container">
-                            <input class="" type="text" name="type" id="type" placeholder="Inserisci tipologia">
-                        </div>
-                        <div class="input-type-container">
-                            <input type="submit" id="submit-input-type" data-inline="true" class="mdl-typography--font-bold" value="AGGIUNGI TIPOLOGIA">
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-
-            <div id="insert-object-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
-                <form data-ajax="false" id="insert-object-form">
-                    <h3>Inserimento oggetto</h3>
-
-                    <fieldset id="input-object-fielset">
-                        <select id="object-type-select" data-inset="true" data-icon="carat-d">
-                            <option>Seleziona una tipologia...</option>
-                        </select>
-
-                        <div class="input-type-container">
-                            <input class="" type="text" name="object" id="object" placeholder="Inserisci descrizione oggetto">
-                        </div>
-
-                        <div id="insert-object-message"></div>
-
-                        <div class="input-type-container">
-                            <input type="submit" id="submit-input-object" data-inline="true" class="mdl-typography--font-bold float-left" value="AGGIUNGI OGGETTO">
-                        </div>
-                        <div class="input-type-container">
-                            <input type="button" id="close-input-object" data-inline="true" class="mdl-typography--font-bold float-right red-color" value="CHIUDI">
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-
-            <div id="view-types-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
-                <div id="view-types-container">
-                    <h3>Tipologie di oggetti</h3>
-                    <ul id="view-types-ul" data-filter="true">
-
-                    </ul>
-                </div>
-            </div>
-
-            <div id="view-objects-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">
-                <div id="view-objects-container">
-                    <h3>Lista degli oggetti</h3>
-                    <ul id="view-objects-ul" data-filter="true">
-
-                    </ul>
-                </div>
-            </div>
-
             <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
                 <div data-role="navbar" class="footer-navbar">
                     <ul class="create-kit-footer-ul">
@@ -346,15 +269,95 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             </div><!-- /footer -->
         </div>
 
-    <script src="js/helper.js"></script>
-    <script src="js/content.js"></script>
-    <script src="js/create-kit.js"></script>
-    <script src="js/logout.js"></script>
-    <script src="js/close-kit.js"></script>
-    <script src="js/all-kits.js"></script>
-    <script src="js/insert-type.js"></script>
-    <script src="js/insert-object.js"></script>
-    <script src="js/view-types.js"></script>
-    <script src="js/view-objects.js"></script>
+<!--        <div id="error-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">-->
+<!--            <p class="error-title"></p>-->
+<!--            <p class="error-content"></p>-->
+<!--        </div>-->
+
+        <div data-role="page" id="insert-type">
+            <div class="navbar-container">
+                <div data-role="navbar">
+                    <ul class="box-shadow-bottom">
+                        <li><a href="#" id="crea-kit" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
+                        <li><a href="#" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
+                        <li><a href="#" class="ui-btn font-large blue-background white-color">Cancella tipologia</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="list-type-label">
+                <p class="font-x-large orange-color">Lista delle tipologie disponibili</p>
+            </div>
+            <div class="list-type-container">
+                <ul id="see-type-list-ul" data-filter="true">
+
+                </ul>
+<!--                <form data-ajax="false" id="insert-type-form">-->
+<!--                    <h3>Inserimento tipologia</h3>-->
+<!---->
+<!--                    <fieldset id="input-type-fielset">-->
+<!--                        <div class="input-type-container">-->
+<!--                            <input class="" type="text" name="type" id="type" placeholder="Inserisci tipologia">-->
+<!--                        </div>-->
+<!--                        <div class="input-type-container">-->
+<!--                            <input type="submit" id="submit-input-type" data-inline="true" class="mdl-typography--font-bold" value="AGGIUNGI TIPOLOGIA">-->
+<!--                        </div>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+            </div>
+        </div>
+
+<!--        <div id="insert-object-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
+<!--            <form data-ajax="false" id="insert-object-form">-->
+<!--                <h3>Inserimento oggetto</h3>-->
+<!---->
+<!--                <fieldset id="input-object-fielset">-->
+<!--                    <select id="object-type-select" data-inset="true" data-icon="carat-d">-->
+<!--                        <option>Seleziona una tipologia...</option>-->
+<!--                    </select>-->
+<!---->
+<!--                    <div class="input-type-container">-->
+<!--                        <input class="" type="text" name="object" id="object" placeholder="Inserisci descrizione oggetto">-->
+<!--                    </div>-->
+<!---->
+<!--                    <div id="insert-object-message"></div>-->
+<!---->
+<!--                    <div class="input-type-container">-->
+<!--                        <input type="submit" id="submit-input-object" data-inline="true" class="mdl-typography--font-bold float-left" value="AGGIUNGI OGGETTO">-->
+<!--                    </div>-->
+<!--                    <div class="input-type-container">-->
+<!--                        <input type="button" id="close-input-object" data-inline="true" class="mdl-typography--font-bold float-right red-color" value="CHIUDI">-->
+<!--                    </div>-->
+<!--                </fieldset>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        <div id="view-types-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
+<!--            <div id="view-types-container">-->
+<!--                <h3>Tipologie di oggetti</h3>-->
+<!--                <ul id="view-types-ul" data-filter="true">-->
+<!---->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--        <div id="view-objects-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
+<!--            <div id="view-objects-container">-->
+<!--                <h3>Lista degli oggetti</h3>-->
+<!--                <ul id="view-objects-ul" data-filter="true">-->
+<!---->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <script src="js/helper.js"></script>
+        <script src="js/content.js"></script>
+        <script src="js/create-kit.js"></script>
+        <script src="js/logout.js"></script>
+        <script src="js/close-kit.js"></script>
+        <script src="js/all-kits.js"></script>
+        <script src="js/insert-type.js"></script>
+        <script src="js/insert-object.js"></script>
+        <script src="js/view-types.js"></script>
+        <script src="js/view-objects.js"></script>
     </body>
 </html>

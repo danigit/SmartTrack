@@ -42,6 +42,10 @@ let app = {
         $('#close-kit').on('pagebeforeshow', function () {
             closeKit();
         });
+
+        $('#insert-type').on('pagebeforeshow', function () {
+            seeTypes();
+        });
     }
 };
 
