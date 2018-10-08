@@ -30,7 +30,7 @@ function closeKit() {
                             let tableCol = $('<td></td>');
                             let sendButton;
 
-                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + value['cod'] + '">Rimuovi oggetto</a>').on('click', function () {
+                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').on('click', function () {
                                 missingObjects.push($(this).attr('data-name'));
                                 $(this).parent().parent().remove();
                             });

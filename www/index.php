@@ -72,7 +72,7 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
                     <form data-ajax="false" id="login-form">
                         <fieldset id="login-fielset">
                             <div class="input-container">
-                                <input class="" type="text" name="email" id="email" placeholder="Inserisci email">
+                                <input class="" type="text" name="username" id="username" placeholder="Inserisci username">
                             </div>
                             <div class="input-container">
                                 <input class="" type="password" name="password" id="password" placeholder="Inserisci password">

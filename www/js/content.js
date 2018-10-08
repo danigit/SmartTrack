@@ -42,7 +42,7 @@ function populateOpenKits() {
                             tableRow.append(tableCol);
                         }else if(innerKey === 'chiudi'){
                             let tableCol = $('<td></td>');
-                            let sendButton = $('<a href="#close-kit?name=daniel&surname=surpanu" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
+                            let sendButton = $('<a href="#close-kit" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
                                 closeKitObject['id'] = $(this).attr('data-name');
                                 // closeKitObject['row'] = $(this).parent().parent();
                             });

@@ -31,10 +31,10 @@ class Connection{
      * @param $password
      * @return db_error|mysqli_stmt
      */
-    function login( $email, $password ){
+    function login( $username, $password ){
 
-        $query = "SELECT user_id, password FROM users WHERE email=? ";
-        $statement = $this->parse_and_execute_select($query, "s", $email);
+        $query = "SELECT user_id, password FROM users WHERE username=? ";
+        $statement = $this->parse_and_execute_select($query, "s", $username);
 
         if ($statement instanceof db_error)
             return $statement;
@@ -181,7 +181,7 @@ class Connection{
      * @return array|db_error|mysqli_stmt - l'array degli oggetti recuperati o un errore
      */
     function get_objects_by_kit($id){
-        $query = "SELECT cod, obj_type, name FROM object WHERE kit_id=?";
+        $query = "SELECT cod, description, name FROM object JOIN object_type ON object.type_id = object_type.type_id WHERE kit_id=?";
         $statement = $this->parse_and_execute_select($query, "s", $id);
 
         if ($statement instanceof db_error)
@@ -195,7 +195,7 @@ class Connection{
         $result_array = array();
 
         while ($row = $result->fetch_array()) {
-            $result_array[] = array("cod" => $row['cod'], "obj_type" => $row['obj_type'], "name" => $row['name'], "id" => $id);
+            $result_array[] = array("cod" => $row['cod'], "obj_type" => $row['description'], "name" => $row['name'], "id" => $id);
         }
 
         $statement->close();

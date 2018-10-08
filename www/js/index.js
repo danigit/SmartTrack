@@ -39,7 +39,7 @@ let app = {
             seeAllKits();
         });
 
-        $('#close-kit').on('pageinit', function () {
+        $('#close-kit').on('pagebeforeshow', function () {
             closeKit();
         });
     }

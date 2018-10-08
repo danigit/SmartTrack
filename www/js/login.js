@@ -7,7 +7,7 @@ submitLogin.on('click', function (event) {
     event.preventDefault();
 
     let logingFormInput = new FormData();
-    logingFormInput.append('email', $('#email').val());
+    logingFormInput.append('username', $('#username').val());
     logingFormInput.append('password', $('#password').val());
 
     let loginPromise = httpPost('php/ajax/login.php', logingFormInput, "POST");
