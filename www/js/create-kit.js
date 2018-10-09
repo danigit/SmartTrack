@@ -52,7 +52,7 @@ function createKit() {
                 }
             }
         )
-    })
+    });
 
     createKitSubmit();
     createKitSuspend();

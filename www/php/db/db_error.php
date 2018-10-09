@@ -23,6 +23,7 @@ class db_error{
     public static $ERROR_ON_GETTING_KIT             = 19;
     public static $WRONG_NUMBER_OF_PARAMETERS       = 32;
     public static $DELETE_TYPE_ERROR                = 33;
+    public static $ERROR_ON_UPDATING_TYPE           = 33;
 
     private $error;
 

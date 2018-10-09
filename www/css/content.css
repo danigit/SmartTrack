@@ -296,16 +296,16 @@ thead tr{
 /*end create kig*/
 
 /*insert type*/
-#insert-type-popup{
-    width: 500px;
-    background-color: #6AB8C1;
+.insert-popup{
+    width: 500px!important;
+    background-color: #6AB8C1!important;
     border: none!important;
     border-radius: 20px!important;
     box-shadow: 0 0 20px 4px #6AB8C1!important;
     padding: 30px!important;
 }
 
-#insert-type-popup h3{
+.insert-popup h3{
     border-bottom: 2px solid #FFFFFF;
     font-size: large!important;
     text-align: center!important;
@@ -313,34 +313,34 @@ thead tr{
     margin: auto auto 40px auto!important;
 }
 
-#input-type-fielset input{
-    width: 98%;
+#input-type-fielset .ui-input-text{
     background: #6AB8C1;
     border: 3px solid white;
     border-radius: 10px;
-    height: 32px;
-    text-align: center;
     color: #FFFFFF;
-    margin-bottom: 30px;
 }
 
 #input-type-fielset input:focus{
     outline: none!important;
 }
 
-#input-type-fielset input[type=submit]{
-    width: 100%;
-    background: #FFFFFF;
-    color: #6AB8C1;
-    border: 1px solid white;
-    border-radius: 10px;
-    height: 38px;
-    font-size: large;
-    line-height: 1!important;
-    text-align: center;
-    margin-bottom: 30px;
+#close-type{
+    margin-right: 0;
 }
 
+#close-type #add-type:hover{
+    background: none!important;
+}
+
+#update-type-form #update-type-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
+}
 /*end insert type*/
 
 /*insert object*/
@@ -416,7 +416,7 @@ thead tr{
     border: 2px solid #3dc235!important;
     border-radius: 10px!important;
     width: 80% !important;
-    margin: auto auto 30px auto!important;
+    margin: 10px auto auto auto!important;
 }
 
 .insert-object-success p{
@@ -431,7 +431,7 @@ thead tr{
     border: 2px solid #E52612!important;
     border-radius: 10px!important;
     width: 80% !important;
-    margin: auto auto 30px auto!important;
+    margin: 10px auto auto auto!important;
 }
 
 .insert-object-error p{

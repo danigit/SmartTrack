@@ -278,32 +278,67 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#" id="crea-kit" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
-                        <li><a href="#" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
+                        <li><a href="#insert-type-popup" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
+                        <li><a href="#update-type-popup" id="update-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="list-type-label">
-                <p class="font-x-large orange-color">Lista delle tipologie disponibili</p>
-            </div>
-            <div class="list-type-container">
-                <ul id="see-type-list-ul" data-filter="true">
 
-                </ul>
-<!--                <form data-ajax="false" id="insert-type-form">-->
-<!--                    <h3>Inserimento tipologia</h3>-->
-<!---->
-<!--                    <fieldset id="input-type-fielset">-->
-<!--                        <div class="input-type-container">-->
-<!--                            <input class="" type="text" name="type" id="type" placeholder="Inserisci tipologia">-->
-<!--                        </div>-->
-<!--                        <div class="input-type-container">-->
-<!--                            <input type="submit" id="submit-input-type" data-inline="true" class="mdl-typography--font-bold" value="AGGIUNGI TIPOLOGIA">-->
-<!--                        </div>-->
-<!--                    </fieldset>-->
-<!--                </form>-->
+            <div data-role="content">
+                <div class="list-type-label">
+                    <p class="font-x-large orange-color">Lista delle tipologie disponibili</p>
+                </div>
+                <div class="list-type-container">
+                    <ul id="see-type-list-ul" data-filter="true" data-inset="true">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div id="insert-type-popup"  class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
+                <form data-ajax="false" id="insert-type-form">
+                    <h3>Inserimento tipologia</h3>
+
+                    <fieldset id="input-type-fielset">
+                        <div class="input-type-container">
+                            <input class="font-large center-text" type="text" name="type" id="type" placeholder="Inserisci descrizione tipologia">
+                        </div>
+
+                        <div id="insert-type-message"></div>
+
+                        <div class="ui-grid-a ui-responsive">
+                            <div class="ui-block-a"><a href="#" id="add-type" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIUNGI TIPOLOGIA</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div id="update-type-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
+                <form data-ajax="false" id="update-type-form">
+                    <h3>Aggiornamento tipologia</h3>
+
+                    <fieldset id="input-type-fielset">
+
+                        <select id="update-type-select" data-inset="true">
+                            <option>Seleziona una tipologia...</option>
+                        </select>
+
+                        <div class="input-type-container">
+                            <input class="font-large center-text" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione tipologia">
+                        </div>
+
+                        <div id="update-type-message"></div>
+
+                        <div class="ui-grid-a ui-responsive">
+                            <div class="ui-block-a"><a href="#" id="update-type" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA TIPOLOGIA</a></div>
+<!--                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>-->
+                        </div>
+                    </fieldset>
+                </form>
             </div>
         </div>
+
 
 <!--        <div id="insert-object-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
 <!--            <form data-ajax="false" id="insert-object-form">-->

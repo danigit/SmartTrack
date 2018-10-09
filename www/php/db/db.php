@@ -467,6 +467,11 @@ class Connection{
         return new db_error(db_error::$ERROR_ON_REGISTER);
     }
 
+    /**
+     * Funzione che elimina il tipo identificato dall'id passato come parametro
+     * @param $id - l'id del tipo
+     * @return bool|db_error|mysqli_stmt
+     */
     function delete_type($id){
         $query = "DELETE FROM object_type WHERE type_id = ?";
         $statement = $this->parse_and_execute_select($query, "s", $id);
@@ -475,6 +480,20 @@ class Connection{
             return $statement;
 
         return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
+    }
+
+    function update_type($id, $type){
+        $query = "UPDATE object_type SET description = ? WHERE type_id = ?";
+
+        $resultUpdate = $this->parse_and_execute_select($query, "si", $type, $id);
+
+        if($resultUpdate instanceof db_error)
+            return $resultUpdate;
+
+        if($resultUpdate === false)
+            return new db_error(db_error::$ERROR_ON_UPDATING_TYPE);
+
+        return $this->connection->affected_rows;
     }
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
