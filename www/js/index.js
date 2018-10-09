@@ -46,6 +46,10 @@ let app = {
         $('#insert-type').on('pagebeforeshow', function () {
             seeTypes();
         });
+
+        $('#insert-object').on('pagebeforeshow', function () {
+            seeObjects();
+        });
     }
 };
 

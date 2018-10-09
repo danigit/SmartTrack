@@ -1,25 +1,38 @@
-$('#view-objects').on('click', function () {
-    $('#insert-object-menu').popup('close');
-    $('#view-objects-ul').empty();
 
-    let viewObjectsPromise = httpPost('php/ajax/get_objects.php', '', 'GET');
+function seeObjects() {
+    $('#see-object-list-ul').empty();
 
-    viewObjectsPromise.then(
+    let viewTypesPromise = httpPost('php/ajax/get_objects.php', '', 'GET');
+
+    viewTypesPromise.then(
         function (data) {
             if (data.result) {
                 $.each(data[0], function (key, value) {
-                    $('#view-objects-ul').append('<li>' + value['name'] + '</li>')
+                    let objectList = $('<li id="' + value['id'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+                    let deleteElem = $('<a href="#" id="' + value['id'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina tipologia</a>').on('click', function () {
+                        let parent = $(this).parent();
+                        console.log('inserting seccond: ' + key + '/' + value);
+                        let deleteObjectForm = new FormData();
+
+                        deleteObjectForm.append('id', value['id']);
+
+                        let deleteObjectPromise = httpPost('php/ajax/delete_object.php', deleteObjectForm, 'POST');
+
+                        deleteObjectPromise.then(
+                            function (data) {
+                                if (data.result) {
+                                    $(parent).remove();
+                                }
+                            }
+                        )
+                    });
+                    objectList.append(deleteElem);
+                    $('#see-object-list-ul').append(objectList);
                 });
 
-
-                $('#view-objects-ul').listview();
-                $('#view-objects-ul').listview('refresh');
-                setTimeout(function () {
-                    $('#view-objects-popup').popup();
-                    $('#view-objects-popup').popup('open');
-                }, 500);
-
+                $('#see-object-list-ul').listview();
+                $('#see-object-list-ul').listview('refresh');
             }
         }
     )
-});
+}

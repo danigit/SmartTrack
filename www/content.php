@@ -72,7 +72,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 <!--                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>-->
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
                         <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
-                        <li><a href="#insert-object" data-rel="popup" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
+                        <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
@@ -339,6 +339,207 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             </div>
         </div>
 
+        <div data-role="page" id="insert-object">
+            <div class="navbar-container">
+                <div data-role="navbar">
+                    <ul class="box-shadow-bottom">
+                        <li><a href="#insert-object-popup" id="insert-object-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetti</a></li>
+                        <li><a href="#update-object-description-popup" id="update-object-description-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna descrizione</a></li>
+                        <li><a href="#update-object-type-popup" id="update-object-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
+                        <li><a href="#update-object-tag-popup" id="update-object-tag-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tag</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="list-type-label">
+                    <p class="font-x-large orange-color">Lista degli oggetti disponibili</p>
+                </div>
+                <div class="list-type-container">
+                    <ul id="see-object-list-ul" data-filter="true" data-inset="true">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div id="insert-object-popup"  class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
+                <form data-ajax="false" id="insert-type-form">
+                    <h3>Inserimento oggetti</h3>
+
+                    <fieldset id="input-object-fielset">
+
+                        <select id="insert-object-type-select" data-inset="true">
+                            <option>Seleziona una tipologia...</option>
+                        </select>
+
+                        <select id="insert-object-tag-select" data-inset="true">
+                            <option>Seleziona un tag...</option>
+                        </select>
+
+                        <div class="input-type-container">
+                            <input class="font-large center-text" type="text" name="object-field" id="object-field" placeholder="Inserisci descrizione oggetto">
+                        </div>
+
+                        <div id="insert-object-message"></div>
+
+                        <div class="ui-grid-a ui-responsive">
+                            <div class="ui-block-a"><a href="#" id="add-object-popup" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIUNGI OGGETTO</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-object-popup" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div id="update-object-description-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
+                <form data-ajax="false" id="update-object-description-form">
+                    <h3>Aggiornamento oggetto</h3>
+
+                    <fieldset id="update-object-description-fielset">
+
+                        <div class="input-type-container">
+                            <input class="font-large center-text input-field" type="text" name="update-object-description-input" id="update-object-description-input" placeholder="Inserisci descrizione oggetto">
+                        </div>
+
+                        <div class="ui-grid-a ui-responsive">
+                            <a href="#" id="update-object-description" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA DESCRIZIONE</a>
+                        </div>
+
+                        <div id="update-object-description-message"></div>
+
+                    </fieldset>
+
+                    <div id="object-description-selected">
+                        <ul>
+
+                        </ul>
+                    </div>
+
+                    <div id="view-object-description-container">
+                        <ul id="view-objects-description-ul" data-filter="true">
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div id="update-object-type-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
+                <form data-ajax="false" id="update-object-type-form">
+                    <h3>Aggiornamento oggetto</h3>
+
+                    <fieldset id="update-object-type-fielset">
+
+                        <select id="update-object-type-select" data-inset="true">-->
+                            <option>Seleziona una tipologia...</option>
+                        </select>
+
+                        <div class="ui-grid-a ui-responsive">
+                            <a href="#" id="update-object-type" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA TIPOLOGIA</a>
+                        </div>
+
+                        <div id="update-object-type-message"></div>
+
+                    </fieldset>
+
+                    <div id="object-type-selected">
+                        <ul>
+
+                        </ul>
+                    </div>
+
+                    <div id="view-object-type-container">
+                        <ul id="view-objects-type-ul" data-filter="true">
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div id="update-object-tag-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
+                <form data-ajax="false" id="update-object-tag-form">
+                    <h3>Aggiornamento oggetto</h3>
+
+                    <fieldset id="update-object-tag-fielset">
+
+                        <select id="update-object-tag-select" data-inset="true">-->
+                            <option>Seleziona un tag...</option>
+                        </select>
+
+                        <div class="ui-grid-a ui-responsive">
+                            <a href="#" id="update-object-tag" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA TAG</a>
+                        </div>
+
+                        <div id="update-object-tag-message"></div>
+
+                    </fieldset>
+
+                    <div id="object-tag-selected">
+                        <ul>
+
+                        </ul>
+                    </div>
+
+                    <div id="view-object-tag-container">
+                        <ul id="view-objects-tag-ul" data-filter="true">
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--            <div id="update-object-description-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">-->
+<!--                <form data-ajax="false" id="update-object-form">-->
+<!--                    <h3>Aggiornamento oggetto</h3>-->
+<!---->
+<!--                    <fieldset id="update-object-fielset">-->
+<!---->
+<!--                        <select id="update-object-type-select" data-inset="true">-->
+<!--                            <option>Seleziona una tipologia...</option>-->
+<!--                        </select>-->
+<!---->
+<!--                        <select id="update-object-tag-select" data-inset="true">-->
+<!--                            <option>Seleziona un tag...</option>-->
+<!--                        </select>-->
+<!---->
+<!--                        <div class="input-type-container">-->
+<!--                            <input class="font-large center-text" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione oggetto">-->
+<!--                        </div>-->
+<!---->
+<!--                        <div id="update-object-message"></div>-->
+<!---->
+<!--                        <div class="ui-grid-a ui-responsive">-->
+<!--                            <div class="ui-block-a"><a href="#" id="update-object" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA OGGETTO</a></div>-->
+<!--                            <!--                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>-->-->
+<!--                        </div>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div id="update-object-description-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">-->
+<!--                <form data-ajax="false" id="update-object-form">-->
+<!--                    <h3>Aggiornamento oggetto</h3>-->
+<!---->
+<!--                    <fieldset id="update-object-fielset">-->
+<!---->
+<!--                        <select id="update-object-type-select" data-inset="true">-->
+<!--                            <option>Seleziona una tipologia...</option>-->
+<!--                        </select>-->
+<!---->
+<!--                        <select id="update-object-tag-select" data-inset="true">-->
+<!--                            <option>Seleziona un tag...</option>-->
+<!--                        </select>-->
+<!---->
+<!--                        <div class="input-type-container">-->
+<!--                            <input class="font-large center-text" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione oggetto">-->
+<!--                        </div>-->
+<!---->
+<!--                        <div id="update-object-message"></div>-->
+<!---->
+<!--                        <div class="ui-grid-a ui-responsive">-->
+<!--                            <div class="ui-block-a"><a href="#" id="update-object" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA OGGETTO</a></div>-->
+<!--                            <!--                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>-->-->
+<!--                        </div>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+<!--            </div>-->
 
 <!--        <div id="insert-object-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
 <!--            <form data-ajax="false" id="insert-object-form">-->
@@ -393,5 +594,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <script src="js/insert-object.js"></script>
         <script src="js/view-types.js"></script>
         <script src="js/view-objects.js"></script>
+        <script src="js/object-crud.js"></script>
     </body>
 </html>

@@ -313,6 +313,24 @@ thead tr{
     margin: auto auto 40px auto!important;
 }
 
+.insert-popup-350{
+    width: 500px!important;
+    height: 350px!important;
+    background-color: #6AB8C1!important;
+    border: none!important;
+    border-radius: 20px!important;
+    box-shadow: 0 0 20px 4px #6AB8C1!important;
+    padding: 30px!important;
+}
+
+.insert-popup-350 h3{
+    border-bottom: 2px solid #FFFFFF;
+    font-size: large!important;
+    text-align: center!important;
+    color: #FFFFFF;
+    margin: auto auto 40px auto!important;
+}
+
 #input-type-fielset .ui-input-text{
     background: #6AB8C1;
     border: 3px solid white;
@@ -328,10 +346,6 @@ thead tr{
     margin-right: 0;
 }
 
-#close-type #add-type:hover{
-    background: none!important;
-}
-
 #update-type-form #update-type-select-button{
     background-color: #6AB8C1!important;
     color: #FFFFFF!important;
@@ -341,79 +355,96 @@ thead tr{
     margin-bottom: 20px!important;
     box-shadow: none!important;
 }
+
+.select-object-list{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    margin-bottom: 3px!important;
+    border-radius: 10px!important;
+    box-shadow: none!important;
+}
 /*end insert type*/
 
 /*insert object*/
 
-#insert-object-popup{
-    width: 500px;
-    background-color: #6AB8C1;
-    border: none!important;
-    border-radius: 20px!important;
-    box-shadow: 0 0 20px 4px #6AB8C1!important;
-    padding: 30px!important;
+/* da modificare su tutti gli input */
+.input-type-container div{
+    background: #6AB8C1!important;
+    border: 3px solid white!important;
+    border-radius: 10px!important;
+    color: #FFFFFF!important;
 }
 
-#insert-object-popup h3{
-    border-bottom: 2px solid #FFFFFF;
-    font-size: large!important;
-    text-align: center!important;
-    color: #FFFFFF;
-    margin: auto auto 40px auto!important;
-}
-
-#input-object-fielset input{
-    width: 98%;
+#input-object-fielset .ui-input-text{
     background: #6AB8C1;
     border: 3px solid white;
     border-radius: 10px;
-    height: 32px;
-    text-align: center;
     color: #FFFFFF;
-    margin-bottom: 30px;
 }
 
 #input-object-fielset input:focus{
     outline: none!important;
 }
 
-#input-object-fielset input[type=submit]{
-    width: 49%;
-    background: #FFFFFF;
-    color: #6AB8C1;
-    border: 1px solid white;
+#update-object-fielset .ui-input-text{
+    background: #6AB8C1;
+    border: 3px solid white;
     border-radius: 10px;
-    height: 38px;
-    font-size: large;
-    line-height: 1!important;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-#input-object-fielset input[type=button]{
-    width: 49%;
-    background: #FFFFFF;
-    color: #6AB8C1;
-    border: 1px solid white;
-    border-radius: 10px;
-    height: 38px;
-    font-size: large;
-    line-height: 1!important;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-#object-type-select{
-    width: 100%;
-    height: 40px;
-    background-color: #6AB8C1;
     color: #FFFFFF;
+}
+
+#input-object-fielset input:focus{
     outline: none!important;
-    border: 3px solid #FFFFFF;
+}
+
+#close-object-popup{
+    margin-right: 0;
+}
+
+#update-object-form #update-object-type-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
+}
+
+#update-object-form #update-object-tag-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
+}
+
+#insert-type-form #insert-object-type-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
+}
+
+#insert-type-form #insert-object-tag-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
 }
 
 .insert-object-success{
-    border: 2px solid #3dc235!important;
+    /*border: 2px solid #3dc235!important;*/
     border-radius: 10px!important;
     width: 80% !important;
     margin: 10px auto auto auto!important;
@@ -428,7 +459,7 @@ thead tr{
 }
 
 .insert-object-error{
-    border: 2px solid #E52612!important;
+    /*border: 2px solid #E52612!important;*/
     border-radius: 10px!important;
     width: 80% !important;
     margin: 10px auto auto auto!important;

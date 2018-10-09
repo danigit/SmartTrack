@@ -1,10 +1,68 @@
-$('#insert-object').on('click', function () {
-    $('#insert-object-menu').popup('close');
-    $('#object-type-select').children('option:not(:first)').remove();
 
-    let getTypesInsertObjectPromise = httpPost('php/ajax/get_types.php', '', 'GET');
+$('#add-object-popup').on('click', function (e) {
+    e.preventDefault();
 
-    getTypesInsertObjectPromise.then(
+    let description = $('#object-field').val();
+    let selectedType = $('#insert-object-type-select').find(':selected').attr('id');
+    let selectedTag = $('#insert-object-tag-select').find(':selected').val();
+    console.log(description + selectedTag + selectedType);
+
+    let inputObjectForm = new FormData();
+    inputObjectForm.append('description', description);
+    inputObjectForm.append('type', selectedType);
+    inputObjectForm.append('tag', selectedTag);
+
+    if(selectedType === undefined || selectedTag === undefined){
+        $('#insert-object-message').empty();
+        $('#insert-object-message').append('<p>Selezionare una tipologia e un tag</p>');
+        $('#insert-object-message').addClass('insert-object-error');
+        setTimeout(function () {
+            $('#insert-object-message').empty();
+            $('#insert-object-message').removeClass('insert-object-error');
+        }, 2000)
+    }else {
+        let inputObjectPromise = httpPost('php/ajax/insert_object.php', inputObjectForm, 'POST');
+
+        inputObjectPromise.then(
+            function (data) {
+                if (data.result) {
+                    $('#object-field').val("");
+                    $('#insert-object-type-select option:eq(0)').prop('selected', true);
+                    $('#insert-object-type-select').selectmenu('refresh');
+                    $('#insert-object-tag-select option:eq(0)').prop('selected', true);
+                    $('#insert-object-tag-select').selectmenu('refresh');
+                    $('#insert-object-message').empty();
+                    $('#insert-object-message').append('<p>L\'oggetto e\' stato inserito con successo</p>');
+                    $('#insert-object-message').addClass('insert-object-success');
+                    setTimeout(function () {
+                        $('#insert-object-message').empty();
+                        $('#insert-object-message').removeClass('insert-object-success');
+                    }, 2000)
+
+                    seeObjects();
+                } else {
+                    $('#insert-object-message').empty();
+                    $('#insert-object-message').append('<p>' + data.message + '</p>');
+                    $('#insert-object-message').addClass('insert-object-error');
+                    setTimeout(function () {
+                        $('#insert-object-message').empty();
+                        $('#insert-object-message').removeClass('insert-object-error');
+                    }, 2000)
+                }
+            }
+        )
+    }
+});
+
+$('#insert-object-popup-button').on('click', function () {
+    getTypes($('#insert-object-type-select'));
+    getTags($('#insert-object-tag-select'));
+    getDataInsert();
+});
+
+function getTypes(param) {
+    let getTypesPromise = httpPost('php/ajax/get_types.php', '', 'GET');
+    getTypesPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
@@ -12,61 +70,87 @@ $('#insert-object').on('click', function () {
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
                     select += '<option id="' + value['id'] + '">' + value['type'] + '</option>';
-                });
-                $('#object-type-select').append(select);
-
-
-                setTimeout(function () {
-                    $('#insert-object-popup').popup();
-                    $('#insert-object-popup').popup('open');
-                    $('#object-type-select').listview();
-                    $('#object-type-select').listview('refresh');
-                }, 500);
+                });;
+                $(param).append(select);
+                $(param).trigger('create');
             } else {
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    $('#error-msg-create-kit').find('.error-message').remove();
-                $('#error-msg-create-kit').append(message);
+                //TODO messaggio errore
             }
         }
     );
-});
 
-$('#close-input-object').on('click', function () {
-    $('#insert-object-popup').popup('close');
-});
+}
 
-$('#submit-input-object').on('click', function (e) {
-    e.preventDefault();
-    let insertObjectForm = new FormData();
-    let type = $('#object-type-select').find(':selected').attr('id');
-    if(type !== undefined) {
-        insertObjectForm.append('type', type);
-    }
-    insertObjectForm.append('description', $('#object').val());
+function getTags(param){
+    let getTagPromise = httpPost('php/ajax/get_tags.php', '', 'GET');
 
-    let insertObjectPromise = httpPost('php/ajax/insert_object.php', insertObjectForm, 'POST');
-
-    insertObjectPromise.then(
+    getTagPromise.then(
         function (data) {
+            //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                // $('#' + elementName + ' option:eq(0)').prop('selected', true);
-                $('#object').val("");
-                $('#insert-object-message').append('<p>L\'oggetto e\' stato inserito con successo</p>');
-                $('#insert-object-message').addClass('insert-object-success');
-                setTimeout(function () {
-                    $('#insert-object-message').empty();
-                    $('#insert-object-message').removeClass('insert-object-success');
-                }, 2000)
-            }else{
-                $('#insert-object-message').append('<p>' + data.message + '</p>');
-                $('#insert-object-message').addClass('insert-object-error');
-                setTimeout(function () {
-                    $('#insert-object-message').empty();
-                    $('#insert-object-message').removeClass('insert-object-error');
-                }, 2000)
+                let select = '';
+                //inserisco le tipologie nella select
+                $.each(data[0], function (key, value) {
+                    select += '<option id="' + value['id'] + '">' + value['mac'] + '</option>';
+                });
+                $(param).append(select);
+                $(param).trigger('create');
+            } else {
+                //TODO messaggio errore
             }
         }
-    )
+    );
+}
 
+function getDataInsert(){
+    $('#insert-object-type-select').children('option:not(:first)').remove();
+    $('#insert-object-tag-select').children('option:not(:first)').remove();
+}
+//
+// function getDataUpdate(){
+//     $('#update-object-type-select').children('option:not(:first)').remove();
+//     $('#update-object-tag-select').children('option:not(:first)').remove();
+//
+//     let getTypesPromise = httpPost('php/ajax/get_types.php', '', 'GET');
+//     let getTagPromise = httpPost('php/ajax/get_tags.php', '', 'GET');
+//
+//     console.log('getting types update');
+//     getTypesPromise.then(
+//         function (data) {
+//             //controllo se ci sono stati degli errori nella chiamata
+//             if (data.result) {
+//                 let select = '';
+//                 //inserisco le tipologie nella select
+//                 $.each(data[0], function (key, value) {
+//                     select += '<option id="' + value['id'] + '">' + value['type'] + '</option>';
+//                 });
+//                 $('#update-object-type-select').append(select);
+//                 $('#update-object-type-select').trigger('create');
+//             } else {
+//                 //TODO messaggio errore
+//             }
+//         }
+//     );
+//
+//     getTagPromise.then(
+//         function (data) {
+//             //controllo se ci sono stati degli errori nella chiamata
+//             if (data.result) {
+//                 let select = '';
+//                 //inserisco le tipologie nella select
+//                 $.each(data[0], function (key, value) {
+//                     select += '<option id="' + value['id'] + '">' + value['mac'] + '</option>';
+//                 });
+//                 $('#update-object-tag-select').append(select);
+//                 $('#update-object-tag-select').trigger('create');
+//             } else {
+//                 //TODO messaggio errore
+//             }
+//         }
+//     );
+// }
+
+$('#close-type').on('click', function (e) {
+    e.preventDefault();
+    $('#insert-type-popup').popup('close');
 });

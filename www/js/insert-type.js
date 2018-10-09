@@ -117,7 +117,7 @@ $('#update-type').on('click', function (e) {
     }
 });
 
-$('#close-type').on('click', function (e) {
+$('#close-object-popup').on('click', function (e) {
     e.preventDefault();
-    $('#insert-type-popup').popup('close');
+    $('#insert-object-popup').popup('close');
 });

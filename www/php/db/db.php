@@ -124,12 +124,36 @@ class Connection{
         return $result_array;
     }
 
+
+    /**
+     * Funzione che recupera tutti i tag
+     * @return array|db_error
+     */
+    function get_tags(){
+        $query = "SELECT tag.ID, tag.MAC, object.ob_tag FROM object RIGHT JOIN tag ON object.ob_tag = tag.MAC WHERE object.ob_tag IS NULL";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_TAG);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
     /**
      * Funzione che recupera tutti gli oggetti
      * @return array|db_error
      */
     function get_objects(){
-        $query = "SELECT name FROM object";
+        $query = "SELECT cod, name FROM object";
 
         $result = $this->connection->query($query);
 
@@ -139,7 +163,7 @@ class Connection{
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('name' => $row['name']);
+            $result_array[] = array('id' => $row['cod'], 'name' => $row['name']);
         }
 
         $result->close();
@@ -454,9 +478,9 @@ class Connection{
      * @param $object - la descrizione dell'oggetto
      * @return bool|db_error|mixed - un errore oppure l'id del tipo inserito
      */
-    function insert_object($type, $object){
-        $query = 'INSERT INTO object (type_id, name) VALUES (?, ?)';
-        $result = $this->parse_and_execute_insert($query, "ss", $type, $object);
+    function insert_object($type, $tag, $description){
+        $query = 'INSERT INTO object (type_id, name, ob_tag) VALUES (?, ?, ?)';
+        $result = $this->parse_and_execute_insert($query, "iss", $type, $description, $tag);
 
         if ($result instanceof db_error) {
             return $result;
@@ -482,6 +506,21 @@ class Connection{
         return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
     }
 
+     /**
+     * Funzione che elimina l'oggetto passato come parametro dal database
+     * @param $id - l'id dell'oggetto
+     * @return bool|db_error|mysqli_stmt
+     */
+    function delete_object($id){
+        $query = "DELETE FROM object WHERE cod = ?";
+        $statement = $this->parse_and_execute_select($query, "s", $id);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
+    }
+
     function update_type($id, $type){
         $query = "UPDATE object_type SET description = ? WHERE type_id = ?";
 
@@ -495,6 +534,49 @@ class Connection{
 
         return $this->connection->affected_rows;
     }
+
+    function update_object_tag($id, $tag){
+        $query = "UPDATE object SET ob_tag = ? WHERE cod = ?";
+
+        $resultUpdate = $this->parse_and_execute_select($query, "si", $tag, $id);
+
+        if($resultUpdate instanceof db_error)
+            return $resultUpdate;
+
+        if($resultUpdate === false)
+            return new db_error(db_error::$ERROR_ON_UPDATING_TYPE);
+
+        return $this->connection->affected_rows;
+    }
+
+    function update_object_description($id, $description){
+        $query = "UPDATE object SET name = ? WHERE cod = ?";
+
+        $resultUpdate = $this->parse_and_execute_select($query, "si", $description, $id);
+
+        if($resultUpdate instanceof db_error)
+            return $resultUpdate;
+
+        if($resultUpdate === false)
+            return new db_error(db_error::$ERROR_ON_UPDATING_TYPE);
+
+        return $this->connection->affected_rows;
+    }
+
+    function update_object_type($id, $type){
+        $query = "UPDATE object SET type_id = ? WHERE cod = ?";
+
+        $resultUpdate = $this->parse_and_execute_select($query, "ii", $type, $id);
+
+        if($resultUpdate instanceof db_error)
+            return $resultUpdate;
+
+        if($resultUpdate === false)
+            return new db_error(db_error::$ERROR_ON_UPDATING_TYPE);
+
+        return $this->connection->affected_rows;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati
