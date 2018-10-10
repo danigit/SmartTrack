@@ -214,6 +214,17 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 <!--        </div>-->
 
         <div data-role="page" id="all-kits">
+            <div class="navbar-container">
+                <div data-role="navbar">
+                    <ul class="box-shadow-bottom">
+                        <li><a href="#see-all-kits" id="see-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
+                        <li><a href="#see-kits-history" id="kits-history" class="ui-btn font-large blue-background white-color">Visualizza cronologia</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="see-all-kits">
             <div class="kit-create-label">
                 <p class="font-x-large blue-color">Tutti i kit</p>
             </div>
@@ -230,6 +241,30 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                     </tr>
                     </thead>
                     <tbody id="all-kit-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div data-role="page" id="see-kits-history">
+            <div class="kit-create-label">
+                <p class="font-x-large blue-color">Cronologia kit</p>
+            </div>
+
+            <div id="all-kit-history-error-message"></div>
+            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella della cronologia dei kit</b></p></div>
+            <div class="table-container">
+                <table data-role="table" id="all-kit-history-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr>
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Data</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10">Ambiente</th>
+                    </tr>
+                    </thead>
+                    <tbody id="all-kit-history-body">
 
                     </tbody>
                 </table>
@@ -486,103 +521,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </form>
             </div>
         </div>
-<!--            <div id="update-object-description-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">-->
-<!--                <form data-ajax="false" id="update-object-form">-->
-<!--                    <h3>Aggiornamento oggetto</h3>-->
-<!---->
-<!--                    <fieldset id="update-object-fielset">-->
-<!---->
-<!--                        <select id="update-object-type-select" data-inset="true">-->
-<!--                            <option>Seleziona una tipologia...</option>-->
-<!--                        </select>-->
-<!---->
-<!--                        <select id="update-object-tag-select" data-inset="true">-->
-<!--                            <option>Seleziona un tag...</option>-->
-<!--                        </select>-->
-<!---->
-<!--                        <div class="input-type-container">-->
-<!--                            <input class="font-large center-text" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione oggetto">-->
-<!--                        </div>-->
-<!---->
-<!--                        <div id="update-object-message"></div>-->
-<!---->
-<!--                        <div class="ui-grid-a ui-responsive">-->
-<!--                            <div class="ui-block-a"><a href="#" id="update-object" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA OGGETTO</a></div>-->
-<!--                            <!--                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>-->-->
-<!--                        </div>-->
-<!--                    </fieldset>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div id="update-object-description-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">-->
-<!--                <form data-ajax="false" id="update-object-form">-->
-<!--                    <h3>Aggiornamento oggetto</h3>-->
-<!---->
-<!--                    <fieldset id="update-object-fielset">-->
-<!---->
-<!--                        <select id="update-object-type-select" data-inset="true">-->
-<!--                            <option>Seleziona una tipologia...</option>-->
-<!--                        </select>-->
-<!---->
-<!--                        <select id="update-object-tag-select" data-inset="true">-->
-<!--                            <option>Seleziona un tag...</option>-->
-<!--                        </select>-->
-<!---->
-<!--                        <div class="input-type-container">-->
-<!--                            <input class="font-large center-text" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione oggetto">-->
-<!--                        </div>-->
-<!---->
-<!--                        <div id="update-object-message"></div>-->
-<!---->
-<!--                        <div class="ui-grid-a ui-responsive">-->
-<!--                            <div class="ui-block-a"><a href="#" id="update-object" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA OGGETTO</a></div>-->
-<!--                            <!--                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>-->-->
-<!--                        </div>-->
-<!--                    </fieldset>-->
-<!--                </form>-->
-<!--            </div>-->
-
-<!--        <div id="insert-object-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
-<!--            <form data-ajax="false" id="insert-object-form">-->
-<!--                <h3>Inserimento oggetto</h3>-->
-<!---->
-<!--                <fieldset id="input-object-fielset">-->
-<!--                    <select id="object-type-select" data-inset="true" data-icon="carat-d">-->
-<!--                        <option>Seleziona una tipologia...</option>-->
-<!--                    </select>-->
-<!---->
-<!--                    <div class="input-type-container">-->
-<!--                        <input class="" type="text" name="object" id="object" placeholder="Inserisci descrizione oggetto">-->
-<!--                    </div>-->
-<!---->
-<!--                    <div id="insert-object-message"></div>-->
-<!---->
-<!--                    <div class="input-type-container">-->
-<!--                        <input type="submit" id="submit-input-object" data-inline="true" class="mdl-typography--font-bold float-left" value="AGGIUNGI OGGETTO">-->
-<!--                    </div>-->
-<!--                    <div class="input-type-container">-->
-<!--                        <input type="button" id="close-input-object" data-inline="true" class="mdl-typography--font-bold float-right red-color" value="CHIUDI">-->
-<!--                    </div>-->
-<!--                </fieldset>-->
-<!--            </form>-->
-<!--        </div>-->
-
-<!--        <div id="view-types-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
-<!--            <div id="view-types-container">-->
-<!--                <h3>Tipologie di oggetti</h3>-->
-<!--                <ul id="view-types-ul" data-filter="true">-->
-<!---->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div id="view-objects-popup" data-role="popup" data-overlay-theme="a" class="ui-content" data-history="false">-->
-<!--            <div id="view-objects-container">-->
-<!--                <h3>Lista degli oggetti</h3>-->
-<!--                <ul id="view-objects-ul" data-filter="true">-->
-<!---->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
 
         <script src="js/helper.js"></script>
         <script src="js/content.js"></script>
@@ -595,5 +533,6 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <script src="js/view-types.js"></script>
         <script src="js/view-objects.js"></script>
         <script src="js/object-crud.js"></script>
+        <script src="js/see-history.js"></script>
     </body>
 </html>

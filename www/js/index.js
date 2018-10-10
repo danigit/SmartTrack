@@ -35,8 +35,13 @@ let app = {
             controlRecoverKit();
         });
 
-        $('#all-kits').on('pageinit', function () {
+        $('#see-all-kits').on('pageinit', function () {
             seeAllKits();
+        });
+
+        $('#see-kits-history').on('pageinit', function () {
+            console.log('pageinit');
+            seeKitsHistory();
         });
 
         $('#close-kit').on('pagebeforeshow', function () {

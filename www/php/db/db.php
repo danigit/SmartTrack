@@ -411,6 +411,34 @@ class Connection{
         return $result_array;
     }
 
+    /**
+     * Funzione che recupera tutti i kit
+     * @return array|db_error - l'array contenente i kit oppure un errore
+     */
+    function get_kits_history(){
+        $query = "SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment FROM 
+                  (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k JOIN 
+                  (SELECT object.name, tracking.TIMESTAMP, tracking.KIT_ID, tracking.AN_REF FROM object 
+                  JOIN tracking ON object.cod = tracking.COD_OBJ) AS o ON k.kit_id = o.kit_id) AS kt 
+                  JOIN anchors AS an ON kt.AN_REF = an.MAC_ANCHOR";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'],
+                "timestamp" => $row['TIMESTAMP'], 'environment' => $row['environment']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
     function close_kit_and_save($kit_id, $data){
         $this->connection->autocommit(false);
         $errors = array();
