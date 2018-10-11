@@ -1,6 +1,7 @@
 
 function seeTypes() {
-    $('#see-type-list-ul').empty();
+    let seeTypeListUl = $('#see-type-list-ul');
+    seeTypeListUl.empty();
 
     let viewTypesPromise = httpPost('php/ajax/get_types.php', '', 'GET');
 
@@ -9,6 +10,8 @@ function seeTypes() {
             if (data.result) {
                 $.each(data[0], function (key, value) {
                     let objectList = $('<li id="' + value['id'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['type'] + '</a></li>');
+
+                    //creo il pulsante per la cancellazione delle tipologie
                     let deleteElem = $('<a href="#" id="' + value['id'] + '" data-name="' + value['type'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina tipologia</a>').on('click', function () {
                         let parent = $(this).parent();
                         console.log('inserting seccond: ' + key + '/' + value);
@@ -32,8 +35,8 @@ function seeTypes() {
                     $('#see-type-list-ul').append(objectList);
                 });
 
-                $('#see-type-list-ul').listview();
-                $('#see-type-list-ul').listview('refresh');
+                seeTypeListUl.listview();
+                seeTypeListUl.listview('refresh');
             }
         }
     )

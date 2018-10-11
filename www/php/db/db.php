@@ -430,7 +430,7 @@ class Connection{
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'],
+            $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'], 'obj_name' => $row['name'],
                 "timestamp" => $row['TIMESTAMP'], 'environment' => $row['environment']);
         }
 
@@ -439,6 +439,41 @@ class Connection{
         return $result_array;
     }
 
+    /**
+     * Funzione che recupera la posizione degli oggetti presenti nel kit passato come parametro
+     * @param $id - l'id del kit che ha come oggetti quelli da cercare la posizione
+     * @return array|db_error|mysqli_stmt
+     */
+    function get_objects_kit_position($id){
+        $query = "SELECT * FROM object JOIN (SELECT a.MAC, a.environment, environment.description FROM (SELECT tag.MAC, anchors.environment FROM tag JOIN anchors ON tag.AN_REF = anchors.MAC_ANCHOR) AS a JOIN environment ON a.environment = environment.env_id) AS e ON object.ob_tag = e.MAC WHERE object.kit_id = ?";
+        $statement = $this->parse_and_execute_select($query, "i", $id);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
+
+        $result = $statement->get_result();
+        $result_array = array();
+
+        while ($row = $result->fetch_array()) {
+            $result_array[] = array("cod" => $row['cod'], "name" => $row['name'], "kit_id" => $row['kit_id'],
+                'kit_description' => $row['description'], 'environment' => $row['environment']);
+        }
+
+        $statement->close();
+
+        return $result_array;
+    }
+
+    /**
+     * Funzione che salva il kit passato come parametro come chiuso
+     * @param $kit_id - l'id del kit da chiudere
+     * @param $data - la data di chiusura
+     * @return db_error|int
+     */
     function close_kit_and_save($kit_id, $data){
         $this->connection->autocommit(false);
         $errors = array();
@@ -549,6 +584,12 @@ class Connection{
         return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
     }
 
+    /**
+     * Funzione che aggiorna una tipologia
+     * @param $id - l'id della tipologia da aggiornare
+     * @param $type - la descrizione della tipologia
+     * @return db_error|int|mysqli_stmt
+     */
     function update_type($id, $type){
         $query = "UPDATE object_type SET description = ? WHERE type_id = ?";
 
@@ -563,6 +604,12 @@ class Connection{
         return $this->connection->affected_rows;
     }
 
+    /**
+     * Funzione che aggiorna il tag di un oggetto
+     * @param $id - l'id dell'oggetto
+     * @param $tag - il nuovo tag dell'oggetto
+     * @return db_error|int|mysqli_stmt
+     */
     function update_object_tag($id, $tag){
         $query = "UPDATE object SET ob_tag = ? WHERE cod = ?";
 
@@ -577,6 +624,12 @@ class Connection{
         return $this->connection->affected_rows;
     }
 
+    /**
+     * Funzione che aggiorna la descrizione di un oggetto
+     * @param $id - l'id dell'oggetto
+     * @param $description - la nuova descrizione dell'oggetto
+     * @return db_error|int|mysqli_stmt
+     */
     function update_object_description($id, $description){
         $query = "UPDATE object SET name = ? WHERE cod = ?";
 
@@ -591,6 +644,12 @@ class Connection{
         return $this->connection->affected_rows;
     }
 
+    /**
+     * Funzione che aggiorna la tipologia di un oggetto
+     * @param $id
+     * @param $type
+     * @return db_error|int|mysqli_stmt
+     */
     function update_object_type($id, $type){
         $query = "UPDATE object SET type_id = ? WHERE cod = ?";
 

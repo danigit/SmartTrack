@@ -13,6 +13,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
     header('Location: index.php');
 ?>
 <!DOCTYPE html>
+
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -32,10 +33,8 @@ or more contributor license agreements.  See the NOTICE file
     under the License.
 -->
 
-<html>
-    <head>
-        <!--
-Customize this policy to fit your own app's needs. For more guidance, see:
+<!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
             * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
@@ -43,6 +42,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
+
+<html>
+    <head>
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -63,13 +65,14 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
         <title>Smart Track</title>
     </head>
+
     <body>
+<!--pagina principale nell'area riservata-->
         <div data-role="page" id="main-content">
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
-<!--                        <li><a href="#" class="ui-btn font-large blue-background white-color">Crea da template</a></li>-->
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
                         <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
                         <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
@@ -96,24 +99,28 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
         </div>
+<!--end pagina principale nell'area riservata-->
 
+<!--pagina creazione kit-->
         <div data-role="page" id="crea-kit-page">
             <div class="kit-create-label box-shadow-bottom">
                 <p class="font-x-large blue-color">Creazione kit</p>
             </div>
+
             <div class="select-container">
                 <form>
                     <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">
                         <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
-                        <select id="type-select" data-inset="true">
+                        <select id="type-select" data-inset="true" title="">
                             <option>Seleziona una tipologia...</option>
                         </select>
                     </fieldset>
                 </form>
             </div>
+
             <div class="type-list-container">
                 <form class="ui-filterable">
-                    <input id="filterBasic-input" data-type="search">
+                    <input id="filterBasic-input" data-type="search" title="">
                 </form>
                 <ul id="type-list-ul" data-role="listview" data-split-icon="plus" data-filter="true" data-input="#filterBasic-input">
 
@@ -151,68 +158,43 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                             <a href="#" id="create-kit-submit" class="ui-btn ui-disabled font-large">Crea kit</a>
                         </li>
                     </ul>
-                </div><!-- /navbar -->
-            </div><!-- /footer -->
+                </div>
+            </div>
+
+            <div id="error-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">
+                <p class="error-title"></p>
+                <p class="error-content"></p>
+            </div>
         </div>
+<!--end pagina creazione kit-->
 
-<!--        <div data-role="page" id="crea-kit-from-template-page">-->
-<!--            <div class="kit-create-from-templatelabel box-shadow-bottom">-->
-<!--                <p class="font-x-large blue-color">Creazione kit da template</p>-->
-<!--            </div>-->
-<!--            <div class="select-container">-->
-<!--                <form>-->
-<!--                    <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">-->
-<!--                        <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>-->
-<!--                        <select id="type-select" data-inset="true">-->
-<!--                            <option>Seleziona un oggetto...</option>-->
-<!--                        </select>-->
-<!--                    </fieldset>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div class="type-list-container">-->
-<!--                <form class="ui-filterable">-->
-<!--                    <input id="filterBasic-input" data-type="search">-->
-<!--                </form>-->
-<!--                <ul id="type-list-ul" data-role="listview" data-split-icon="plus" data-filter="true" data-input="#filterBasic-input">-->
-<!---->
-<!--                </ul>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="kit-objects-container">-->
-<!--                <div class="object-list-label">-->
-<!--                    <p class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>-->
-<!--                </div>-->
-<!--                <ul data-role="listview" id="object-list-ul">-->
-<!---->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="kit-description-container">-->
-<!--                <fieldset id="create-kit-fielset">-->
-<!--                    <div class="mdl-textfield mdl-js-textfield">-->
-<!--                        <input class="mdl-textfield__input font-large" type="text" name="description" id="description">-->
-<!--                        <label class="mdl-textfield__label font-large" for="description">Inserisci la descrizione del kit</label>-->
-<!--                    </div>-->
-<!--                </fieldset>-->
-<!--            </div>-->
-<!--            <div id="error-msg-create-kit"></div>-->
-<!---->
-<!--            <div data-role="footer" data-id="foo1" data-position="fixed">-->
-<!--                <div data-role="navbar" class="footer-navbar">-->
-<!--                    <ul class="create-kit-footer-ul">-->
-<!--                        <li class="create-kit-button-suspend margin-r-5" data-inline="true">-->
-<!--                            <a href="#" id="create-kit-suspend" class="ui-btn ui-disabled font-large">Sospendi kit</a>-->
-<!--                        </li>-->
-<!--                        <li class="create-kit-button-recover margin-r-5 display-none" data-inline="true">-->
-<!--                            <a href="#" id="create-kit-recover" class="ui-btn font-large">Recupera kit</a>-->
-<!--                        </li>-->
-<!--                        <li class="create-kit-button-submit margin-l-5" data-inline="true">-->
-<!--                            <a href="#" id="create-kit-submit" class="ui-btn ui-disabled font-large">Crea kit</a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div><!-- /navbar -->
-<!--            </div><!-- /footer -->
-<!--        </div>-->
+<!--pagina visualizzazione degli oggetti di un kit-->
+        <div data-role="page" id="see-kit-objects-position">
+            <div class="kit-create-label box-shadow-bottom">
+                <p class="font-x-large blue-color">Cronologia oggetti kit</p>
+            </div>
 
+            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella posizioni oggetti kit</b></p></div>
+            <div class="table-container">
+                <table data-role="table" id="kit-objects-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr>
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Id oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Nome oggetto</th>
+                        <th data-priority="3" class="border-right-no-color font-x-large padding-10">Id kit</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Descrizione ambiente</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10">Id ambiente</th>
+                    </tr>
+                    </thead>
+                    <tbody id="kit-objects-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<!--end pagina visualizzazione degli oggetti di un kit-->
+
+<!--pagina visualizzazione di tutti i kit e la cronologia dei kit -->
         <div data-role="page" id="all-kits">
             <div class="navbar-container">
                 <div data-role="navbar">
@@ -223,7 +205,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </div>
             </div>
         </div>
+<!--end pagina visualizzazione di tutti i kit e la cronologia dei kit-->
 
+<!--pagina visualizzazione di tutti i kit-->
         <div data-role="page" id="see-all-kits">
             <div class="kit-create-label">
                 <p class="font-x-large blue-color">Tutti i kit</p>
@@ -246,7 +230,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
         </div>
+<!--end pagina visualizzazione di tutti i kit-->
 
+<!--pagina visualizzazione delle cronologia dei kit-->
         <div data-role="page" id="see-kits-history">
             <div class="kit-create-label">
                 <p class="font-x-large blue-color">Cronologia kit</p>
@@ -260,6 +246,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                     <tr>
                         <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Nome oggetto</th>
                         <th data-priority="4" class="border-right-no-color font-x-large padding-10">Data</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10">Ambiente</th>
                     </tr>
@@ -270,7 +257,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
         </div>
+<!--end pagina visualizzazione della cronologia dei kit-->
 
+<!--pagina chiusura kit-->
         <div data-role="page" id="close-kit">
             <div class="kit-create-label">
                 <p class="font-x-large blue-color">Chiusura kit</p>
@@ -281,9 +270,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 <table data-role="table" id="close-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr>
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Object id</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Object type</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Object name</th>
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Id oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Tipologia oggetto</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Nome oggetto</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10"></th>
                     </tr>
                     </thead>
@@ -293,6 +282,11 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </table>
             </div>
 
+            <div id="close-kit-popup" class="success-popup" data-role="popup" data-overlay-theme="a" data-history="false">
+                <p class="error-title font-large"></p>
+                <span class="font-medium padding-10"></span>
+            </div>
+
             <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
                 <div data-role="navbar" class="footer-navbar">
                     <ul class="create-kit-footer-ul">
@@ -300,15 +294,12 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                             <a href="#" id="close-kit-and-save-button" class="ui-btn font-large close-kit-button">Close kit</a>
                         </li>
                     </ul>
-                </div><!-- /navbar -->
-            </div><!-- /footer -->
+                </div>
+            </div>
         </div>
+<!--end pagina chiusura kit-->
 
-<!--        <div id="error-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">-->
-<!--            <p class="error-title"></p>-->
-<!--            <p class="error-content"></p>-->
-<!--        </div>-->
-
+<!--pagine inserimento tipologia-->
         <div data-role="page" id="insert-type">
             <div class="navbar-container">
                 <div data-role="navbar">
@@ -355,7 +346,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
                     <fieldset id="input-type-fielset">
 
-                        <select id="update-type-select" data-inset="true">
+                        <select id="update-type-select" data-inset="true" title="">
                             <option>Seleziona una tipologia...</option>
                         </select>
 
@@ -373,12 +364,14 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </form>
             </div>
         </div>
+<!--enc pagina inserimento tipologia-->
 
+<!--pagina inserimento oggetto-->
         <div data-role="page" id="insert-object">
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#insert-object-popup" id="insert-object-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetti</a></li>
+                        <li><a href="#insert-object-popup" id="insert-object-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#update-object-description-popup" id="update-object-description-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna descrizione</a></li>
                         <li><a href="#update-object-type-popup" id="update-object-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
                         <li><a href="#update-object-tag-popup" id="update-object-tag-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tag</a></li>
@@ -403,11 +396,11 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
                     <fieldset id="input-object-fielset">
 
-                        <select id="insert-object-type-select" data-inset="true">
+                        <select id="insert-object-type-select" data-inset="true" title="">
                             <option>Seleziona una tipologia...</option>
                         </select>
 
-                        <select id="insert-object-tag-select" data-inset="true">
+                        <select id="insert-object-tag-select" data-inset="true" title="">
                             <option>Seleziona un tag...</option>
                         </select>
 
@@ -415,7 +408,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                             <input class="font-large center-text" type="text" name="object-field" id="object-field" placeholder="Inserisci descrizione oggetto">
                         </div>
 
-                        <div id="insert-object-message"></div>
+                        <div id="insert-object-message" class="border-radius-10"></div>
 
                         <div class="ui-grid-a ui-responsive">
                             <div class="ui-block-a"><a href="#" id="add-object-popup" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIUNGI OGGETTO</a></div>
@@ -439,7 +432,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                             <a href="#" id="update-object-description" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA DESCRIZIONE</a>
                         </div>
 
-                        <div id="update-object-description-message"></div>
+                        <div id="update-object-description-message" class="border-radius-10"></div>
 
                     </fieldset>
 
@@ -463,7 +456,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
                     <fieldset id="update-object-type-fielset">
 
-                        <select id="update-object-type-select" data-inset="true">-->
+                        <select id="update-object-type-select" data-inset="true" title="">
                             <option>Seleziona una tipologia...</option>
                         </select>
 
@@ -471,7 +464,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                             <a href="#" id="update-object-type" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA TIPOLOGIA</a>
                         </div>
 
-                        <div id="update-object-type-message"></div>
+                        <div id="update-object-type-message" class="border-radius-10"></div>
 
                     </fieldset>
 
@@ -495,7 +488,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
 
                     <fieldset id="update-object-tag-fielset">
 
-                        <select id="update-object-tag-select" data-inset="true">-->
+                        <select id="update-object-tag-select" data-inset="true" title="">
                             <option>Seleziona un tag...</option>
                         </select>
 
@@ -503,7 +496,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                             <a href="#" id="update-object-tag" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA TAG</a>
                         </div>
 
-                        <div id="update-object-tag-message"></div>
+                        <div id="update-object-tag-message" class="border-radius-10"></div>
 
                     </fieldset>
 
@@ -521,7 +514,9 @@ Customize this policy to fit your own app's needs. For more guidance, see:
                 </form>
             </div>
         </div>
+<!--end pgina inserimento oggetto-->
 
+<!--inserimento file javascript nella pagina-->
         <script src="js/helper.js"></script>
         <script src="js/content.js"></script>
         <script src="js/create-kit.js"></script>
@@ -534,5 +529,7 @@ Customize this policy to fit your own app's needs. For more guidance, see:
         <script src="js/view-objects.js"></script>
         <script src="js/object-crud.js"></script>
         <script src="js/see-history.js"></script>
+<!--end inserimento file javascript nella pagina-->
+
     </body>
 </html>

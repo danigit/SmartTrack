@@ -33,10 +33,12 @@ function seeAllKits() {
                     $('#all-kit-body').append(tableRow).trigger('create');
                 });
             } else {
+                let allKitErrorMessage = $('#all-kit-error-message');
+
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                 if ($('.error-message').length !== 0)
-                    $('#all-kit-error-message').find('.error-message').remove();
-                $('#all-kit-error-message').append(message);
+                    allKitErrorMessage.find('.error-message').remove();
+                allKitErrorMessage.append(message);
             }
         }
     );

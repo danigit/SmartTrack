@@ -46,14 +46,12 @@
 /*main page*/
 
 thead tr{
-    /*background-color: #FFBC58!important;*/
     background: url("../img/table-header.jpg") bottom !important;
     color: #FFFFFF;
 }
 
 .table-label{
     height: 100px;
-    /*background-image: url("../img/table-label.jpg")!important;*/
     margin-top: 50px;
     padding: 0 20px;
 }
@@ -292,12 +290,12 @@ thead tr{
     border: none!important;
     padding: 0!important;
 }
-
 /*end create kig*/
+
 
 /*insert type*/
 .insert-popup{
-    width: 500px!important;
+    width: 600px!important;
     background-color: #6AB8C1!important;
     border: none!important;
     border-radius: 20px!important;
@@ -314,8 +312,8 @@ thead tr{
 }
 
 .insert-popup-350{
-    width: 500px!important;
-    height: 350px!important;
+    width: 600px!important;
+    height: 340px!important;
     background-color: #6AB8C1!important;
     border: none!important;
     border-radius: 20px!important;
@@ -365,7 +363,21 @@ thead tr{
     border-radius: 10px!important;
     box-shadow: none!important;
 }
+
+.list-type-container{
+    margin: 50px 50px 20px 50px;
+}
+
+.list-type-container .ui-input-search{
+    border: 1px solid #6AB8C1!important;
+}
+
+.list-type-label{
+    margin: 50px auto auto 50px;
+}
+
 /*end insert type*/
+
 
 /*insert object*/
 
@@ -423,6 +435,26 @@ thead tr{
     box-shadow: none!important;
 }
 
+#update-object-type-form #update-object-type-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
+}
+
+#update-object-tag-form #update-object-tag-select-button{
+    background-color: #6AB8C1!important;
+    color: #FFFFFF!important;
+    outline: none!important;
+    border: 3px solid #FFFFFF!important;
+    border-radius: 10px!important;
+    margin-bottom: 20px!important;
+    box-shadow: none!important;
+}
+
 #insert-type-form #insert-object-type-select-button{
     background-color: #6AB8C1!important;
     color: #FFFFFF!important;
@@ -444,7 +476,6 @@ thead tr{
 }
 
 .insert-object-success{
-    /*border: 2px solid #3dc235!important;*/
     border-radius: 10px!important;
     width: 80% !important;
     margin: 10px auto auto auto!important;
@@ -459,7 +490,6 @@ thead tr{
 }
 
 .insert-object-error{
-    /*border: 2px solid #E52612!important;*/
     border-radius: 10px!important;
     width: 80% !important;
     margin: 10px auto auto auto!important;
@@ -474,25 +504,3 @@ thead tr{
 }
 
 /*end insert object*/
-
-
-/*insert type*/
-
-.list-type-container{
-    margin: 50px 50px 20px 50px;
-}
-
-.list-type-container .ui-input-search{
-    border: 1px solid #6AB8C1!important;
-}
-
-.list-type-label{
-    margin: 50px auto auto 50px;
-}
-
-
-
-
-
-
-/*end insert type*/

@@ -40,7 +40,6 @@ let app = {
         });
 
         $('#see-kits-history').on('pageinit', function () {
-            console.log('pageinit');
             seeKitsHistory();
         });
 

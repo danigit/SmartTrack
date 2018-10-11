@@ -26,10 +26,24 @@ function populateOpenKits() {
                             let tableCol = $('<td></td>');
                             let sendButton;
                             if(value['is_sent'] === "1") {
-                                sendButton = $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color ui-disabled border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
-                                    $(this).css('background', 'red');
-                                    sendKit($(this).attr('data-name'));
-                                    $(this).addClass('ui-disabled');
+                                sendButton = $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
+                                    let kitPositionForm = new FormData();
+                                    kitPositionForm.append('id', value['kit_id']);
+                                    let kitPositionPromise = httpPost('php/ajax/get_objects_kit_position.php', kitPositionForm, 'POST');
+
+                                    kitPositionPromise.then(
+                                        function (dataPosition) {
+                                            if (dataPosition.result) {
+                                                $.each(dataPosition[0], function (dataKey, dataValue) {
+                                                    let positionTableRow = $('<tr></tr>');
+                                                    $.each(dataValue, function (innerDataKey, innerDataValue) {
+                                                        positionTableRow.append('<td class="font-x-large">' + innerDataValue + '</td>');
+                                                    });
+                                                    $('#kit-objects-body').append(positionTableRow);
+                                                })
+                                            }
+                                        }
+                                    )
                                 });
                             }else{
                                 sendButton = $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {

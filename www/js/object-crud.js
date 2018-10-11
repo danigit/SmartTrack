@@ -1,34 +1,49 @@
+
+
+let updateObjedtDescriptionMessage = $('#update-object-description-message');
+let updateObjedtTypeMessage = $('#update-object-type-message');
+let updateObjedtTagMessage = $('#update-object-tag-message');
+
 $('#update-object-description-popup-button').on('click', function () {
     $('#view-objects-ul').empty();
     $('#update-object-description-input').val("");
     $('#view-object-description-container').css('display', 'block');
+    $('#view-object-description-container input').val("");
     $('#object-description-selected ul').empty();
     getDescriptionData('description');
 });
 
 $('#update-object-type-popup-button').on('click', function () {
-//     $('#view-objects-ul').empty();
-//     $('#update-object-' + param + '-input').val("");
-//     $('#view-object-' + param + '-container').css('display', 'block');
-//     $('#object-' + param + '-selected ul').empty();
+    $('#update-object-type-select option:eq(0)').prop('selected', true);
+    $('#update-object-type-select').selectmenu('refresh');
+
+    $('#view-objects-type-ul').empty();
+    $('#view-object-type-container').css('display', 'block');
+    $('#view-object-type-container input').val("");
+    $('#object-type-selected ul').empty();
+
     getTypes($('#update-object-type-select'));
     getDescriptionData('type');
 });
 
 $('#update-object-tag-popup-button').on('click', function () {
-//     $('#view-objects-ul').empty();
-//     $('#update-object-' + param + '-input').val("");
-//     $('#view-object-' + param + '-container').css('display', 'block');
-//     $('#object-' + param + '-selected ul').empty();
+    $('#update-object-tag-select option:eq(0)').prop('selected', true);
+    $('#update-object-tag-select').selectmenu('refresh');
+
+    $('#view-objects-tag-ul').empty();
+    $('#view-object-tag-container').css('display', 'block');
+    $('#view-object-tag-container input').val("");
+    $('#object-tag-selected ul').empty();
+
     getTags($('#update-object-tag-select'));
     getDescriptionData('tag');
 });
 
 function getDescriptionData(param){
+    $('#view-objects-' + param + '-ul').empty();
 
     let getObjectssPromise = httpPost('php/ajax/get_objects.php', '', 'GET');
 
-    console.log('getting types update');
     getObjectssPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
@@ -37,8 +52,7 @@ function getDescriptionData(param){
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
                     list = $('<li class="select-object-list" id="' + value['id'] + '">' + value['name'] + '</li>').on('click', function () {
-                        console.log('object clicked');
-                        $('#object-' + param + '-selected ul').append('<li class="select-object-list margin-top-50" id="' + value['id'] + '">' + value['name'] + '</li>');
+                        $('#object-' + param + '-selected ul').append('<li class="select-object-list margin-top-15" id="' + value['id'] + '">' + value['name'] + '</li>');
                         $('#object-' + param + '-selected ul').listview();
                         $('#object-' + param + '-selected ul').listview('refresh');
                         $('#view-object-' + param + '-container').css('display', 'none');
@@ -49,7 +63,7 @@ function getDescriptionData(param){
                 $('#view-objects-' + param + '-ul').listview('refresh');
                 // $('#view-objects-ul').trigger('create');
             } else {
-                //TODO messaggio errore
+                showMessage(updateObjedtDescriptionMessage, data.message, 'input-object-error');
             }
         }
     );
@@ -70,47 +84,30 @@ $('#update-object-description').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   $('#update-object-description-message').empty();
-                   $('#update-object-description-message').append('<p>L\'oggetto e\' stato inserito con successo</p>');
-                   $('#update-object-description-message').addClass('insert-object-success');
+                   showMessage(updateObjedtDescriptionMessage, 'L\'oggetto e\' stato inserito con successo', 'insert-object-success');
                    setTimeout(function () {
-                       $('#update-object-description-message').empty();
-                       $('#iupdate-object-description-message').removeClass('insert-object-success');
                        $('#update-object-description-popup').popup('close');
-                   }, 2000)
-
+                   }, 2000);
                    seeObjects();
                }else {
-
-                   $('#update-object-description-message').empty();
-                   $('#update-object-description-message').append('<p>' + data.message + '</p>');
-                   $('#update-object-description-message').addClass('insert-object-error');
-                   setTimeout(function () {
-                       $('#update-object-description-message').empty();
-                       $('#update-object-description-message').removeClass('insert-object-error');
-                   }, 2000)
+                   showMessage(updateObjedtDescriptionMessage, data.message, 'insert-object-error');
                }
            }
        )
    }else {
-        $('#update-object-description-message').empty();
-        $('#update-object-description-message').append('<p>Selezionare un oggetto</p>');
-        $('#update-object-description-message').addClass('insert-object-error');
-        setTimeout(function () {
-            $('#update-object-description-message').empty();
-            $('#update-object-description-message').removeClass('insert-object-error');
-        }, 2000)
+        showMessage(updateObjedtDescriptionMessage, 'Selezionare un oggetto', 'insert-object-error');
     }
 });
+
 
 $('#update-object-type').on('click', function () {
 
     let object = $('#object-type-selected ul li').attr('id');
-    let selectedType = $('#update-object-type-select').find(':selected').attr('id');
+    let selectedType = $('#update-object-type-select').find(':selected').val();
 
-
-    if(object !== undefined){
+    if(object !== undefined && selectedType !== 'Seleziona una tipologia...'){
        let objectDescriptionForm = new FormData();
+
        objectDescriptionForm.append('id', object);
        objectDescriptionForm.append('type', selectedType);
 
@@ -119,36 +116,19 @@ $('#update-object-type').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   $('#update-object-type-message').empty();
-                   $('#update-object-type-message').append('<p>L\'oggetto e\' stato aggiornato con successo</p>');
-                   $('#update-object-type-message').addClass('insert-object-success');
+                   showMessage(updateObjedtTypeMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
                    setTimeout(function () {
-                       $('#update-object-type-message').empty();
-                       $('#iupdate-object-type-message').removeClass('insert-object-success');
                        $('#update-object-type-popup').popup('close');
-                   }, 2000)
+                   }, 2000);
 
                    seeObjects();
                }else {
-
-                   $('#update-object-type-message').empty();
-                   $('#update-object-type-message').append('<p>' + data.message + '</p>');
-                   $('#update-object-type-message').addClass('insert-object-error');
-                   setTimeout(function () {
-                       $('#update-object-type-message').empty();
-                       $('#update-object-type-message').removeClass('insert-object-error');
-                   }, 2000)
+                   showMessage(updateObjedtTypeMessage, data.message, 'insert-object-error');
                }
            }
        )
    }else {
-        $('#update-object-type-message').empty();
-        $('#update-object-type-message').append('<p>Selezionare un oggetto</p>');
-        $('#update-object-type-message').addClass('insert-object-error');
-        setTimeout(function () {
-            $('#update-object-type-message').empty();
-            $('#update-object-type-message').removeClass('insert-object-error');
-        }, 2000)
+        showMessage(updateObjedtTypeMessage, 'Selezionare un oggetto', 'input-object-error');
     }
 });
 
@@ -168,35 +148,18 @@ $('#update-object-tag').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   $('#update-object-tag-message').empty();
-                   $('#update-object-tag-message').append('<p>L\'oggetto e\' stato aggiornato con successo</p>');
-                   $('#update-object-tag-message').addClass('insert-object-success');
+                   showMessage(updateObjedtTagMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
                    setTimeout(function () {
-                       $('#update-object-tag-message').empty();
-                       $('#iupdate-object-tag-message').removeClass('insert-object-success');
                        $('#update-object-tag-popup').popup('close');
-                   }, 2000)
+                   }, 2000);
 
                    seeObjects();
                }else {
-
-                   $('#update-object-tag-message').empty();
-                   $('#update-object-tag-message').append('<p>' + data.message + '</p>');
-                   $('#update-object-tag-message').addClass('insert-object-error');
-                   setTimeout(function () {
-                       $('#update-object-tag-message').empty();
-                       $('#update-object-tag-message').removeClass('insert-object-error');
-                   }, 2000)
+                   showMessage(updateObjedtTagMessage, data.message, 'insert-object-error');
                }
            }
        )
    }else {
-        $('#update-object-tag-message').empty();
-        $('#update-object-tag-message').append('<p>Selezionare un tag</p>');
-        $('#update-object-tag-message').addClass('insert-object-error');
-        setTimeout(function () {
-            $('#update-object-tag-message').empty();
-            $('#update-object-tag-message').removeClass('insert-object-error');
-        }, 2000)
+        showMessage(updateObjedtTagMessage, 'Selezionare un tag', 'insert-object-error');
     }
 });

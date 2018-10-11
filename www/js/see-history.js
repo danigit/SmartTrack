@@ -24,10 +24,12 @@ function seeKitsHistory() {
                     $('#all-kit-history-body').append(tableRow).trigger('create');
                 });
             } else {
+                let allKitHistoryErrorMessage = $('#all-kit-history-error-message');
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+
                 if ($('.error-message').length !== 0)
-                    $('#all-kit-history-error-message').find('.error-message').remove();
-                $('#all-kit-history-error-message').append(message);
+                    allKitHistoryErrorMessage.find('.error-message').remove();
+                allKitHistoryErrorMessage.append(message);
             }
         }
     );

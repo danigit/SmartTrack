@@ -17,7 +17,7 @@ class update_object_description extends cs_interaction {
         $this->value = $this->validate_string('description');
 
         if(!$this->value)
-            $this->json_error('Selezionare un oggetto');
+            $this->json_error('Inserire un descrizione');
 
         $this->id = $this->validate_string('id');
 

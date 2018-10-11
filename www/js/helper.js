@@ -22,7 +22,14 @@ function httpPost(url, input, type) {
     });
 }
 
+/**
+ * Funzione che mostra un errore in modalita' popup
+ * @param title - titolo dell'errore
+ * @param content - contenuto dell'errore
+ * @param type - il tipo di messaggio
+ */
 function showError(title, content, type) {
+    console.log('showing error: ' + title);
     let elem = $('#error-popup');
     if(type === 'success') {
         elem.removeClass('error-popup');
@@ -40,6 +47,7 @@ function showError(title, content, type) {
         elem.popup();
         elem.popup("open");
     }
+
     setTimeout(function () {
         elem.popup("close");
     }, 2000);

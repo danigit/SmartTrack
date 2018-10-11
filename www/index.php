@@ -31,17 +31,19 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
     specific language governing permissions and limitations
     under the License.
 -->
+
+<!--
+       Customize this policy to fit your own app's needs. For more guidance, see:
+           https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+       Some notes:
+           * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+           * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+           * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+               * Enable inline JS: add 'unsafe-inline' to default-src
+-->
+
 <html>
     <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -77,7 +79,6 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
                             <div class="input-container">
                                 <input class="" type="password" name="password" id="password" placeholder="Inserisci password">
                             </div>
-<!--                            <br><br><br><br><br>-->
                             <input type="submit" id="submit-login" data-inline="true" value="Login">
                         </fieldset>
                     </form>

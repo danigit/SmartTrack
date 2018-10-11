@@ -1,10 +1,14 @@
 /**
  * Funzione che crea un nuovo kit
  */
+
+let typesSelect = $('#type-select');
+let typeListUl = $('#type-list-ul');
+let objectListUl = $('#object-list-ul');
+let errorMsgCreateKit = $('#error-msg-create-kit');
+
 function createKit() {
 
-    let typesSelect = $('#type-select');
-    let typeListUl = $('#type-list-ul');
     let selectedType;
 
     let getTypesPromise = httpPost('php/ajax/get_types.php', '', 'GET');
@@ -14,22 +18,26 @@ function createKit() {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 let select = '';
+
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
                     select += '<option id="' + value['id'] + '">' + value['type'] + '</option>';
                 });
+
                 typesSelect.append(select);
             } else {
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+
                 if ($('.error-message').length !== 0)
-                    $('#error-msg-create-kit').find('.error-message').remove();
-                $('#error-msg-create-kit').append(message);
+                    errorMsgCreateKit.find('.error-message').remove();
+                errorMsgCreateKit.append(message);
             }
         }
     );
 
+    //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
     typesSelect.on('change', function () {
-        selectedType = $('#type-select').find(':selected').attr('id');
+        selectedType = typesSelect.find(':selected').attr('id');
 
         let getObjectsForm = new FormData();
         getObjectsForm.append('type', selectedType);
@@ -39,13 +47,11 @@ function createKit() {
         getObjectsPromise.then(
             function (data) {
                 if (data.result) {
-                    let list;
-
                     //svuoto la lista delle tipologie
                     typeListUl.empty();
 
                     $.each(data[0], function (key, value) {
-                        typeListUl.append(inserRow(key, value));
+                        typeListUl.append(insertRow(key, value));
                     });
                     
                     typeListUl.listview('refresh');
@@ -59,12 +65,23 @@ function createKit() {
     createKitRecover();
 }
 
-function inserRow(key, value) {
+/**
+ * Funzione che inserisce un nuovo oggetto nella lista disponibili
+ * @param key
+ * @param value
+ * @returns {jQuery.fn.init|jQuery|HTMLElement}
+ */
+function insertRow(key, value) {
+    console.log('iserting row');
     let list  = $('<li class="margin-bottom-5"></li>');
+
+    //creo il pulsante per aggiungere l'oggetto alla lista degli oggetti presenti nel kit
     let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 border-radius-10">Aggiungi al kit</a>').on('click', function () {
         let cod = $(this).attr('id');
         let isPresent = false;
+
         $(this).parent().remove();
+
         //controllo se l'oggetto e' gia' presente nella lista
         $.each($('#object-list-ul').children(), function (key, value) {
             if ($(value).attr('id') === cod) {
@@ -72,45 +89,52 @@ function inserRow(key, value) {
             }
         });
 
+        console.log(isPresent);
         //se l'oggetto e' gia' presente non lo inserisco piu'
         if(!isPresent){
             let objectList = $('<li id="' + cod + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+
+            //creo il pulsante per eliminare l'oggetto dalla lista degli oggetti presenti nel kit e aggiungerlo
+            //nella lista degli oggetti disponibili
             let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                 $(this).parent().remove();
                 console.log('inserting seccond: ' + key + '/' + value);
-                $('#type-list-ul').append(inserRow(key, value));
-                $('#type-list-ul').listview('refresh');
+                typeListUl.append(insertRow(key, value));
+                typeListUl.listview('refresh');
             });
 
             objectList.append(deleteElem);
-            $('#object-list-ul').append(objectList);
-            $('#object-list-ul').listview('refresh');
+            objectListUl.append(objectList);
+            objectListUl.listview('refresh');
             $('.create-kit-button-submit a').removeClass('ui-disabled');
             $('.create-kit-button-suspend a').removeClass('ui-disabled');
         }else{
             showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
         }
-
     });
 
     list.append('<a href="#" class="border-orange-1 border-radius-10">' + value['name'] + '</a>');
     list.append(button);
     return list;
 }
+
 /**
  * Funzione che controlla se c'e' un kit da recuperare e lo recupera
  */
 function controlRecoverKit() {
     let controlRecoverKitPromise = httpPost('php/ajax/control_recover_kit.php', '', 'GET');
+
     controlRecoverKitPromise.then(
         function (data) {
+            //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 $('.create-kit-button-suspend').addClass('display-none');
                 $('.create-kit-button-recover').removeClass('display-none');
                 $('#create-kit-submit').addClass('ui-disabled');
                 $('#type-select-fieldset div').addClass('ui-disabled');
             }else{
-
+                //TODO eseguire un'azzione alternativa(rimetere pulsante sospendi kit)
+                // showError("Nessun kit da recuperare", "Impossibile recuperare il kit", "error");
             }
         }
     )
@@ -126,16 +150,20 @@ function createKitSubmit() {
 
         //controllo se il kit ha una descrizione
         if($('#description').val() === ""){
+
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
             $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
+
             let message = $('<div class="error-message"><span>Inserire una descrizione per il kit</span></div>');
+
             if ($('.error-message').length !== 0)
-                $('#error-msg-create-kit').find('.error-message').remove();
-            $('#error-msg-create-kit').append(message);
+                errorMsgCreateKit.find('.error-message').remove();
+            errorMsgCreateKit.append(message);
         }else {
             //aggiungo tutti i dati da inviare al server
-            $.each($('#object-list-ul').children(), function (key, value) {
+            $.each(objectListUl.children(), function (key, value) {
                 let obj = $(value).attr('id');
+
                 createKitForm.append(key, obj);
                 count++;
             });
@@ -143,28 +171,22 @@ function createKitSubmit() {
             createKitForm.append('count', "" + count);
             createKitForm.append('description', $('#description').val());
 
-
             let createKitPromise = httpPost('php/ajax/create_kit.php', createKitForm, 'POST');
             createKitPromise.then(
                 function (data) {
+                    //controllo se ci sono stati dei errori nella chiamata
                     if (data.result) {
-                        //TODO mostrare il messaggio che il kit e' statto creato e ripristinare la pagina
-                        // $('#object-list-ul').empty();
-                        // $('#type-list-ul').empty();
-                        // $('.kit-description-container input').val('');
-                        // $('.kit-description-container input').trigger('create');
-                        // $('#type-select option:eq(0)').prop('selected', true);
-                        // $('#type-select').selectmenu('refresh');
-                        // $('#error-msg-create-kit').empty();
-                        // $('.create-kit-button-submit a').addClass('ui-disabled');
-                        // $('.create-kit-button-suspend a').addClass('ui-disabled');
-                        // $('#create-kit-fielset input').css('border-bottom', '1px solid #6AB8C1');
-                        document.location.href = 'content.php';
+                        showError('Kit creato', 'Il kit e\' stato creato con successo', 'success');
+                        setTimeout(function () {
+                            document.location.href = 'content.php';
+                        }, 1500);
                     }else {
                         let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+
                         if ($('.error-message').length !== 0)
-                            $('#error-msg-create-kit').find('.error-message').remove();
-                        $('#error-msg-create-kit').append(message);
+                            errorMsgCreateKit.find('.error-message').remove();
+
+                        errorMsgCreateKit.append(message);
                     }
                 }
             )
@@ -181,7 +203,7 @@ function createKitSuspend() {
         let count  = 0;
 
         //aggiungo tutti i dati da inviare al server
-        $.each($('#object-list-ul').children(), function (key, value) {
+        $.each(objectListUl.children(), function (key, value) {
             let obj = $(value).attr('id');
             suspendKitForm.append(key, obj);
             count++;
@@ -193,23 +215,17 @@ function createKitSuspend() {
 
         createKitPromise.then(
             function (data) {
+                //controllo se ci sono stati degli errori nella chiamata
                 if (data.result) {
-                    //ripristino la pagina
-                    // $('#object-list-ul').empty();
-                    // $('#type-list-ul').empty();
-                    // $('#type-select option:eq(0)').prop('selected', true);
-                    // $('#type-select').selectmenu('refresh');
-                    // $('#create-kit-submit').addClass('ui-disabled');
-                    // $('.create-kit-button-suspend').addClass('display-none');
-                    // $('.create-kit-button-recover').removeClass('display-none');
-                    // $('#type-select-fieldset div').addClass('ui-disabled');
-                    // $('.kit-description-container input').val("");
-                    document.location.href = 'content.php';
+                    showError('Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
+                    setTimeout(function (){
+                        document.location.href = 'content.php';
+                    }, 1500);
                 }else{
                     let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                     if ($('.error-message').length !== 0)
-                        $('#error-msg-create-kit').find('.error-message').remove();
-                    $('#error-msg-create-kit').append(message);
+                        errorMsgCreateKit.find('.error-message').remove();
+                    errorMsgCreateKit.append(message);
                 }
             }
         )
@@ -226,6 +242,7 @@ function createKitRecover() {
 
         recoverKitPromise.then(
             function (data) {
+                //controllo se ci sono stati degli errori nella chiamata
                 if (data.result) {
                     $('.create-kit-button-recover').addClass('display-none');
                     $('.create-kit-button-suspend').removeClass('display-none');
@@ -234,19 +251,22 @@ function createKitRecover() {
 
                     $.each(data[0], function (key, value) {
                         let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+
+                        //aggiungo i pulsanti di cancellazione agli oggetti presenti nel kit
                         let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                             $(this).parent().remove();
                         });
+
                         objectList.append(deleteElem);
-                        $('#object-list-ul').append(objectList);
+                        objectListUl.append(objectList);
                     });
 
-                    $('#object-list-ul').listview('refresh');
+                    objectListUl.listview('refresh');
                 }else {
                     let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                     if ($('.error-message').length !== 0)
-                        $('#error-msg-create-kit').find('.error-message').remove();
-                    $('#error-msg-create-kit').append(message);
+                        errorMsgCreateKit.find('.error-message').remove();
+                    errorMsgCreateKit.append(message);
                 }
             }
         )
