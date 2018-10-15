@@ -20,37 +20,17 @@ function populateOpenKits() {
                         tableRow = $('<tr class="gray-background"></tr>')
                     }
                     $.each(value, function (innerKey, innerValue) {
-                        if(innerKey === 'kit_id' || innerKey === 'description' || innerKey === 'creation_date') {
-                            tableRow.append('<td class="font-x-large">' + innerValue + '</td>');
+                        if(innerKey === 'kit_id' ) {
+                            tableRow.append('<td class="font-x-large darkblue-color bold-text center-text">' + innerValue + '</td>');
+                        }else if(innerKey === 'description' || innerKey === 'creation_date') {
+                            tableRow.append('<td class="font-x-large bold-tex center-text">' + innerValue + '</td>');
                         }else if(innerKey === 'spedisci'){
                             let tableCol = $('<td></td>');
                             let sendButton;
                             if(value['is_sent'] === "1") {
-                                sendButton = $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
-                                    let kitPositionForm = new FormData();
-                                    kitPositionForm.append('id', value['kit_id']);
-                                    let kitPositionPromise = httpPost('php/ajax/get_objects_kit_position.php', kitPositionForm, 'POST');
-
-                                    kitPositionPromise.then(
-                                        function (dataPosition) {
-                                            if (dataPosition.result) {
-                                                $.each(dataPosition[0], function (dataKey, dataValue) {
-                                                    let positionTableRow = $('<tr></tr>');
-                                                    $.each(dataValue, function (innerDataKey, innerDataValue) {
-                                                        positionTableRow.append('<td class="font-x-large">' + innerDataValue + '</td>');
-                                                    });
-                                                    $('#kit-objects-body').append(positionTableRow);
-                                                })
-                                            }
-                                        }
-                                    )
-                                });
+                                 sendButton = positionButton(value, innerValue);
                             }else{
-                                sendButton = $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
-                                    $(this).css('background', 'red');
-                                    sendKit($(this).attr('data-name'));
-                                    $(this).addClass('ui-disabled');
-                                });
+                                sendButton = sendKitButton(innerValue);
                             }
                             tableCol.append(sendButton);
                             tableRow.append(tableCol);
@@ -76,6 +56,54 @@ function populateOpenKits() {
     );
 }
 
+/**
+ * Funzione che gestisce la spedizione di un kit
+ * @param innerValue
+ * @returns {void|*|jQuery}
+ */
+function sendKitButton(innerValue) {
+    return $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
+        $(this).css('background', 'red');
+        sendKit($(this).attr('data-name'));
+        setTimeout(function (){
+            $('#open-kit-body').empty();
+            populateOpenKits();
+        }, 2000);
+    });
+}
+
+/**
+ * Funzione che gestisce la visualizzazione della posizione degli oggetti di un kit spedito
+ * @param value - variabile per recuperare l'id del kit
+ * @param innerValue -
+ * @returns {*}
+ */
+function positionButton(value, innerValue) {
+    return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin yellow-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
+        let kitPositionForm = new FormData();
+        kitPositionForm.append('id', value['kit_id']);
+        let kitPositionPromise = httpPost('php/ajax/get_objects_kit_position.php', kitPositionForm, 'POST');
+
+        kitPositionPromise.then(
+            function (dataPosition) {
+                if (dataPosition.result) {
+                    $.each(dataPosition[0], function (dataKey, dataValue) {
+                        let positionTableRow = $('<tr></tr>');
+                        $.each(dataValue, function (innerDataKey, innerDataValue) {
+                            if (innerDataKey === 'kit_id' || innerDataKey === 'cod'){
+                                positionTableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerDataValue + '</td>');
+                            } else {
+                                positionTableRow.append('<td class="font-x-large center-text bold-text">' + innerDataValue + '</td>');
+                            }
+                        });
+                        $('#kit-objects-body').append(positionTableRow);
+                    })
+                }
+            }
+        )
+    });
+}
+
 function sendKit(id) {
     let sendKitForm = new FormData();
     sendKitForm.append('id', id);
@@ -86,7 +114,6 @@ function sendKit(id) {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                console.log('kit send registered');
                 showError("Kit spedito", "Il kit e' stato spedito", "success");
             }
         }

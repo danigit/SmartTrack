@@ -29,6 +29,7 @@ $('#add-object-popup').on('click', function (e) {
                 //controllo se ci sono stati degli errori nella chiamata
                 if (data.result) {
                     resetInput();
+                    getTags($('#insert-object-tag-select'));
                     showMessage(insertObjectMessage, 'L\'oggetto e\' stato inserito con successo', 'insert-object-success');
                     seeObjects();
                 } else {
@@ -53,8 +54,8 @@ function showMessage(insertObject, message, type) {
 function resetInput(){
     $('#object-field').val("");
 
-    $('#insert-object-type-select option:eq(0)').prop('selected', true);
-    $('#insert-object-type-select').selectmenu('refresh');
+    // $('#insert-object-type-select option:eq(0)').prop('selected', true);
+    // $('#insert-object-type-select').selectmenu('refresh');
     $('#insert-object-tag-select option:eq(0)').prop('selected', true);
     $('#insert-object-tag-select').selectmenu('refresh');
 }

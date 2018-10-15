@@ -74,7 +74,7 @@ $('#update-type').on('click', function (e) {
     }
 });
 
-$('#close-object-popup').on('click', function (e) {
+$('#close-update-type').on('click', function (e) {
     e.preventDefault();
-    $('#insert-object-popup').popup('close');
+    $('#update-type-popup').popup('close');
 });

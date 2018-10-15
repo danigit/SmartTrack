@@ -29,7 +29,11 @@ function closeKit() {
                     $.each(value, function (innerKey, innerValue) {
 
                         if(innerKey !== 'id'){
-                            tableRow.append('<td class="font-x-large">' + innerValue + '</td>');
+                            if( innerKey === 'cod'){
+                                tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                            }else {
+                                tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                            }
                         }else {
                             let tableCol = $('<td></td>');
                             let sendButton;

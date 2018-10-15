@@ -19,7 +19,11 @@ function seeKitsHistory() {
                     }
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
-                        tableRow.append('<td class="font-x-large">' + innerValue + '</td>');
+                        if(innerKey === 'kit_id'){
+                            tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                        }else {
+                            tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                        }
                     });
                     $('#all-kit-history-body').append(tableRow).trigger('create');
                 });

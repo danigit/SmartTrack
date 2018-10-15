@@ -412,15 +412,44 @@ class Connection{
     }
 
     /**
+     * Funzione che recupera tutti i kit incompleti
+     * @return array|db_error - l'array contenente i kit oppure un errore
+     */
+    function get_incomplete_kits(){
+        $query = "SELECT k.kit_id, k.description, object.cod, object.name, k.creation_date, k.closing_date FROM 
+                  (SELECT kit.kit_id, kit.description, kit.creation_date, kit.closing_date, incomplete_kit.object_id 
+                  FROM incomplete_kit JOIN kit ON incomplete_kit.kit_id = kit.kit_id) as k JOIN object 
+                  ON k.object_id = object.cod";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
+                "cod" => $row['cod'], "name" => $row['name'], "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])),
+                "closing_date" => $row['closing_date'],);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+
+    /**
      * Funzione che recupera tutti i kit
      * @return array|db_error - l'array contenente i kit oppure un errore
      */
     function get_kits_history(){
-        $query = "SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment FROM 
+        $query = "SELECT aaa.description, aaa.name, aaa.TIMESTAMP, aaa.KIT_ID, aaa.AN_REF, envir.description AS 'environment' FROM (SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment FROM 
                   (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k JOIN 
                   (SELECT object.name, tracking.TIMESTAMP, tracking.KIT_ID, tracking.AN_REF FROM object 
                   JOIN tracking ON object.cod = tracking.COD_OBJ) AS o ON k.kit_id = o.kit_id) AS kt 
-                  JOIN anchors AS an ON kt.AN_REF = an.MAC_ANCHOR";
+                  JOIN anchors AS an ON kt.AN_REF = an.MAC_ANCHOR) AS aaa JOIN environment AS envir ON aaa.environment = envir.env_id";
 
         $result = $this->connection->query($query);
 

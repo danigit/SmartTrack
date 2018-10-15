@@ -85,10 +85,10 @@ or more contributor license agreements.  See the NOTICE file
             <div class="table-container">
                 <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
-                        <tr>
-                            <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
-                            <th data-priority="3" class="border-right-no-color font-x-large padding-10">Data creazione</th>
+                        <tr class="box-shadow-bottom">
+                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                            <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
                             <th data-priority="4" ></th>
                             <th data-priority="5" ></th>
                         </tr>
@@ -178,12 +178,12 @@ or more contributor license agreements.  See the NOTICE file
             <div class="table-container">
                 <table data-role="table" id="kit-objects-table" data-mode="reflow" class="ui-responsive">
                     <thead>
-                    <tr>
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Id oggetto</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Nome oggetto</th>
-                        <th data-priority="3" class="border-right-no-color font-x-large padding-10">Id kit</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Descrizione ambiente</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10">Id ambiente</th>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Descrizione ambiente</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Id ambiente</th>
                     </tr>
                     </thead>
                     <tbody id="kit-objects-body">
@@ -204,24 +204,48 @@ or more contributor license agreements.  See the NOTICE file
                     </ul>
                 </div>
             </div>
+
+            <div data-role="content">
+                <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit incompleti</b></p></div>
+                <div class="table-container">
+                    <table data-role="table" id="all-incomplete-kits-table" data-mode="reflow" class="ui-responsive">
+                        <thead>
+                        <tr class="box-shadow-bottom">
+                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
+                            <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                            <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
+                        </tr>
+                        </thead>
+                        <tbody id="all-incomplete-kits-body">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="all-incomplete-kits-error-message"></div>
+
+            </div>
         </div>
 <!--end pagina visualizzazione di tutti i kit e la cronologia dei kit-->
 
 <!--pagina visualizzazione di tutti i kit-->
         <div data-role="page" id="see-all-kits">
-            <div class="kit-create-label">
+            <div class="kit-create-label box-shadow-bottom">
                 <p class="font-x-large blue-color">Tutti i kit</p>
             </div>
-            <div id="all-kit-error-message"></div>
+
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit</b></p></div>
             <div class="table-container">
                 <table data-role="table" id="all-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
-                    <tr>
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Data creazione</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10">Kit chiuso</th>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Kit chiuso</th>
                     </tr>
                     </thead>
                     <tbody id="all-kit-body">
@@ -229,12 +253,13 @@ or more contributor license agreements.  See the NOTICE file
                     </tbody>
                 </table>
             </div>
+            <div id="all-kit-error-message"></div>
         </div>
 <!--end pagina visualizzazione di tutti i kit-->
 
 <!--pagina visualizzazione delle cronologia dei kit-->
         <div data-role="page" id="see-kits-history">
-            <div class="kit-create-label">
+            <div class="kit-create-label box-shadow-bottom">
                 <p class="font-x-large blue-color">Cronologia kit</p>
             </div>
 
@@ -243,12 +268,12 @@ or more contributor license agreements.  See the NOTICE file
             <div class="table-container">
                 <table data-role="table" id="all-kit-history-table" data-mode="reflow" class="ui-responsive">
                     <thead>
-                    <tr>
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Kit id</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Descrizione</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Nome oggetto</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Data</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10">Ambiente</th>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
                     </tr>
                     </thead>
                     <tbody id="all-kit-history-body">
@@ -261,7 +286,7 @@ or more contributor license agreements.  See the NOTICE file
 
 <!--pagina chiusura kit-->
         <div data-role="page" id="close-kit">
-            <div class="kit-create-label">
+            <div class="kit-create-label box-shadow-bottom">
                 <p class="font-x-large blue-color">Chiusura kit</p>
             </div>
 
@@ -269,11 +294,11 @@ or more contributor license agreements.  See the NOTICE file
             <div class="table-container">
                 <table data-role="table" id="close-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
-                    <tr>
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10">Id oggetto</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10">Tipologia oggetto</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10">Nome oggetto</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10"></th>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text"></th>
                     </tr>
                     </thead>
                     <tbody id="close-kit-body">
@@ -358,7 +383,7 @@ or more contributor license agreements.  See the NOTICE file
 
                         <div class="ui-grid-a ui-responsive">
                             <div class="ui-block-a"><a href="#" id="update-type" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA TIPOLOGIA</a></div>
-<!--                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>-->
+                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>

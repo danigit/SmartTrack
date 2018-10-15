@@ -17,11 +17,14 @@ function createKit() {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
+
+                $(typesSelect).children('option:not(:first)').remove();
+
                 let select = '';
 
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
-                    select += '<option id="' + value['id'] + '">' + value['type'] + '</option>';
+                    select += '<option id="' + value['id'] + '" class="center-text">' + value['type'] + '</option>';
                 });
 
                 typesSelect.append(select);
@@ -34,6 +37,11 @@ function createKit() {
             }
         }
     );
+
+    //aggiorno la lista degli oggetti disponibili
+    $('#crea-kit').on('click', function () {
+        typesSelect.trigger('change');
+    });
 
     //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
     typesSelect.on('change', function () {
@@ -72,49 +80,57 @@ function createKit() {
  * @returns {jQuery.fn.init|jQuery|HTMLElement}
  */
 function insertRow(key, value) {
-    console.log('iserting row');
-    let list  = $('<li class="margin-bottom-5"></li>');
-
-    //creo il pulsante per aggiungere l'oggetto alla lista degli oggetti presenti nel kit
-    let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 border-radius-10">Aggiungi al kit</a>').on('click', function () {
-        let cod = $(this).attr('id');
-        let isPresent = false;
-
-        $(this).parent().remove();
-
-        //controllo se l'oggetto e' gia' presente nella lista
-        $.each($('#object-list-ul').children(), function (key, value) {
-            if ($(value).attr('id') === cod) {
-                isPresent = true;
-            }
-        });
-
-        console.log(isPresent);
-        //se l'oggetto e' gia' presente non lo inserisco piu'
-        if(!isPresent){
-            let objectList = $('<li id="' + cod + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
-
-            //creo il pulsante per eliminare l'oggetto dalla lista degli oggetti presenti nel kit e aggiungerlo
-            //nella lista degli oggetti disponibili
-            let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
-                $(this).parent().remove();
-                console.log('inserting seccond: ' + key + '/' + value);
-                typeListUl.append(insertRow(key, value));
-                typeListUl.listview('refresh');
-            });
-
-            objectList.append(deleteElem);
-            objectListUl.append(objectList);
-            objectListUl.listview('refresh');
-            $('.create-kit-button-submit a').removeClass('ui-disabled');
-            $('.create-kit-button-suspend a').removeClass('ui-disabled');
-        }else{
-            showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
+    let isInKit = false;
+    let list = null;
+    $.each(objectListUl.children(), function (innerKey, innerValue) {
+        if (innerValue.firstChild.textContent === value['name']){
+            isInKit = true;
         }
     });
 
-    list.append('<a href="#" class="border-orange-1 border-radius-10">' + value['name'] + '</a>');
-    list.append(button);
+    if(!isInKit) {
+        list = $('<li class="margin-bottom-5"></li>');
+
+        //creo il pulsante per aggiungere l'oggetto alla lista degli oggetti presenti nel kit
+        let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 border-radius-10">Aggiungi al kit</a>').on('click', function () {
+            let cod = $(this).attr('id');
+            let isPresent = false;
+
+            $(this).parent().remove();
+
+            //controllo se l'oggetto e' gia' presente nella lista
+            $.each($('#object-list-ul').children(), function (key, value) {
+                if ($(value).attr('id') === cod) {
+                    isPresent = true;
+                }
+            });
+
+            //se l'oggetto e' gia' presente non lo inserisco piu'
+            if (!isPresent) {
+                let objectList = $('<li id="' + cod + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10 margin-right-42">' + value['name'] + '</a></li>');
+
+                //creo il pulsante per eliminare l'oggetto dalla lista degli oggetti presenti nel kit e aggiungerlo
+                //nella lista degli oggetti disponibili
+                let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
+                    $(this).parent().remove();
+                    console.log(value['name']);
+                    typeListUl.append(insertRow(key, value));
+                    typeListUl.listview('refresh');
+                });
+
+                objectList.append(deleteElem);
+                objectListUl.append(objectList);
+                objectListUl.listview('refresh');
+                $('.create-kit-button-submit a').removeClass('ui-disabled');
+                $('.create-kit-button-suspend a').removeClass('ui-disabled');
+            } else {
+                showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
+            }
+        });
+
+        list.append('<a href="#" class="border-orange-1 border-radius-10 margin-right-42">' + value['name'] + '</a>');
+        list.append(button);
+    }
     return list;
 }
 

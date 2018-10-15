@@ -103,9 +103,10 @@ $('#update-object-description').on('click', function () {
 $('#update-object-type').on('click', function () {
 
     let object = $('#object-type-selected ul li').attr('id');
-    let selectedType = $('#update-object-type-select').find(':selected').val();
+    let selectedType = $('#update-object-type-select').find(':selected').attr('id');
+    let selectedText = $('#update-object-type-select').find(':selected').val();
 
-    if(object !== undefined && selectedType !== 'Seleziona una tipologia...'){
+    if(object !== undefined && selectedText !== 'Seleziona una tipologia...'){
        let objectDescriptionForm = new FormData();
 
        objectDescriptionForm.append('id', object);

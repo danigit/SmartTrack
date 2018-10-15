@@ -52,6 +52,10 @@
     color: #6AB8C1!important;
 }
 
+.darkblue-color{
+    color: #0099FF!important;
+}
+
 .white-color{
     color: #FFFFFF!important;
 }
@@ -177,4 +181,17 @@
 
 .margin-top-15{
     margin-top: 15px!important;
+}
+
+.bold-text{
+    font-weight: bold!important;
+}
+
+.margin-right-42{
+    margin-right: 42px!important;
+}
+
+#type-select-fieldset .ui-select{
+    border: 2px solid #6AB8C1;
+    border-radius: 10px;
 }

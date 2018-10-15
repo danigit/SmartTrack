@@ -35,6 +35,10 @@ let app = {
             controlRecoverKit();
         });
 
+        $('#all-kits').on('pageinit', function () {
+            seeIncompleteKits();
+        });
+
         $('#see-all-kits').on('pageinit', function () {
             seeAllKits();
         });
