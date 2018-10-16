@@ -104,7 +104,7 @@ or more contributor license agreements.  See the NOTICE file
 <!--pagina creazione kit-->
         <div data-role="page" id="crea-kit-page">
             <div class="kit-create-label box-shadow-bottom">
-                <p class="font-x-large blue-color">Creazione kit</p>
+                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Creazione kit</p>
             </div>
 
             <div class="select-container">
@@ -171,7 +171,7 @@ or more contributor license agreements.  See the NOTICE file
 <!--pagina visualizzazione degli oggetti di un kit-->
         <div data-role="page" id="see-kit-objects-position">
             <div class="kit-create-label box-shadow-bottom">
-                <p class="font-x-large blue-color">Cronologia oggetti kit</p>
+                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Cronologia oggetti kit</p>
             </div>
 
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella posizioni oggetti kit</b></p></div>
@@ -234,7 +234,7 @@ or more contributor license agreements.  See the NOTICE file
 <!--pagina visualizzazione di tutti i kit-->
         <div data-role="page" id="see-all-kits">
             <div class="kit-create-label box-shadow-bottom">
-                <p class="font-x-large blue-color">Tutti i kit</p>
+                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Tutti i kit</p>
             </div>
 
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit</b></p></div>
@@ -260,8 +260,17 @@ or more contributor license agreements.  See the NOTICE file
 <!--pagina visualizzazione delle cronologia dei kit-->
         <div data-role="page" id="see-kits-history">
             <div class="kit-create-label box-shadow-bottom">
-                <p class="font-x-large blue-color">Cronologia kit</p>
+                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Cronologia kit</p>
             </div>
+
+            <fieldset id="see-kit-history-fielset">
+
+                <select id="see-kit-history-select" data-inset="true" title="">
+                    <option>Tutti i kit</option>
+                    <option id="closed">Kit chiusi</option>
+                    <option id="incomplete">Kit incompleti</option>
+                </select>
+            </fieldset>
 
             <div id="all-kit-history-error-message"></div>
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella della cronologia dei kit</b></p></div>
@@ -287,7 +296,7 @@ or more contributor license agreements.  See the NOTICE file
 <!--pagina chiusura kit-->
         <div data-role="page" id="close-kit">
             <div class="kit-create-label box-shadow-bottom">
-                <p class="font-x-large blue-color">Chiusura kit</p>
+                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Chiusura kit</p>
             </div>
 
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella degli oggetti presenti nel kit</b></p></div>
@@ -387,6 +396,15 @@ or more contributor license agreements.  See the NOTICE file
                         </div>
                     </fieldset>
                 </form>
+            </div>
+
+            <div data-role="popup" id="delete-type-confirm" class="confirm-delete" data-history="false" data-overlay-theme="a">
+                <div data-role="content">
+                    <h3 class="delete-type-confirm-header center-text blue-color margin-bottom-30"></h3>
+                    <p class="delete-type-confirm-text center-text margin-bottom-30"></p>
+                    <a href="#" class="delete-type-confirm-button width-90 margin-lr-auto" data-role="button" data-rel="back">Elimina tipologia</a>
+                    <a href="#" class="width-90 margin-lr-auto" data-role="button" data-rel="back">Anulla</a>
+                </div>
             </div>
         </div>
 <!--enc pagina inserimento tipologia-->
@@ -537,6 +555,15 @@ or more contributor license agreements.  See the NOTICE file
                         </ul>
                     </div>
                 </form>
+            </div>
+            
+            <div data-role="popup" id="delete-object-confirm" class="confirm-delete" data-history="false" data-overlay-theme="a">
+                <div data-role="content">
+                    <h3 class="delete-object-confirm-header center-text blue-color margin-bottom-30"></h3>
+                    <p class="delete-object-confirm-text center-text margin-bottom-30"></p>
+                    <a href="#" class="delete-object-confirm-button width-90 margin-lr-auto" data-role="button" data-rel="back">Elimina oggetto</a>
+                    <a href="#" class="width-90 margin-lr-auto" data-role="button" data-rel="back">Anulla</a>
+                </div>
             </div>
         </div>
 <!--end pgina inserimento oggetto-->
