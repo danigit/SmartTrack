@@ -92,7 +92,8 @@ fieldset{
 }
 
 #login-content{
-    margin: 15%;
+    width: 79%!important;
+    margin: 3% auto auto!important;
     border-radius: 40px;
     background-color: #4081AD;
     box-shadow: 0 0 20px 2px #4081ad;

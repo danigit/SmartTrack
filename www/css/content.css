@@ -45,6 +45,11 @@
 
 /*main page*/
 
+.home-button{
+    margin: 0!important;
+    border-radius: 10px!important;
+}
+
 thead tr{
     background: url("../img/table-header.jpg") bottom !important;
     color: #FFFFFF;
@@ -287,7 +292,7 @@ thead tr{
 }
 
 #error-msg-create-kit div{
-    width: 80% !important;
+    width: 20% !important;
     margin-left: 0!important;
     border: none!important;
     padding: 0!important;
