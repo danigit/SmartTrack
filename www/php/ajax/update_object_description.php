@@ -16,12 +16,12 @@ class update_object_description extends cs_interaction {
     protected function input_elaboration(){
         $this->value = $this->validate_string('description');
 
-        if(!$this->value)
+        if($this->value === false)
             $this->json_error('Inserire un descrizione');
 
         $this->id = $this->validate_string('id');
 
-        if(!$this->id)
+        if($this->id === false)
             $this->json_error('Selezionare un oggetto');
     }
 

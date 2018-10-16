@@ -16,17 +16,17 @@ class insert_object extends cs_interaction {
     protected function input_elaboration(){
         $this->type = $this->validate_string('type');
 
-        if(!$this->type)
+        if($this->type === false)
             $this->json_error('Seleziona un tipo');
 
         $this->tag = $this->validate_string('tag');
 
-        if(!$this->tag)
+        if($this->tag === false)
             $this->json_error('Inserisci un tag');
 
         $this->description = $this->validate_string('description');
 
-        if(!$this->description)
+        if($this->description === false)
             $this->json_error('Inserisci una descrizione');
     }
 

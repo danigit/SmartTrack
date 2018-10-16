@@ -18,7 +18,7 @@ class close_kit extends cs_interaction {
 
     protected function input_elaboration(){
         $this->id = $this->validate_string('id');
-        if(!$this->id){
+        if($this->id === false){
             $this->json_error('Impossibile recuperare l\'id');
         }
     }

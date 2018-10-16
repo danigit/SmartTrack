@@ -10,7 +10,7 @@ require_once 'db_error.php';
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
     private $connection;
 
     public function __construct(){
@@ -446,10 +446,105 @@ class Connection{
      */
     function get_kits_history(){
         $query = "SELECT aaa.description, aaa.name, aaa.TIMESTAMP, aaa.KIT_ID, aaa.AN_REF, envir.description AS 'environment' FROM (SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment FROM 
-                  (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k JOIN 
+                  (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k RIGHT JOIN 
                   (SELECT object.name, tracking.TIMESTAMP, tracking.KIT_ID, tracking.AN_REF FROM object 
                   JOIN tracking ON object.cod = tracking.COD_OBJ) AS o ON k.kit_id = o.kit_id) AS kt 
                   JOIN anchors AS an ON kt.AN_REF = an.MAC_ANCHOR) AS aaa JOIN environment AS envir ON aaa.environment = envir.env_id";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'], 'obj_name' => $row['name'],
+                "timestamp" => $row['TIMESTAMP'], 'environment' => $row['environment']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    /**
+     * Funzione che recupera la cronologia di un singolo kit passato come parametro
+     * @param $id
+     * @return array|db_error|mysqli_stmt
+     */
+    function get_history_by_kit($id){
+        $query = "SELECT aaa.description, aaa.name, aaa.TIMESTAMP, aaa.KIT_ID, aaa.AN_REF, envir.description AS 'environment' FROM (SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment FROM 
+                  (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k JOIN 
+                  (SELECT object.name, tracking.TIMESTAMP, tracking.KIT_ID, tracking.AN_REF FROM object 
+                  JOIN tracking ON object.cod = tracking.COD_OBJ) AS o ON k.kit_id = o.KIT_ID WHERE o.KIT_ID = ?) AS kt 
+                  JOIN anchors AS an ON kt.AN_REF = an.MAC_ANCHOR) AS aaa JOIN environment AS envir ON aaa.environment = envir.env_id";
+
+        $statement = $this->parse_and_execute_select($query, "i", $id);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
+
+        $result = $statement->get_result();
+        $result_array = array();
+
+        while ($row = $result->fetch_array()) {
+            $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'], 'obj_name' => $row['name'],
+                "timestamp" => $row['TIMESTAMP'], 'environment' => $row['environment']);
+        }
+
+        $statement->close();
+
+        return $result_array;
+    }
+
+    /**
+     * Funzione che recupera la cronologia di tutti i kit chiusi
+     * @return array|db_error
+     */
+    function closed_kit_history(){
+        $query = "SELECT aaa.description, aaa.name, aaa.TIMESTAMP, aaa.KIT_ID, aaa.AN_REF, envir.description AS 'environment' 
+                  FROM (SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment 
+                  FROM (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k 
+                  RIGHT JOIN (SELECT object.name, tracking.TIMESTAMP, tracking.KIT_ID, tracking.AN_REF 
+                  FROM object JOIN tracking ON object.cod = tracking.COD_OBJ) AS o ON k.kit_id = o.kit_id 
+                  WHERE k.closing_date IS NOT NULL) AS kt JOIN anchors AS an ON kt.AN_REF = an.MAC_ANCHOR) AS aaa 
+                  JOIN environment AS envir ON aaa.environment = envir.env_id";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'], 'obj_name' => $row['name'],
+                "timestamp" => $row['TIMESTAMP'], 'environment' => $row['environment']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    /**
+     * Funzione che recupera la cronologia dei kit incompleti
+     * @return array|db_error
+     */
+    function incomplete_kit_history(){
+        $query = "SELECT aka.description, aka.name, aka.TIMESTAMP, aka.KIT_ID, aka.AN_REF, aka.environment FROM incomplete_kit 
+                  JOIN (SELECT aaa.description, aaa.name, aaa.TIMESTAMP, aaa.KIT_ID, aaa.AN_REF, envir.description 
+                  AS 'environment' FROM (SELECT kt.description, kt.name, kt.TIMESTAMP, kt.KIT_ID, kt.AN_REF, an.environment 
+                  FROM (SELECT k.description, o.name, o.TIMESTAMP, o.KIT_ID, o.AN_REF FROM kit AS k 
+                  RIGHT JOIN (SELECT object.name, tracking.TIMESTAMP, tracking.KIT_ID, tracking.AN_REF FROM object 
+                  JOIN tracking ON object.cod = tracking.COD_OBJ) AS o ON k.kit_id = o.kit_id) AS kt JOIN anchors 
+                  AS an ON kt.AN_REF = an.MAC_ANCHOR) AS aaa JOIN environment AS envir ON aaa.environment = envir.env_id) 
+                  AS aka ON aka.KIT_ID = incomplete_kit.kit_id";
 
         $result = $this->connection->query($query);
 

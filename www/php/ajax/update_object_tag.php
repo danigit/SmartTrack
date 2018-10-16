@@ -15,12 +15,12 @@ class update_object_tag extends cs_interaction {
     protected function input_elaboration(){
         $this->value = $this->validate_string('tag');
 
-        if(!$this->value)
+        if($this->value === false)
             $this->json_error('Selezionare un tag');
 
         $this->id = $this->validate_string('id');
 
-        if(!$this->id)
+        if($this->id === false)
             $this->json_error('Selezionare un oggetto');
     }
 

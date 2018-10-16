@@ -19,7 +19,7 @@ class get_objects_by_type extends cs_interaction {
     protected function input_elaboration(){
         $this->type = $this->validate_string('type');
 
-        if(!$this->type)
+        if($this->type === false)
             $this->json_error("Nessun tipo ricevuto");
 
     }

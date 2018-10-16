@@ -18,12 +18,12 @@ class login extends is_not_logged {
     protected function input_elaboration(){
         $this->username = $this->validate_string('username');
 
-        if(!$this->username)
+        if($this->username === false)
             $this->json_error('Username non valido');
 
         $this->password = $this->validate_string('password');
 
-        if(!$this->password)
+        if($this->password === false)
             $this->json_error('Inserire una password');
     }
 

@@ -16,7 +16,7 @@ class insert_type extends cs_interaction {
     protected function input_elaboration(){
         $this->type = $this->validate_string('type');
 
-        if(!$this->type)
+        if($this->type === false)
             $this->json_error('Inserisci un tipo');
     }
 
