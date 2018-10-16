@@ -19,15 +19,17 @@ function seeObjects() {
 
                         deleteObjectForm.append('id', value['id']);
 
-                        let deleteObjectPromise = httpPost('php/ajax/delete_object.php', deleteObjectForm, 'POST');
+                        confirmDeleteObject('Cancella oggetto', 'Sei sicuro di voler cancellare l\'oggetto?', 'Cancella oggetto', function () {
+                            let deleteObjectPromise = httpPost('php/ajax/delete_object.php', deleteObjectForm, 'POST');
 
-                        deleteObjectPromise.then(
-                            function (data) {
-                                if (data.result) {
-                                    $(parent).remove();
+                            deleteObjectPromise.then(
+                                function (data) {
+                                    if (data.result) {
+                                        $(parent).remove();
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        });
                     });
                     objectList.append(deleteElem);
                     $('#see-object-list-ul').append(objectList);
@@ -37,4 +39,14 @@ function seeObjects() {
             }
         }
     )
+}
+
+
+function confirmDeleteObject(title, content, button, callback) {
+    $("#delete-object-confirm .delete-object-confirm-header").text(title);
+    $("#delete-object-confirm .delete-object-confirm-text").text(content);
+    $("#delete-object-confirm .delete-object-confirm-button").text(button).on("click.delete-type-confirm", function() {
+        callback();
+    });
+    $('#delete-object-confirm').popup('open');
 }
