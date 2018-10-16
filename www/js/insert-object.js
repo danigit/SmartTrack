@@ -64,6 +64,8 @@ $('#insert-object-popup-button').on('click', function () {
     getTypes($('#insert-object-type-select'));
     getTags($('#insert-object-tag-select'));
     resetInput();
+    $('#insert-object-type-select option:eq(0)').prop('selected', true);
+    $('#insert-object-type-select').selectmenu('refresh');
 });
 
 function getTypes(param) {
@@ -115,4 +117,9 @@ function getTags(param){
 $('#close-type').on('click', function (e) {
     e.preventDefault();
     $('#insert-type-popup').popup('close');
+});
+
+$('#close-object-popup').on('click', function (e) {
+    e.preventDefault();
+    $('#insert-object-popup').popup('close');
 });
