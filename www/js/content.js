@@ -80,6 +80,7 @@ function sendKitButton(innerValue) {
  */
 function positionButton(value, innerValue) {
     return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin yellow-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
+        $('#kit-objects-body').empty();
         let kitPositionForm = new FormData();
         kitPositionForm.append('id', value['kit_id']);
         let kitPositionPromise = httpPost('php/ajax/get_objects_kit_position.php', kitPositionForm, 'POST');

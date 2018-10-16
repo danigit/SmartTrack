@@ -148,6 +148,7 @@ function controlRecoverKit() {
                 $('.create-kit-button-recover').removeClass('display-none');
                 $('#create-kit-submit').addClass('ui-disabled');
                 $('#type-select-fieldset div').addClass('ui-disabled');
+                createKitRecover();
             }else{
                 //TODO eseguire un'azzione alternativa(rimetere pulsante sospendi kit)
                 // showError("Nessun kit da recuperare", "Impossibile recuperare il kit", "error");
@@ -170,11 +171,12 @@ function createKitSubmit() {
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
             $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
 
-            let message = $('<div class="error-message"><span>Inserire una descrizione per il kit</span></div>');
+            let message = $('<div class="error-message float-left"><span>Inserire una descrizione per il kit</span></div>');
 
             if ($('.error-message').length !== 0)
                 errorMsgCreateKit.find('.error-message').remove();
             errorMsgCreateKit.append(message);
+            errorMsgCreateKit.append($('<img src="../GESTIONLEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'));
         }else {
             //aggiungo tutti i dati da inviare al server
             $.each(objectListUl.children(), function (key, value) {
@@ -252,39 +254,37 @@ function createKitSuspend() {
  * Funzione che gestisce il click sul recupero di un kit sospeso
  */
 function createKitRecover() {
-    $('#create-kit-recover').on('click', function () {
 
-        let recoverKitPromise = httpPost('php/ajax/recover_kit.php', '', 'GET');
+    let recoverKitPromise = httpPost('php/ajax/recover_kit.php', '', 'GET');
 
-        recoverKitPromise.then(
-            function (data) {
-                //controllo se ci sono stati degli errori nella chiamata
-                if (data.result) {
-                    $('.create-kit-button-recover').addClass('display-none');
-                    $('.create-kit-button-suspend').removeClass('display-none');
-                    $('#create-kit-submit').removeClass('ui-disabled');
-                    $('#type-select-fieldset div').removeClass('ui-disabled');
+    recoverKitPromise.then(
+        function (data) {
+            //controllo se ci sono stati degli errori nella chiamata
+            if (data.result) {
+                $('.create-kit-button-recover').addClass('display-none');
+                $('.create-kit-button-suspend').removeClass('display-none');
+                $('#create-kit-submit').removeClass('ui-disabled');
+                $('#type-select-fieldset div').removeClass('ui-disabled');
 
-                    $.each(data[0], function (key, value) {
-                        let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+                $.each(data[0], function (key, value) {
+                    let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
 
-                        //aggiungo i pulsanti di cancellazione agli oggetti presenti nel kit
-                        let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
-                            $(this).parent().remove();
-                        });
-
-                        objectList.append(deleteElem);
-                        objectListUl.append(objectList);
+                    //aggiungo i pulsanti di cancellazione agli oggetti presenti nel kit
+                    let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
+                        $(this).parent().remove();
                     });
 
-                    objectListUl.listview('refresh');
-                }else {
-                    let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                    if ($('.error-message').length !== 0)
-                        errorMsgCreateKit.find('.error-message').remove();
-                    errorMsgCreateKit.append(message);
-                }
+                    objectList.append(deleteElem);
+                    objectListUl.append(objectList);
+                });
+
+                objectListUl.listview('refresh');
+            }else {
+                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+                if ($('.error-message').length !== 0)
+                    errorMsgCreateKit.find('.error-message').remove();
+                errorMsgCreateKit.append(message);
             }
-        )
-    })
+        }
+    )
 }
