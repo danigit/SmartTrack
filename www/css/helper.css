@@ -65,7 +65,7 @@
 }
 
 .orange-color{
-    color: #ED653F;
+    color: #ED653F!important;
 }
 .display-none {
     display: none !important;
@@ -206,4 +206,29 @@
 
 .confirm-delete{
     padding: 10px!important;
+}
+
+.white-background{
+    background: #FFFFFF!important;
+}
+
+.width-93{
+    width: 93%!important;
+}
+
+.green-color{
+    color: #5DB553!important;
+}
+
+.padding-20{
+    padding: 20px!important;
+}
+
+.border-blue-2{
+    border: 2px solid #6AB8C1!important;
+}
+
+.margin-auto{
+    display: block!important;
+    margin:auto!important;
 }

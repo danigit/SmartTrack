@@ -30,7 +30,7 @@ function closeKit() {
 
                         if(innerKey !== 'id'){
                             if( innerKey === 'cod'){
-                                tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large green-color center-text bold-text">' + innerValue + '</td>');
                             }else {
                                 tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
                             }
@@ -39,7 +39,7 @@ function closeKit() {
                             let sendButton;
 
                             //creo pulsante der la segnalazione che l'oggetto e' disperso
-                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').on('click', function () {
+                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-color border-red-1 border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').on('click', function () {
                                 //inserisco l'oggetto disperso nella lista degli oggetti dispersi
                                 missingObjects.push($(this).attr('data-name'));
                                 $(this).parent().parent().remove();

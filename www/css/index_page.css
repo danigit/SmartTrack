@@ -5,6 +5,7 @@
 .ui-content{
     padding: 0!important;
 }
+
 ::placeholder{
     color: #FFFFFF!important;
     text-shadow: none!important;

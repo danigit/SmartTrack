@@ -21,7 +21,7 @@ function populateOpenKits() {
                     }
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'kit_id' ) {
-                            tableRow.append('<td class="font-x-large darkblue-color bold-text center-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large green-color bold-text center-text">' + innerValue + '</td>');
                         }else if(innerKey === 'description' || innerKey === 'creation_date') {
                             tableRow.append('<td class="font-x-large bold-tex center-text">' + innerValue + '</td>');
                         }else if(innerKey === 'spedisci'){
@@ -36,7 +36,7 @@ function populateOpenKits() {
                             tableRow.append(tableCol);
                         }else if(innerKey === 'chiudi'){
                             let tableCol = $('<td></td>');
-                            let sendButton = $('<a href="#close-kit" class="ui-btn font-medium no-margin padding-10 red-background white-color border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
+                            let sendButton = $('<a href="#close-kit" class="ui-btn font-medium no-margin padding-10 border-orange-1 red-color border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
                                 closeKitObject['id'] = $(this).attr('data-name');
                                 // closeKitObject['row'] = $(this).parent().parent();
                             });
@@ -62,8 +62,7 @@ function populateOpenKits() {
  * @returns {void|*|jQuery}
  */
 function sendKitButton(innerValue) {
-    return $('<a href="#" class="ui-btn font-medium no-margin green-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
-        $(this).css('background', 'red');
+    return $('<a href="#" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
         sendKit($(this).attr('data-name'));
         setTimeout(function (){
             $('#open-kit-body').empty();
@@ -79,7 +78,7 @@ function sendKitButton(innerValue) {
  * @returns {*}
  */
 function positionButton(value, innerValue) {
-    return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin yellow-background padding-10 white-color border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
+    return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
         $('#kit-objects-body').empty();
         let kitPositionForm = new FormData();
         kitPositionForm.append('id', value['kit_id']);

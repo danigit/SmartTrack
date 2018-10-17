@@ -10,7 +10,8 @@ require_once 'db_error.php';
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
     public function __construct(){
@@ -242,7 +243,6 @@ class Connection{
         $query = "INSERT INTO kit (description, creation_date) VALUES (?, '$now_date')";
         $resultInsert = $this->parse_and_execute_insert($query, "s", $description);
 
-
         if($resultInsert === false){
             array_push($errors, 'insert');
         }
@@ -257,6 +257,12 @@ class Connection{
             if($resultUpdate == false){
                 array_push($errors, 'update');
             }
+
+            $query = "INSERT INTO kit_history (kit_id, object_id) VALUES (?, ?)";
+            $resultHistoryInsert = $this->parse_and_execute_insert($query, "ii", $id, $datum);
+
+            if ($resultHistoryInsert == false)
+                array_push($errors, 'insertHistory');
         }
 
         if(!empty($errors)){
@@ -495,6 +501,33 @@ class Connection{
         while ($row = $result->fetch_array()) {
             $result_array[] = array('kit_id' => $row['KIT_ID'], 'kit_description' => $row['description'], 'obj_name' => $row['name'],
                 "timestamp" => $row['TIMESTAMP'], 'environment' => $row['environment']);
+        }
+
+        $statement->close();
+
+        return $result_array;
+    }
+
+    function get_template_info($id){
+        $query = "SELECT object_type.description, COUNT(object_type.description) AS num FROM 
+                  (SELECT kit_history.kit_id, kit_history.object_id, object.cod, object.type_id FROM kit_history JOIN object 
+                  ON kit_history.object_id = object.cod WHERE kit_history.kit_id = ?) AS ko JOIN object_type 
+                  ON ko.type_id = object_type.type_id GROUP BY object_type.description";
+
+        $statement = $this->parse_and_execute_select($query, "i", $id);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
+
+        $result = $statement->get_result();
+        $result_array = array();
+
+        while ($row = $result->fetch_array()) {
+            $result_array[] = array('type' => $row['description'], 'number' => $row['num']);
         }
 
         $statement->close();

@@ -80,7 +80,9 @@ or more contributor license agreements.  See the NOTICE file
                     </ul>
                 </div>
             </div>
+
             <div id="error-msg"></div>
+
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella kit disponibili</b></p></div>
             <div class="table-container">
                 <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
@@ -101,11 +103,18 @@ or more contributor license agreements.  See the NOTICE file
         </div>
 <!--end pagina principale nell'area riservata-->
 
+
 <!--pagina creazione kit-->
         <div data-role="page" id="crea-kit-page">
-            <div class="kit-create-label box-shadow-bottom">
-                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Creazione kit</p>
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Creazione kit</p>
             </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
 
             <div class="select-container">
                 <form>
@@ -129,7 +138,7 @@ or more contributor license agreements.  See the NOTICE file
 
             <div class="kit-objects-container">
                 <div class="object-list-label">
-                    <p class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>
+                    <p class="font-large blue-color center-text">Lista degli elementi selezionati per comporre il kit</p>
                 </div>
                 <ul data-role="listview" id="object-list-ul">
 
@@ -146,18 +155,10 @@ or more contributor license agreements.  See the NOTICE file
             <div id="error-msg-create-kit"></div>
 
             <div data-role="footer" data-id="foo1" data-position="fixed">
-                <div data-role="navbar" class="footer-navbar">
-                    <ul class="create-kit-footer-ul">
-                        <li class="create-kit-button-suspend margin-r-5" data-inline="true">
-                            <a href="#" id="create-kit-suspend" class="ui-btn ui-disabled font-large">Sospendi kit</a>
-                        </li>
-                        <li class="create-kit-button-recover margin-r-5 display-none" data-inline="true">
-                            <a href="#" id="create-kit-recover" class="ui-btn font-large">Recupera kit</a>
-                        </li>
-                        <li class="create-kit-button-submit margin-l-5" data-inline="true">
-                            <a href="#" id="create-kit-submit" class="ui-btn ui-disabled font-large">Crea kit</a>
-                        </li>
-                    </ul>
+                <div class="ui-grid-b ui-responsive white-background">
+                    <div class="ui-block-a"><a href="#create-kit-from-template-page" id="create-kit-from-template" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-green-1 green-color">Crea da template</a></div>
+                    <div class="ui-block-b ui-disabled"><a href="#" id="create-kit-suspend" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-orange-1 orange-color">Sospendi kit</a></div>
+                    <div class="ui-block-c ui-disabled"><a href="#" id="create-kit-submit" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-green-1 green-color">Crea kit</a></div>
                 </div>
             </div>
 
@@ -168,10 +169,89 @@ or more contributor license agreements.  See the NOTICE file
         </div>
 <!--end pagina creazione kit-->
 
+<!--pagina creazione kit da template-->
+        <div data-role="page" id="create-kit-from-template-page">
+            <div class="kit-create-label box-shadow-bottom">
+                <p class="font-x-large blue-color">Creazione kit da template</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
+            <div class="select-container">
+                <form>
+                    <fieldset class="ui-field-contain" id="see-kit-template-fielset" data-role="controlgoup" data-inset="true">
+                        <label for="see-kit-template-fielset" class="font-x-large">Seleziona un template</label>
+                        <select id="see-kit-template-select" data-inset="true" title="">
+                            <option>Seleziona un template</option>
+                        </select>
+                    </fieldset>
+
+                    <div id="type-count-container">
+                        <p class="font-large center-text red-color margin-top-50"></p>
+                    </div>
+
+                    <fieldset class="ui-field-contain" id="type-select-from-template-fieldset" data-role="controlgoup" data-inset="true">
+                        <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
+                        <select id="type-select-from-template" data-inset="true" title="">
+                            <option>Seleziona una tipologia...</option>
+                        </select>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="type-list-container">
+                <form class="ui-filterable">
+                    <input id="filterBasic-input-from-template" data-type="search" title="">
+                </form>
+                <ul id="type-list-ul-from-template" data-role="listview" data-split-icon="plus" data-filter="true" data-input="#filterBasic-input">
+
+                </ul>
+            </div>
+
+            <div class="kit-objects-container">
+                <div class="object-list-label">
+                    <p class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>
+                </div>
+                <ul data-role="listview" id="object-list-ul-from-template">
+
+                </ul>
+            </div>
+            <div class="kit-description-container">
+                <fieldset id="create-kit-fielset-from-template">
+                    <div class="">
+                        <input class="font-large" type="text" name="description-from-template" id="description-from-template" placeholder="Inserisci la descrizione del kit">
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="error-msg-create-kit-from-template"></div>
+
+            <div data-role="footer" data-id="foo1-from-template" data-position="fixed">
+                <div class="ui-grid-a ui-responsive white-background">
+                    <div class="ui-block-a ui-disabled"><a href="#" id="create-kit-suspend-from-template" class="ui-btn ui-shadow ui-corner-all width-93 font-large">Sospendi kit</a></div>
+                    <div class="ui-block-b ui-disabled"><a href="#" id="create-kit-submit-from-template" class="ui-btn ui-shadow ui-corner-all width-93 font-large">Crea kit</a></div>
+                </div>
+            </div>
+
+            <div id="error-popup-from-template" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">
+                <p class="error-title"></p>
+                <p class="error-content"></p>
+            </div>
+        </div>
+<!--end pagina creazione kit da template-->
+
 <!--pagina visualizzazione degli oggetti di un kit-->
         <div data-role="page" id="see-kit-objects-position">
             <div class="kit-create-label box-shadow-bottom">
-                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Cronologia oggetti kit</p>
+                <p class="font-x-large blue-color">Cronologia oggetti kit</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
             </div>
 
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella posizioni oggetti kit</b></p></div>
@@ -205,6 +285,11 @@ or more contributor license agreements.  See the NOTICE file
                 </div>
             </div>
 
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
             <div data-role="content">
                 <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit incompleti</b></p></div>
                 <div class="table-container">
@@ -213,10 +298,10 @@ or more contributor license agreements.  See the NOTICE file
                         <tr class="box-shadow-bottom">
                             <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
                             <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
-                            <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                            <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
+                            <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
+                            <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                            <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
                         </tr>
                         </thead>
                         <tbody id="all-incomplete-kits-body">
@@ -233,8 +318,13 @@ or more contributor license agreements.  See the NOTICE file
 
 <!--pagina visualizzazione di tutti i kit-->
         <div data-role="page" id="see-all-kits">
-            <div class="kit-create-label box-shadow-bottom">
-                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Tutti i kit</p>
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Tutti i kit</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
             </div>
 
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit</b></p></div>
@@ -259,14 +349,19 @@ or more contributor license agreements.  See the NOTICE file
 
 <!--pagina visualizzazione delle cronologia dei kit-->
         <div data-role="page" id="see-kits-history">
-            <div class="kit-create-label box-shadow-bottom">
-                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Cronologia kit</p>
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Cronologia kit</p>
             </div>
 
-            <fieldset id="see-kit-history-fielset">
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
 
+            <fieldset id="see-kit-history-fielset" class="kit-selection-label">
+                <label for="see-kit-history-fielset" class="font-x-large orange-color margin-bottom-5">Seleziona i kit da visualizzare</label>
                 <select id="see-kit-history-select" data-inset="true" title="">
-                    <option>Tutti i kit</option>
+                    <option id="all">Tutti i kit</option>
                     <option id="closed">Kit chiusi</option>
                     <option id="incomplete">Kit incompleti</option>
                 </select>
@@ -296,7 +391,12 @@ or more contributor license agreements.  See the NOTICE file
 <!--pagina chiusura kit-->
         <div data-role="page" id="close-kit">
             <div class="kit-create-label box-shadow-bottom">
-                <a href="#main-content" class="ui-btn float-left home-button">Home</a> <p class="font-x-large blue-color">Chiusura kit</p>
+                <p class="font-x-large blue-color">Chiusura kit</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
             </div>
 
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella degli oggetti presenti nel kit</b></p></div>
@@ -322,13 +422,10 @@ or more contributor license agreements.  See the NOTICE file
             </div>
 
             <div data-role="footer" data-id="close-kit-footer" data-position="fixed">
-                <div data-role="navbar" class="footer-navbar">
-                    <ul class="create-kit-footer-ul">
-                        <li data-inline="true">
-                            <a href="#" id="close-kit-and-save-button" class="ui-btn font-large close-kit-button">Close kit</a>
-                        </li>
-                    </ul>
+                <div class="ui-grid-solo white-background">
+                    <div class="ui-block-a"><a href="#" id="close-kit-and-save-button" class="ui-btn ui-shadow ui-corner-all width-90 margin-auto font-large green-color border-green-1">Chiudi kit</a></div>
                 </div>
+
             </div>
         </div>
 <!--end pagina chiusura kit-->
@@ -344,6 +441,11 @@ or more contributor license agreements.  See the NOTICE file
                 </div>
             </div>
 
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
             <div data-role="content">
                 <div class="list-type-label">
                     <p class="font-x-large orange-color">Lista delle tipologie disponibili</p>
@@ -357,18 +459,18 @@ or more contributor license agreements.  See the NOTICE file
 
             <div id="insert-type-popup"  class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="insert-type-form">
-                    <h3>Inserimento tipologia</h3>
+                    <h3 class="bold-text">Inserimento tipologia</h3>
 
                     <fieldset id="input-type-fielset">
                         <div class="input-type-container">
-                            <input class="font-large center-text" type="text" name="type" id="type" placeholder="Inserisci descrizione tipologia">
+                            <input class="font-large center-text border-blue-2" type="text" name="type" id="type" placeholder="Inserisci descrizione tipologia">
                         </div>
 
                         <div id="insert-type-message"></div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <div class="ui-block-a"><a href="#" id="add-type" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIUNGI TIPOLOGIA</a></div>
-                            <div class="ui-block-b"><a href="#" id="close-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>
+                            <div class="ui-block-a"><a href="#" id="add-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1">AGGIUNGI TIPOLOGIA</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-type" class="ui-btn ui-shadow ui-corner-all red-color border-red-1">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>
@@ -376,7 +478,7 @@ or more contributor license agreements.  See the NOTICE file
 
             <div id="update-type-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-type-form">
-                    <h3>Aggiornamento tipologia</h3>
+                    <h3 class="bold-text">Aggiornamento tipologia</h3>
 
                     <fieldset id="input-type-fielset">
 
@@ -385,14 +487,14 @@ or more contributor license agreements.  See the NOTICE file
                         </select>
 
                         <div class="input-type-container">
-                            <input class="font-large center-text" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione tipologia">
+                            <input class="font-large center-text border-blue-2" type="text" name="update-type-input" id="update-type-input" placeholder="Inserisci descrizione tipologia">
                         </div>
 
                         <div id="update-type-message"></div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <div class="ui-block-a"><a href="#" id="update-type" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIORNA TIPOLOGIA</a></div>
-                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>
+                            <div class="ui-block-a"><a href="#" id="update-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1">AGGIORNA TIPOLOGIA</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color border-red-1">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>
@@ -422,6 +524,11 @@ or more contributor license agreements.  See the NOTICE file
                 </div>
             </div>
 
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
             <div data-role="content">
                 <div class="list-type-label">
                     <p class="font-x-large orange-color">Lista degli oggetti disponibili</p>
@@ -435,7 +542,7 @@ or more contributor license agreements.  See the NOTICE file
 
             <div id="insert-object-popup"  class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="insert-type-form">
-                    <h3>Inserimento oggetti</h3>
+                    <h3 class="bold-text">Inserimento oggetti</h3>
 
                     <fieldset id="input-object-fielset">
 
@@ -448,14 +555,14 @@ or more contributor license agreements.  See the NOTICE file
                         </select>
 
                         <div class="input-type-container">
-                            <input class="font-large center-text" type="text" name="object-field" id="object-field" placeholder="Inserisci descrizione oggetto">
+                            <input class="font-large center-text border-blue-2" type="text" name="object-field" id="object-field" placeholder="Inserisci descrizione oggetto">
                         </div>
 
                         <div id="insert-object-message" class="border-radius-10"></div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <div class="ui-block-a"><a href="#" id="add-object-popup" class="ui-btn ui-shadow ui-corner-all blue-color">AGGIUNGI OGGETTO</a></div>
-                            <div class="ui-block-b"><a href="#" id="close-object-popup" class="ui-btn ui-shadow ui-corner-all red-color">CHIUDI</a></div>
+                            <div class="ui-block-a"><a href="#" id="add-object-popup" class="ui-btn ui-shadow ui-corner-all green-color border-green-1">AGGIUNGI OGGETTO</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-object-popup" class="ui-btn ui-shadow ui-corner-all red-color border-red-1">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>
@@ -463,16 +570,16 @@ or more contributor license agreements.  See the NOTICE file
 
             <div id="update-object-description-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-object-description-form">
-                    <h3>Aggiornamento oggetto</h3>
+                    <h3 class="bold-text">Aggiornamento descrizione</h3>
 
                     <fieldset id="update-object-description-fielset">
 
                         <div class="input-type-container">
-                            <input class="font-large center-text input-field" type="text" name="update-object-description-input" id="update-object-description-input" placeholder="Inserisci descrizione oggetto">
+                            <input class="font-large center-text input-field border-blue-2" type="text" name="update-object-description-input" id="update-object-description-input" placeholder="Inserisci descrizione oggetto">
                         </div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <a href="#" id="update-object-description" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA DESCRIZIONE</a>
+                            <a href="#" id="update-object-description" class="ui-btn ui-shadow ui-corner-all green-color ui-responsive border-green-1">AGGIORNA DESCRIZIONE</a>
                         </div>
 
                         <div id="update-object-description-message" class="border-radius-10"></div>
@@ -495,7 +602,7 @@ or more contributor license agreements.  See the NOTICE file
 
             <div id="update-object-type-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-object-type-form">
-                    <h3>Aggiornamento oggetto</h3>
+                    <h3 class="bold-text">Aggiornamento tipologia</h3>
 
                     <fieldset id="update-object-type-fielset">
 
@@ -504,7 +611,7 @@ or more contributor license agreements.  See the NOTICE file
                         </select>
 
                         <div class="ui-grid-a ui-responsive">
-                            <a href="#" id="update-object-type" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA TIPOLOGIA</a>
+                            <a href="#" id="update-object-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 ui-responsive">AGGIORNA TIPOLOGIA</a>
                         </div>
 
                         <div id="update-object-type-message" class="border-radius-10"></div>
@@ -527,7 +634,7 @@ or more contributor license agreements.  See the NOTICE file
 
             <div id="update-object-tag-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-object-tag-form">
-                    <h3>Aggiornamento oggetto</h3>
+                    <h3 class="bold-text">Aggiornamento tag</h3>
 
                     <fieldset id="update-object-tag-fielset">
 
@@ -536,7 +643,7 @@ or more contributor license agreements.  See the NOTICE file
                         </select>
 
                         <div class="ui-grid-a ui-responsive">
-                            <a href="#" id="update-object-tag" class="ui-btn ui-shadow ui-corner-all blue-color ui-responsive">AGGIORNA TAG</a>
+                            <a href="#" id="update-object-tag" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 ui-responsive">AGGIORNA TAG</a>
                         </div>
 
                         <div id="update-object-tag-message" class="border-radius-10"></div>
@@ -572,6 +679,7 @@ or more contributor license agreements.  See the NOTICE file
         <script src="js/helper.js"></script>
         <script src="js/content.js"></script>
         <script src="js/create-kit.js"></script>
+        <script src="js/create-kit-from-template.js"></script>
         <script src="js/logout.js"></script>
         <script src="js/close-kit.js"></script>
         <script src="js/all-kits.js"></script>

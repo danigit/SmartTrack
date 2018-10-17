@@ -1,8 +1,9 @@
 /**
  * Funzione che recupera tutti i kit e li visualizza in una tabella
  */
-function seeKitsHistory() {
-    getKits();
+function seeKitsHistory(first) {
+    if (first)
+        getKits($('#see-kit-history-select'));
     let allKitsHistoryPromise = httpPost('php/ajax/get_kits_history.php', '', 'GET');
 
     allKitsHistoryPromise.then(
@@ -44,8 +45,8 @@ $('#see-kit-history-select').on('change', function () {
 
     let kitId = $('#see-kit-history-select').find(':selected').attr('id');
 
-    if(kitId === undefined){
-        seeKitsHistory()
+    if(kitId === 'all'){
+        seeKitsHistory(false)
     }else if (kitId === 'closed'){
         let closedKitHistoryPromise = httpPost('php/ajax/closed_kit_history.php', '', 'GET');
 
@@ -101,7 +102,7 @@ $('#see-kit-history-select').on('change', function () {
                 }
             }
         )
-    } else{
+    }else{
 
         let kitHistoryForm = new FormData();
         kitHistoryForm.append('id', kitId);
@@ -144,20 +145,19 @@ $('#see-kit-history-select').on('change', function () {
     }
 });
 
-function getKits() {
+function getKits(list) {
     let allKitsPromise = httpPost('php/ajax/get_all_kits.php');
 
     allKitsPromise.then(
         function (data) {
             if (data.result){
-                console.log(data);
                 let select = '';
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
                     select += '<option id="' + value['kit_id'] + '">' + value['description'] + '</option>';
                 });
-                $('#see-kit-history-select').append(select);
-                $('#see-kit-history-select').trigger('create');
+                list.append(select);
+                list.trigger('create');
             }
         }
     )

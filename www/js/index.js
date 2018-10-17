@@ -35,6 +35,10 @@ let app = {
             controlRecoverKit();
         });
 
+        $('#create-kit-from-template-page').on('pageinit', function () {
+            createKitFromTemplate();
+        });
+
         $('#all-kits').on('pageinit', function () {
             seeIncompleteKits();
         });
@@ -44,7 +48,7 @@ let app = {
         });
 
         $('#see-kits-history').on('pageinit', function () {
-            seeKitsHistory();
+            seeKitsHistory(true);
         });
 
         $('#close-kit').on('pagebeforeshow', function () {

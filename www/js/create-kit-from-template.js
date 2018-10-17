@@ -2,12 +2,38 @@
  * Funzione che crea un nuovo kit
  */
 
-let typesSelect = $('#type-select');
-let typeListUl = $('#type-list-ul');
-let objectListUl = $('#object-list-ul');
-let errorMsgCreateKit = $('#error-msg-create-kit');
+let templateSelection = $('#see-kit-template-select');
+let typesSelectFromTemplate = $('#type-select-from-template');
+let typeListUlFromTemplate = $('#type-list-ul-from-template');
+let objectListUlFromTemplate = $('#object-list-ul-from-template');
+let errorMsgCreateKitFromTemplate = $('#error-msg-create-kit-from-template');
+let typesCount = {};
+let typeTrace = 0;
 
-function createKit() {
+function createKitFromTemplate() {
+
+    getKits($('#see-kit-template-select'));
+
+    templateSelection.on('change', function () {
+        $('#type-count-container p').empty();
+       let selectedTemplate = templateSelection.find(':selected').attr('id');
+
+       let kitTemplateForm = new FormData();
+       kitTemplateForm.append('id', selectedTemplate);
+
+       let kitTemplatePromise = httpPost('php/ajax/get_template_info.php', kitTemplateForm, 'POST');
+
+       kitTemplatePromise.then(
+           function (data) {
+               if (data.result) {
+                   $.each(data[0], function (key, value) {
+                       typesCount[key] = {type: value['type'], number: value['number']};
+                   });
+                   $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">'+ typesCount[typeTrace].type + '</b>');
+               }
+           }
+       )
+    });
 
     let selectedType;
 
@@ -18,7 +44,7 @@ function createKit() {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
 
-                $(typesSelect).children('option:not(:first)').remove();
+                $(typesSelectFromTemplate).children('option:not(:first)').remove();
 
                 let select = '';
 
@@ -27,25 +53,25 @@ function createKit() {
                     select += '<option id="' + value['id'] + '" class="center-text">' + value['type'] + '</option>';
                 });
 
-                typesSelect.append(select);
+                typesSelectFromTemplate.append(select);
             } else {
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
 
                 if ($('.error-message').length !== 0)
-                    errorMsgCreateKit.find('.error-message').remove();
-                errorMsgCreateKit.append(message);
+                    errorMsgCreateKitFromTemplate.find('.error-message').remove();
+                errorMsgCreateKitFromTemplate.append(message);
             }
         }
     );
 
     //aggiorno la lista degli oggetti disponibili
     $('#crea-kit').on('click', function () {
-        typesSelect.trigger('change');
+        typesSelectFromTemplate.trigger('change');
     });
 
     //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
-    typesSelect.on('change', function () {
-        selectedType = typesSelect.find(':selected').attr('id');
+    typesSelectFromTemplate.on('change', function () {
+        selectedType = typesSelectFromTemplate.find(':selected').attr('id');
 
         let getObjectsForm = new FormData();
         getObjectsForm.append('type', selectedType);
@@ -56,20 +82,20 @@ function createKit() {
             function (data) {
                 if (data.result) {
                     //svuoto la lista delle tipologie
-                    typeListUl.empty();
+                    typeListUlFromTemplate.empty();
 
                     $.each(data[0], function (key, value) {
-                        typeListUl.append(insertRow(key, value));
+                        typeListUlFromTemplate.append(insertRowFromTemplate(key, value));
                     });
-                    
-                    typeListUl.listview('refresh');
+
+                    typeListUlFromTemplate.listview('refresh');
                 }
             }
         )
     });
 
-    createKitSubmit();
-    createKitSuspend();
+    createKitSubmitFromTemplate();
+    createKitSuspendFromTemplate();
 }
 
 /**
@@ -78,10 +104,10 @@ function createKit() {
  * @param value
  * @returns {jQuery.fn.init|jQuery|HTMLElement}
  */
-function insertRow(key, value) {
+function insertRowFromTemplate(key, value) {
     let isInKit = false;
     let list = null;
-    $.each(objectListUl.children(), function (innerKey, innerValue) {
+    $.each(objectListUlFromTemplate.children(), function (innerKey, innerValue) {
         if (innerValue.firstChild.textContent === value['name']){
             isInKit = true;
         }
@@ -98,7 +124,7 @@ function insertRow(key, value) {
             $(this).parent().remove();
 
             //controllo se l'oggetto e' gia' presente nella lista
-            $.each($('#object-list-ul').children(), function (key, value) {
+            $.each($('#object-list-ul-from-template').children(), function (key, value) {
                 if ($(value).attr('id') === cod) {
                     isPresent = true;
                 }
@@ -113,15 +139,30 @@ function insertRow(key, value) {
                 let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                     $(this).parent().remove();
                     console.log(value['name']);
-                    typeListUl.append(insertRow(key, value));
-                    typeListUl.listview('refresh');
+                    typeListUlFromTemplate.append(insertRow(key, value));
+                    typeListUlFromTemplate.listview('refresh');
                 });
 
                 objectList.append(deleteElem);
-                objectListUl.append(objectList);
-                objectListUl.listview('refresh');
-                $('#create-kit-submit').parent().removeClass('ui-disabled');
-                $('#create-kit-suspend').parent().removeClass('ui-disabled');
+                objectListUlFromTemplate.append(objectList);
+                objectListUlFromTemplate.listview('refresh');
+                $('#create-kit-submit-from-template').parent().removeClass('ui-disabled');
+                $('#create-kit-suspend-from-template').parent().removeClass('ui-disabled');
+
+                typesCount[typeTrace].number = typesCount[typeTrace].number - 1;
+                console.log(Object.keys(typesCount).length);
+                if (typesCount[typeTrace].number === 0 && typeTrace < Object.keys(typesCount).length - 1){
+                    typeTrace++;
+                }
+
+                $('#type-count-container p').text("");
+                $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">'+ typesCount[typeTrace].type + '</b>');
+
+                if (typesCount[typeTrace].number === 0 && typeTrace === Object.keys(typesCount).length - 1){
+                    $('#type-count-container p').text("Il kit e' completo");
+                    $('#type-count-container p').removeClass("red-color");
+                    $('#type-count-container p').addClass("green-color");
+                }
             } else {
                 showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
             }
@@ -133,50 +174,30 @@ function insertRow(key, value) {
     return list;
 }
 
-/**
- * Funzione che controlla se c'e' un kit da recuperare e lo recupera
- */
-function controlRecoverKit() {
-    let controlRecoverKitPromise = httpPost('php/ajax/control_recover_kit.php', '', 'GET');
-
-    controlRecoverKitPromise.then(
-        function (data) {
-            //controllo se ci sono stati degli errori nella chiamata
-            if (data.result) {
-                $('#create-kit-submit').parent().removeClass('ui-disabled');
-                $('#create-kit-suspend').parent().removeClass('ui-disabled');
-                createKitRecover();
-            }else{
-                //TODO eseguire un'azzione alternativa(rimetere pulsante sospendi kit)
-                // showError("Nessun kit da recuperare", "Impossibile recuperare il kit", "error");
-            }
-        }
-    )
-}
 
 /**
  * Funzione che gestisce il click sul pulsante di creazione kit
  */
-function createKitSubmit() {
-    $('#create-kit-submit').on('click', function () {
+function createKitSubmitFromTemplate() {
+    $('#create-kit-submit-from-template').on('click', function () {
         let createKitForm = new FormData();
         let count  = 0;
 
         //controllo se il kit ha una descrizione
-        if($('#description').val() === ""){
+        if($('#description-from-template').val() === ""){
 
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
-            $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
+            $('#create-kit-fielset-from-template input').css('border-bottom', '1px solid #E52612');
 
             let message = $('<div class="error-message float-left"><span>Inserire una descrizione per il kit</span></div>');
 
             if ($('.error-message').length !== 0)
-                errorMsgCreateKit.find('.error-message').remove();
-            errorMsgCreateKit.append(message);
-            errorMsgCreateKit.append($('<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'))
+                errorMsgCreateKitFromTemplate.find('.error-message').remove();
+            errorMsgCreateKitFromTemplate.append(message);
+            errorMsgCreateKitFromTemplate.append($('<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'))
         }else {
             //aggiungo tutti i dati da inviare al server
-            $.each(objectListUl.children(), function (key, value) {
+            $.each(objectListUlFromTemplate.children(), function (key, value) {
                 let obj = $(value).attr('id');
 
                 createKitForm.append(key, obj);
@@ -184,7 +205,7 @@ function createKitSubmit() {
             });
 
             createKitForm.append('count', "" + count);
-            createKitForm.append('description', $('#description').val());
+            createKitForm.append('description', $('#description-from-template').val());
 
             let createKitPromise = httpPost('php/ajax/create_kit.php', createKitForm, 'POST');
             createKitPromise.then(
@@ -199,9 +220,9 @@ function createKitSubmit() {
                         let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
 
                         if ($('.error-message').length !== 0)
-                            errorMsgCreateKit.find('.error-message').remove();
+                            errorMsgCreateKitFromTemplate.find('.error-message').remove();
 
-                        errorMsgCreateKit.append(message);
+                        errorMsgCreateKitFromTemplate.append(message);
                     }
                 }
             )
@@ -212,13 +233,13 @@ function createKitSubmit() {
 /**
  * Funzione che gestisce il click sul pulsante di sospensione della creazione del kit
  */
-function createKitSuspend() {
-    $('#create-kit-suspend').on('click', function () {
+function createKitSuspendFromTemplate() {
+    $('#create-kit-suspend-from-template').on('click', function () {
         let suspendKitForm = new FormData();
         let count  = 0;
 
         //aggiungo tutti i dati da inviare al server
-        $.each(objectListUl.children(), function (key, value) {
+        $.each(objectListUlFromTemplate.children(), function (key, value) {
             let obj = $(value).attr('id');
             console.log(obj);
             suspendKitForm.append(key, obj);
@@ -240,48 +261,10 @@ function createKitSuspend() {
                 }else{
                     let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                     if ($('.error-message').length !== 0)
-                        errorMsgCreateKit.find('.error-message').remove();
-                    errorMsgCreateKit.append(message);
+                        errorMsgCreateKitFromTemplate.find('.error-message').remove();
+                    errorMsgCreateKitFromTemplate.append(message);
                 }
             }
         )
     });
-}
-
-/**
- * Funzione che gestisce il click sul recupero di un kit sospeso
- */
-function createKitRecover() {
-
-    let recoverKitPromise = httpPost('php/ajax/recover_kit.php', '', 'GET');
-
-    recoverKitPromise.then(
-        function (data) {
-            //controllo se ci sono stati degli errori nella chiamata
-            if (data.result) {
-                $('#create-kit-suspend').parent().removeClass('display-none');
-                $('#create-kit-submit').parent().removeClass('ui-disabled');
-                $('#type-select-from-template-fieldset div').removeClass('ui-disabled');
-
-                $.each(data[0], function (key, value) {
-                    let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
-
-                    //aggiungo i pulsanti di cancellazione agli oggetti presenti nel kit
-                    let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
-                        $(this).parent().remove();
-                    });
-
-                    objectList.append(deleteElem);
-                    objectListUl.append(objectList);
-                });
-
-                objectListUl.listview('refresh');
-            }else {
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    errorMsgCreateKit.find('.error-message').remove();
-                errorMsgCreateKit.append(message);
-            }
-        }
-    )
 }

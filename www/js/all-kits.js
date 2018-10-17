@@ -19,7 +19,7 @@ function seeAllKits() {
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'kit_id'){
-                            tableRow.append('<td class="font-x-large darkblue-color bold-text center-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large green-color bold-text center-text">' + innerValue + '</td>');
                         }else if(innerKey === 'description' || innerKey === 'creation_date') {
                             tableRow.append('<td class="font-x-large bold-text center-text">' + innerValue + '</td>');
                         }
@@ -64,7 +64,7 @@ function seeIncompleteKits() {
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if (innerKey === 'kit_id' || innerKey === 'cod'){
-                            tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large green-color center-text bold-text">' + innerValue + '</td>');
                         }else {
                             tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
                         }
