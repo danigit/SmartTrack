@@ -162,3 +162,10 @@ function getKits(list) {
         }
     )
 }
+
+$('#kits-history').on('click', function () {
+    $('#see-kit-history-select option:eq(0)').prop('selected', true);
+    $('#see-kit-history-select').selectmenu();
+    $('#see-kit-history-select').selectmenu('refresh');
+
+});

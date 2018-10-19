@@ -59,7 +59,8 @@ or more contributor license agreements.  See the NOTICE file
         <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
 
         <script src="../node_modules/material-design-lite/material.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<!--        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>-->
+        <script src="js/default/jquery-2.2.4.js"></script>
         <script src="js/default/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
 
@@ -73,7 +74,7 @@ or more contributor license agreements.  See the NOTICE file
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
-                        <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
+                        <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Gestione kit</a></li>
                         <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
                         <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
@@ -279,7 +280,7 @@ or more contributor license agreements.  See the NOTICE file
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#see-all-kits" id="see-kits" class="ui-btn font-large blue-background white-color">Visualizza kit</a></li>
+                        <li><a href="#see-all-kits" id="see-kits" class="ui-btn font-large blue-background white-color">Visualizza stato kit</a></li>
                         <li><a href="#see-kits-history" id="kits-history" class="ui-btn font-large blue-background white-color">Visualizza cronologia</a></li>
                     </ul>
                 </div>
@@ -520,6 +521,7 @@ or more contributor license agreements.  See the NOTICE file
                         <li><a href="#update-object-description-popup" id="update-object-description-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna descrizione</a></li>
                         <li><a href="#update-object-type-popup" id="update-object-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
                         <li><a href="#update-object-tag-popup" id="update-object-tag-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tag</a></li>
+                        <li><a href="#tag-status-popup" id="tag-status" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Stato tag</a></li>
                     </ul>
                 </div>
             </div>
@@ -663,7 +665,11 @@ or more contributor license agreements.  See the NOTICE file
                     </div>
                 </form>
             </div>
-            
+
+            <div id="tag-status-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
+
+            </div>
+
             <div data-role="popup" id="delete-object-confirm" class="confirm-delete" data-history="false" data-overlay-theme="a">
                 <div data-role="content">
                     <h3 class="delete-object-confirm-header center-text blue-color margin-bottom-30"></h3>

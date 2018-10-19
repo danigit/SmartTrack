@@ -38,11 +38,6 @@ function createKit() {
         }
     );
 
-    //aggiorno la lista degli oggetti disponibili
-    $('#crea-kit').on('click', function () {
-        typesSelect.trigger('change');
-    });
-
     //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
     typesSelect.on('change', function () {
         selectedType = typesSelect.find(':selected').attr('id');
@@ -71,6 +66,12 @@ function createKit() {
     createKitSubmit();
     createKitSuspend();
 }
+
+//aggiorno la lista degli oggetti disponibili
+$('#crea-kit').on('click', function () {
+    createKit();
+    typesSelect.trigger('change');
+});
 
 /**
  * Funzione che inserisce un nuovo oggetto nella lista disponibili
