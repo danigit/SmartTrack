@@ -10,8 +10,9 @@ require_once 'db_error.php';
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
 //    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
     public function __construct(){
@@ -142,6 +143,26 @@ class Connection{
 
         while ($row = mysqli_fetch_assoc($result)) {
             $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    function get_tags_status(){
+        $query = "SELECT tag.ID, tag.MAC, tag.NAME, tag.AN_REF, tag.TIMESTAMP, tag.BATTERY_STATUS FROM tag";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_TAG);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC'], 'name' => $row['NAME'],
+                'an_ref' => $row['AN_REF'], 'timestap' => $row['TIMESTAMP'], 'battery' => $row['BATTERY_STATUS']);
         }
 
         $result->close();

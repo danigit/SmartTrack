@@ -40,7 +40,7 @@ let app = {
         });
 
         $('#all-kits').on('pageinit', function () {
-            seeIncompleteKits();
+            seeAllKits();
         });
 
         $('#see-all-kits').on('pageinit', function () {
@@ -61,6 +61,10 @@ let app = {
 
         $('#insert-object').on('pagebeforeshow', function () {
             seeObjects();
+        });
+
+        $('#tag-status-page').on('pagebeforeshow', function () {
+            tagStatus();
         });
     }
 };
