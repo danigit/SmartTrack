@@ -29,6 +29,13 @@ function seeKitsHistory(first) {
                     });
                     $('#all-kit-history-body').append(tableRow).trigger('create');
                 });
+
+                if($('#all-kit-history-body').children().length === 0){
+                    $('.table-empty').empty();
+                    $('.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">Nessun kit da mostrare');
+                }else{
+                    $('.table-empty').empty();
+                }
             } else {
                 let allKitHistoryErrorMessage = $('#all-kit-history-error-message');
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
@@ -151,6 +158,13 @@ function getKits(list) {
     allKitsPromise.then(
         function (data) {
             if (data.result){
+                $.each(list.children(), function (key, value) {
+                    if(key > 2){
+                        $(value).remove();
+                    }
+                });
+
+                // list.find('option').not(':first').remove();
                 let select = '';
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {

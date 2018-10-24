@@ -51,7 +51,8 @@ function getDescriptionData(param){
                 let list = '';
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
-                    list = $('<li class="select-object-list" id="' + value['id'] + '">' + value['name'] + '</li>').on('click', function () {
+                    list = $('<li id="' + value['id'] + '"><a href="#" class="select-object-list">' + value['name'] + '</a></li>').on('click', function () {
+                        console.log('li pressed');
                         $('#object-' + param + '-selected ul').append('<li class="select-object-list margin-top-15" id="' + value['id'] + '">' + value['name'] + '</li>');
                         $('#object-' + param + '-selected ul').listview();
                         $('#object-' + param + '-selected ul').listview('refresh');
@@ -84,7 +85,7 @@ $('#update-object-description').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   showMessage(updateObjedtDescriptionMessage, 'L\'oggetto e\' stato inserito con successo', 'insert-object-success');
+                   showMessage(updateObjedtDescriptionMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
                    setTimeout(function () {
                        $('#update-object-description-popup').popup('close');
                    }, 2000);

@@ -30,25 +30,27 @@ let app = {
             populateOpenKits();
         });
 
-        $('#crea-kit-page').on('pageinit', function () {
+        $('#crea-kit-page').on('pagebeforeshow', function () {
             createKit();
             controlRecoverKit();
         });
 
-        $('#create-kit-from-template-page').on('pageinit', function () {
+        $('#create-kit-from-template-page').on('pagebeforeshow', function () {
             createKitFromTemplate();
         });
 
-        $('#all-kits').on('pageinit', function () {
-            seeIncompleteKits();
+        $('#all-kits').on('pagebeforeshow', function () {
+            if(!$('#all-objects').is(':checked')) {
+                seeAllKits();
+            }
         });
 
         $('#see-all-kits').on('pageinit', function () {
             seeAllKits();
         });
 
-        $('#see-kits-history').on('pageinit', function () {
-            seeKitsHistory(true);
+        $('#see-kits-history').on('pagebeforeshow', function () {
+            // seeKitsHistory(true);
         });
 
         $('#close-kit').on('pagebeforeshow', function () {
@@ -61,6 +63,10 @@ let app = {
 
         $('#insert-object').on('pagebeforeshow', function () {
             seeObjects();
+        });
+
+        $('#tag-status-page').on('pagebeforeshow', function () {
+            tagStatus();
         });
     }
 };

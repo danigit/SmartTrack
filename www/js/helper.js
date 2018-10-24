@@ -24,13 +24,13 @@ function httpPost(url, input, type) {
 
 /**
  * Funzione che mostra un errore in modalita' popup
+ * @param errorPopup
  * @param title - titolo dell'errore
  * @param content - contenuto dell'errore
  * @param type - il tipo di messaggio
  */
-function showError(title, content, type) {
-    console.log('showing error: ' + title);
-    let elem = $('#error-popup');
+function showError(errorPopup, title, content, type) {
+    let elem = errorPopup;
     if(type === 'success') {
         elem.removeClass('error-popup');
         elem.addClass('success-popup');

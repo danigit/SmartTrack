@@ -20,10 +20,17 @@ function populateOpenKits() {
                         tableRow = $('<tr class="gray-background"></tr>')
                     }
                     $.each(value, function (innerKey, innerValue) {
-                        if(innerKey === 'kit_id' ) {
-                            tableRow.append('<td class="font-x-large green-color bold-text center-text">' + innerValue + '</td>');
-                        }else if(innerKey === 'description' || innerKey === 'creation_date') {
+                        if(innerKey === 'description' || innerKey === 'creation_date') {
                             tableRow.append('<td class="font-x-large bold-tex center-text">' + innerValue + '</td>');
+                        }else if(innerKey === 'oggetti'){
+                            let tableColSeeObjects = $('<td></td>');
+                            let seeObjects = $('<a href="#see-kit-objects" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color border-radius-10" data-name="' + innerValue + '">Visualizza oggetti</a>').on('click', function () {
+                                // closeKitObject['id'] = $(this).attr('data-name');
+                                // closeKitObject['row'] = $(this).parent().parent();
+                                seeKitObjects($(this).attr('data-name'));
+                            });
+                            tableColSeeObjects.append(seeObjects);
+                            tableRow.append(tableColSeeObjects);
                         }else if(innerKey === 'spedisci'){
                             let tableCol = $('<td></td>');
                             let sendButton;
@@ -46,6 +53,13 @@ function populateOpenKits() {
                     });
                     $('#open-kit-body').append(tableRow).trigger('create');
                 });
+
+                if($('#open-kit-body').children().length === 0){
+                    $('.table-empty').empty();
+                    $('.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">Nessun kit da mostrare');
+                }else{
+                    $('.table-empty').empty();
+                }
             } else {
                 let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
                 if ($('.error-message').length !== 0)
@@ -114,7 +128,7 @@ function sendKit(id) {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                showError("Kit spedito", "Il kit e' stato spedito", "success");
+                showError($('#error-content-popup'), "Kit spedito", "Il kit e' stato spedito", "success");
             }
         }
     );

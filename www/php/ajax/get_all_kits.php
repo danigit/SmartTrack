@@ -13,14 +13,25 @@ require_once 'helper.php';
  * Classe che recupera tutti i kit
  */
 class get_all_kits extends cs_interaction{
-    private $result;
+    private $from, $to, $result;
 
-    protected function input_elaboration(){}
+    protected function input_elaboration(){
+
+        $this->from = $this->validate_string('from');
+
+        if($this->from === false)
+            $this->json_error('Inserire la data di inizio intervallo');
+
+        $this->to = $this->validate_string('to');
+
+        if($this->to === false)
+            $this->json_error('Inserire la data di fine intervallo');
+    }
 
     protected function get_db_informations(){
 
         $connection = $this->get_connection();
-        $this->result = $connection->get_all_kits();
+        $this->result = $connection->get_all_kits($this->from, $this->to);
 
         if(is_error($this->result))
             $this->json_error("Errore nel recupero dei kit");

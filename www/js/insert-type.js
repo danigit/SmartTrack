@@ -18,7 +18,7 @@ $('#add-type').on('click', function (e) {
                 showMessage(insertTypeMessage, 'La tipologia e\' stata inserita con successo', 'insert-object-success');
                 seeTypes();
             }else {
-                showMessage(insertTypeMessage, 'Non e\' stato possibile inserire l\'oggetto', 'insert-object-error');
+                showMessage(insertTypeMessage, 'Non e\' stato possibile inserire l\'oggetto: ' + data.message, 'insert-object-error');
             }
         }
     )

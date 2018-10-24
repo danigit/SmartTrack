@@ -38,6 +38,12 @@ function seeTypes() {
 
                 seeTypeListUl.listview();
                 seeTypeListUl.listview('refresh');
+
+                if(seeTypeListUl.children().length === 0){
+                    seeTypeListUl.append('<li class="font-large"><a class="border-red-1 border-radius-10 center-text red-color">Nessuna tipologia da mostrare</a></li>');
+                    seeTypeListUl.listview();
+                    seeTypeListUl.listview('refresh');
+                }
             }
         }
     )

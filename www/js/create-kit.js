@@ -18,6 +18,10 @@ function createKit() {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
 
+                console.log('changing the select');
+                $('#type-select option:eq(0)').prop('selected', true);
+                $('#type-select').selectmenu('refresh');
+                typeListUl.empty();
                 $(typesSelect).children('option:not(:first)').remove();
 
                 let select = '';
@@ -37,41 +41,42 @@ function createKit() {
             }
         }
     );
-
-    //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
-    typesSelect.on('change', function () {
-        selectedType = typesSelect.find(':selected').attr('id');
-
-        let getObjectsForm = new FormData();
-        getObjectsForm.append('type', selectedType);
-
-        let getObjectsPromise = httpPost('php/ajax/get_objects_by_type.php', getObjectsForm, 'POST');
-
-        getObjectsPromise.then(
-            function (data) {
-                if (data.result) {
-                    //svuoto la lista delle tipologie
-                    typeListUl.empty();
-
-                    $.each(data[0], function (key, value) {
-                        typeListUl.append(insertRow(key, value));
-                    });
-                    
-                    typeListUl.listview('refresh');
-                }
-            }
-        )
-    });
-
-    createKitSubmit();
-    createKitSuspend();
 }
 
-//aggiorno la lista degli oggetti disponibili
-$('#crea-kit').on('click', function () {
-    createKit();
-    typesSelect.trigger('change');
+
+createKitSubmit();
+createKitSuspend();
+
+//gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
+typesSelect.on('change', function () {
+    selectedType = typesSelect.find(':selected').attr('id');
+
+    let getObjectsForm = new FormData();
+    getObjectsForm.append('type', selectedType);
+
+    let getObjectsPromise = httpPost('php/ajax/get_objects_by_type.php', getObjectsForm, 'POST');
+
+    getObjectsPromise.then(
+        function (data) {
+            if (data.result) {
+                //svuoto la lista delle tipologie
+                typeListUl.empty();
+
+                $.each(data[0], function (key, value) {
+                    typeListUl.append(insertRow(key, value));
+                });
+
+                typeListUl.listview('refresh');
+            }
+        }
+    )
 });
+
+//aggiorno la lista degli oggetti disponibili
+// $('#crea-kit').on('click', function () {
+//     createKit();
+//     typesSelect.trigger('change');
+// });
 
 /**
  * Funzione che inserisce un nuovo oggetto nella lista disponibili
@@ -124,7 +129,7 @@ function insertRow(key, value) {
                 $('#create-kit-submit').parent().removeClass('ui-disabled');
                 $('#create-kit-suspend').parent().removeClass('ui-disabled');
             } else {
-                showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
+                showError($('#error-popup'), "Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
             }
         });
 
@@ -169,12 +174,11 @@ function createKitSubmit() {
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
             $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
 
-            let message = $('<div class="error-message float-left"><span>Inserire una descrizione per il kit</span></div>');
+            let message = $('<div class="error-message float-left"><span class="float-left">Inserire una descrizione per il kit</span><img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
 
             if ($('.error-message').length !== 0)
                 errorMsgCreateKit.find('.error-message').remove();
             errorMsgCreateKit.append(message);
-            errorMsgCreateKit.append($('<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'))
         }else {
             //aggiungo tutti i dati da inviare al server
             $.each(objectListUl.children(), function (key, value) {
@@ -192,7 +196,7 @@ function createKitSubmit() {
                 function (data) {
                     //controllo se ci sono stati dei errori nella chiamata
                     if (data.result) {
-                        showError('Kit creato', 'Il kit e\' stato creato con successo', 'success');
+                        showError($('#error-popup'), 'Kit creato', 'Il kit e\' stato creato con successo', 'success');
                         setTimeout(function () {
                             document.location.href = 'content.php';
                         }, 1500);
@@ -234,7 +238,7 @@ function createKitSuspend() {
             function (data) {
                 //controllo se ci sono stati degli errori nella chiamata
                 if (data.result) {
-                    showError('Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
+                    showError($('#error-popup'), 'Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
                     setTimeout(function (){
                         document.location.href = 'content.php';
                     }, 1500);
@@ -260,6 +264,7 @@ function createKitRecover() {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
+                objectListUl.empty();
                 $('#create-kit-suspend').parent().removeClass('display-none');
                 $('#create-kit-submit').parent().removeClass('ui-disabled');
                 $('#type-select-from-template-fieldset div').removeClass('ui-disabled');

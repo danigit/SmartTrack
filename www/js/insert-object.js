@@ -114,6 +114,25 @@ function getTags(param){
     );
 }
 
+function readBarCode(){
+    let barcodeLength = 0;
+    let fullBarcode = "";
+    let parsedCode = 0;
+
+    $('#bar-code').on('keyup', function (event) {
+        barcodeLength++;
+        if(barcodeLength === 10){
+            fullBarcode = $('#bar-code').val();
+            parsedCode = fullBarcode.substring(1, fullBarcode.length - 1);
+            console.log(parsedCode);
+            barcodeLength = 0;
+            return parsedCode;
+        }
+    })
+}
+
+readBarCode();
+
 $('#close-type').on('click', function (e) {
     e.preventDefault();
     $('#insert-type-popup').popup('close');

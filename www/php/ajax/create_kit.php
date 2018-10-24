@@ -17,7 +17,13 @@ class create_kit extends cs_interaction {
 
     protected function input_elaboration(){
         $this->count = $this->validate_string('count');
+
+        if($this->count === false)
+            $this->json_error('Numero oggetti non ricevuto');
+
         $this->description = $this->validate_string('description');
+        if ($this->description === false)
+            $this->json_error('Inserire una descrizione');
 
         for($i = 0; $i < $this->count; $i++){
             $this->data[] = $this->validate_string($i);

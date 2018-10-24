@@ -74,7 +74,7 @@ or more contributor license agreements.  See the NOTICE file
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
-                        <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Gestione kit</a></li>
+                        <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Cronologia kit</a></li>
                         <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
                         <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
@@ -89,17 +89,25 @@ or more contributor license agreements.  See the NOTICE file
                 <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                         <tr class="box-shadow-bottom">
-                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
                             <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
                             <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                            <th data-priority="4" ></th>
-                            <th data-priority="5" ></th>
+                            <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text"></th>
+                            <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text"></th>
+                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>
                         </tr>
                     </thead>
                     <tbody id="open-kit-body">
 
                     </tbody>
                 </table>
+            </div>
+
+            <div class="table-empty">
+            </div>
+
+            <div id="error-content-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">
+                <p class="error-title"></p>
+                <p class="error-content"></p>
             </div>
         </div>
 <!--end pagina principale nell'area riservata-->
@@ -157,9 +165,9 @@ or more contributor license agreements.  See the NOTICE file
 
             <div data-role="footer" data-id="foo1" data-position="fixed">
                 <div class="ui-grid-b ui-responsive white-background">
-                    <div class="ui-block-a"><a href="#create-kit-from-template-page" id="create-kit-from-template" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-green-1 green-color">Crea da template</a></div>
-                    <div class="ui-block-b ui-disabled"><a href="#" id="create-kit-suspend" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-orange-1 orange-color">Sospendi kit</a></div>
-                    <div class="ui-block-c ui-disabled"><a href="#" id="create-kit-submit" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-green-1 green-color">Crea kit</a></div>
+                    <div class="ui-block-a"><a href="#create-kit-from-template-page" id="create-kit-from-template" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-green-1 green-color inset-shadow-green">Crea da template</a></div>
+                    <div class="ui-block-b ui-disabled"><a href="#" id="create-kit-suspend" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-orange-1 orange-color inset-shadow-orange">Sospendi kit</a></div>
+                    <div class="ui-block-c ui-disabled"><a href="#" id="create-kit-submit" class="ui-btn ui-shadow ui-corner-all font-large width-90 border-green-1 green-color inset-shadow-green">Crea kit</a></div>
                 </div>
             </div>
 
@@ -172,7 +180,7 @@ or more contributor license agreements.  See the NOTICE file
 
 <!--pagina creazione kit da template-->
         <div data-role="page" id="create-kit-from-template-page">
-            <div class="kit-create-label box-shadow-bottom">
+            <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Creazione kit da template</p>
             </div>
 
@@ -194,7 +202,7 @@ or more contributor license agreements.  See the NOTICE file
                         <p class="font-large center-text red-color margin-top-50"></p>
                     </div>
 
-                    <fieldset class="ui-field-contain" id="type-select-from-template-fieldset" data-role="controlgoup" data-inset="true">
+                    <fieldset class="ui-field-contain ui-disabled" id="type-select-from-template-fieldset" data-role="controlgoup" data-inset="true">
                         <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
                         <select id="type-select-from-template" data-inset="true" title="">
                             <option>Seleziona una tipologia...</option>
@@ -232,8 +240,8 @@ or more contributor license agreements.  See the NOTICE file
 
             <div data-role="footer" data-id="foo1-from-template" data-position="fixed">
                 <div class="ui-grid-a ui-responsive white-background">
-                    <div class="ui-block-a ui-disabled"><a href="#" id="create-kit-suspend-from-template" class="ui-btn ui-shadow ui-corner-all width-93 font-large">Sospendi kit</a></div>
-                    <div class="ui-block-b ui-disabled"><a href="#" id="create-kit-submit-from-template" class="ui-btn ui-shadow ui-corner-all width-93 font-large">Crea kit</a></div>
+                    <div class="ui-block-a ui-disabled"><a href="#" id="create-kit-suspend-from-template" class="ui-btn ui-shadow ui-corner-all font-large width-93 border-orange-1 orange-color">Sospendi kit</a></div>
+                    <div class="ui-block-b ui-disabled"><a href="#" id="create-kit-submit-from-template" class="ui-btn ui-shadow ui-corner-all font-large width-93 border-green-1 green-color">Crea kit</a></div>
                 </div>
             </div>
 
@@ -272,6 +280,9 @@ or more contributor license agreements.  See the NOTICE file
                     </tbody>
                 </table>
             </div>
+
+            <div class="table-empty">
+            </div>
         </div>
 <!--end pagina visualizzazione degli oggetti di un kit-->
 
@@ -280,10 +291,70 @@ or more contributor license agreements.  See the NOTICE file
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#see-all-kits" id="see-kits" class="ui-btn font-large blue-background white-color">Visualizza stato kit</a></li>
-                        <li><a href="#see-kits-history" id="kits-history" class="ui-btn font-large blue-background white-color">Visualizza cronologia</a></li>
+                        <li><a href="#see-incomplete-kits" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color">Visualizza stato kit incompleti</a></li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
+            <div id="check-all-kits-content" class="margin-top-50 margin-l-5 width-90">
+                <form>
+                    <label>
+                        <input type="checkbox" name="all-objects" id="all-objects" class="blue-color">Visualizza cronologia kit chiusi
+                    </label>
+                </form>
+            </div>
+
+            <div id="from-to-date" class="margin-l-5">
+                <p class="float-left blue-color bold-text font-large">Visualizza la cronologia degli oggetti dal </p>
+                <div class="float-left width-200 margin-l-5">
+<!--                    <input style="width: 200px" type="date" id="from" data-role="datebox" data-options='{"mode": "calbox", "useNewStyle":true}'>-->
+                    <input type="date" id="from" >
+                </div>
+                <p class="float-left margin-l-5 blue-color bold-text font-large">al</p>
+                <div class="float-left width-200 margin-l-5">
+<!--                    <input type="date" id="to" data-role="datebox" data-options='{"mode": "calbox", "useNewStyle":true}'>-->
+                    <input type="date" id="to">
+                </div>
+            </div>
+
+            <br>
+
+            <div class="table-label">
+                <p class="font-xx-large center-text line-height-3 blue-color"><b>Kit</b></p>
+            </div>
+
+            <div class="table-container">
+                <table data-role="table" id="all-kit-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Kit chiuso</th>
+                        <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">Visualizza oggetti</th>
+                    </tr>
+                    </thead>
+                    <tbody id="all-kit-body">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-empty">
+            </div>
+
+            <div id="all-kit-error-message"></div>
+        </div>
+<!--end pagina visualizzazione di tutti i kit e la cronologia dei kit-->
+
+<!--pagina visualizzazione di tutti i kit incompleti-->
+        <div data-role="page" id="see-incomplete-kits">
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Tutti i kit incompleti</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -297,12 +368,11 @@ or more contributor license agreements.  See the NOTICE file
                     <table data-role="table" id="all-incomplete-kits-table" data-mode="reflow" class="ui-responsive">
                         <thead>
                         <tr class="box-shadow-bottom">
-                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
-                            <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione kit</th>
                             <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
                             <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
                             <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
+                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>
                         </tr>
                         </thead>
                         <tbody id="all-incomplete-kits-body">
@@ -311,42 +381,13 @@ or more contributor license agreements.  See the NOTICE file
                     </table>
                 </div>
 
+                <div class="table-empty"></div>
+
                 <div id="all-incomplete-kits-error-message"></div>
 
             </div>
         </div>
-<!--end pagina visualizzazione di tutti i kit e la cronologia dei kit-->
-
-<!--pagina visualizzazione di tutti i kit-->
-        <div data-role="page" id="see-all-kits">
-            <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Tutti i kit</p>
-            </div>
-
-            <div class="ui-grid-d center back-home-buttons">
-                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
-                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
-            </div>
-
-            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella di tutti i kit</b></p></div>
-            <div class="table-container">
-                <table data-role="table" id="all-kit-table" data-mode="reflow" class="ui-responsive">
-                    <thead>
-                    <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Kit chiuso</th>
-                    </tr>
-                    </thead>
-                    <tbody id="all-kit-body">
-
-                    </tbody>
-                </table>
-            </div>
-            <div id="all-kit-error-message"></div>
-        </div>
-<!--end pagina visualizzazione di tutti i kit-->
+<!--end pagina visualizzazione di tutti i kit incompleti-->
 
 <!--pagina visualizzazione delle cronologia dei kit-->
         <div data-role="page" id="see-kits-history">
@@ -358,15 +399,6 @@ or more contributor license agreements.  See the NOTICE file
                 <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
                 <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
             </div>
-
-            <fieldset id="see-kit-history-fielset" class="kit-selection-label">
-                <label for="see-kit-history-fielset" class="font-x-large orange-color margin-bottom-5">Seleziona i kit da visualizzare</label>
-                <select id="see-kit-history-select" data-inset="true" title="">
-                    <option id="all">Tutti i kit</option>
-                    <option id="closed">Kit chiusi</option>
-                    <option id="incomplete">Kit incompleti</option>
-                </select>
-            </fieldset>
 
             <div id="all-kit-history-error-message"></div>
             <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella della cronologia dei kit</b></p></div>
@@ -386,6 +418,8 @@ or more contributor license agreements.  See the NOTICE file
                     </tbody>
                 </table>
             </div>
+
+            <div class="table-empty"></div>
         </div>
 <!--end pagina visualizzazione della cronologia dei kit-->
 
@@ -417,6 +451,8 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
+            <div class="table-empty"></div>
+
             <div id="close-kit-popup" class="success-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <p class="error-title font-large"></p>
                 <span class="font-medium padding-10"></span>
@@ -426,7 +462,6 @@ or more contributor license agreements.  See the NOTICE file
                 <div class="ui-grid-solo white-background">
                     <div class="ui-block-a"><a href="#" id="close-kit-and-save-button" class="ui-btn ui-shadow ui-corner-all width-90 margin-auto font-large green-color border-green-1">Chiudi kit</a></div>
                 </div>
-
             </div>
         </div>
 <!--end pagina chiusura kit-->
@@ -501,12 +536,12 @@ or more contributor license agreements.  See the NOTICE file
                 </form>
             </div>
 
-            <div data-role="popup" id="delete-type-confirm" class="confirm-delete" data-history="false" data-overlay-theme="a">
+            <div data-role="popup" id="delete-type-confirm" class="confirm-delete padding-20-40" data-history="false" data-overlay-theme="a">
                 <div data-role="content">
-                    <h3 class="delete-type-confirm-header center-text blue-color margin-bottom-30"></h3>
+                    <h3 class="delete-type-confirm-header center-text blue-color margin-bottom-30 font-x-large"></h3>
                     <p class="delete-type-confirm-text center-text margin-bottom-30"></p>
-                    <a href="#" class="delete-type-confirm-button width-90 margin-lr-auto" data-role="button" data-rel="back">Elimina tipologia</a>
-                    <a href="#" class="width-90 margin-lr-auto" data-role="button" data-rel="back">Anulla</a>
+                    <a href="#" class="delete-type-confirm-button width-90 margin-lr-auto border-red-1 red-color" data-role="button" data-rel="back">Elimina tipologia</a>
+                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color" data-role="button" data-rel="back">Anulla</a>
                 </div>
             </div>
         </div>
@@ -521,7 +556,7 @@ or more contributor license agreements.  See the NOTICE file
                         <li><a href="#update-object-description-popup" id="update-object-description-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna descrizione</a></li>
                         <li><a href="#update-object-type-popup" id="update-object-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
                         <li><a href="#update-object-tag-popup" id="update-object-tag-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tag</a></li>
-                        <li><a href="#tag-status-popup" id="tag-status" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Stato tag</a></li>
+                        <li><a href="#tag-status-page" id="tag-status" class="ui-btn font-large blue-background white-color">Stato tag</a></li>
                     </ul>
                 </div>
             </div>
@@ -555,6 +590,10 @@ or more contributor license agreements.  See the NOTICE file
                         <select id="insert-object-tag-select" data-inset="true" title="">
                             <option>Seleziona un tag...</option>
                         </select>
+
+<!--                        <div class="input-type-container">-->
+<!--                            <input class="font-large center-text border-blue-2" type="text" id="bar-code" hidden>-->
+<!--                        </div>-->
 
                         <div class="input-type-container">
                             <input class="font-large center-text border-blue-2" type="text" name="object-field" id="object-field" placeholder="Inserisci descrizione oggetto">
@@ -666,20 +705,79 @@ or more contributor license agreements.  See the NOTICE file
                 </form>
             </div>
 
-            <div id="tag-status-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
-
-            </div>
-
-            <div data-role="popup" id="delete-object-confirm" class="confirm-delete" data-history="false" data-overlay-theme="a">
+            <div data-role="popup" id="delete-object-confirm" class="confirm-delete padding-20-40" data-history="false" data-overlay-theme="a">
                 <div data-role="content">
-                    <h3 class="delete-object-confirm-header center-text blue-color margin-bottom-30"></h3>
+                    <h3 class="delete-object-confirm-header center-text blue-color margin-bottom-30 font-x-large"></h3>
                     <p class="delete-object-confirm-text center-text margin-bottom-30"></p>
-                    <a href="#" class="delete-object-confirm-button width-90 margin-lr-auto" data-role="button" data-rel="back">Elimina oggetto</a>
-                    <a href="#" class="width-90 margin-lr-auto" data-role="button" data-rel="back">Anulla</a>
+                    <a href="#" class="delete-object-confirm-button width-90 margin-lr-auto border-orange-1 red-color" data-role="button" data-rel="back">Elimina oggetto</a>
+                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color" data-role="button" data-rel="back">Anulla</a>
                 </div>
             </div>
         </div>
 <!--end pgina inserimento oggetto-->
+
+        <div data-role="page" id="tag-status-page">
+            <div class="kit-create-label box-shadow-bottom">
+                <p class="font-x-large blue-color">Informazioni sui tag</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
+            <div class="table-container">
+                <table data-role="table" id="tag-status-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id tag</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Mac</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ancora riferimento</th>
+                        <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">L'ultimo aggiornamento</th>
+                        <th data-priority="7" class="border-right-no-color font-x-large padding-10 center-text">Stato bateria</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tag-status-body">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-empty"></div>
+
+        </div>
+
+        <div data-role="page" id="see-kit-objects">
+            <div class="kit-create-label box-shadow-bottom">
+                <p class="font-x-large blue-color">Tabella degli oggetti del kit</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+            <div class="table-container">
+                <table data-role="table" id="see-kit-objects-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Tag oggetto</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="see-kit-objects-body">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-empty"></div>
+
+        </div>
 
 <!--inserimento file javascript nella pagina-->
         <script src="js/helper.js"></script>
@@ -695,6 +793,7 @@ or more contributor license agreements.  See the NOTICE file
         <script src="js/view-objects.js"></script>
         <script src="js/object-crud.js"></script>
         <script src="js/see-history.js"></script>
+        <script src="js/tag-information.js"></script>
 <!--end inserimento file javascript nella pagina-->
 
     </body>

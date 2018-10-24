@@ -10,8 +10,9 @@ require_once 'db_error.php';
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
-//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
     public function __construct(){
@@ -92,9 +93,45 @@ class Connection{
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'], "is_sent" => $row['is_sent'],
-                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), "spedisci" => $row['kit_id'],
+            $result_array[] = array("description" => $row['description'], "is_sent" => $row['is_sent'],
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), 'oggetti' => $row['kit_id'], "spedisci" => $row['kit_id'],
                 "chiudi" => $row['kit_id']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    /**
+     * Funzione che recupera tutti i kit aperti
+     * @param $from
+     * @param $to
+     * @return array|db_error - l'array dei kit recuperati oppure un errore
+     */
+    function get_closed_kits($from, $to){
+        var_dump($from);
+        var_dump($to);
+        $query = "SELECT kit_id, description, is_sent, creation_date FROM kit 
+                  WHERE kit.closing_date IS NOT NULL AND (DATE(kit.closing_date) >= ? 
+                  AND DATE(kit.closing_date) <= ?) ORDER BY kit.closing_date DESC
+";
+
+        $statement = $this->parse_and_execute_select($query, "ss", $from, $to);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        if ($statement === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+
+        $result = $statement->get_result();
+        $result_array = array();
+
+        while ($row = $result->fetch_array()) {
+            $result_array[] = array("kit_id" => $row["kit_id"], "description" => $row['description'],
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), 'closing_date' => $row['closing_date'],
+                "oggetti" => $row['kit_id']);
         }
 
         $result->close();
@@ -142,6 +179,26 @@ class Connection{
 
         while ($row = mysqli_fetch_assoc($result)) {
             $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    function get_tags_status(){
+        $query = "SELECT tag.ID, tag.MAC, tag.NAME, tag.AN_REF, tag.TIMESTAMP, tag.BATTERY_STATUS FROM tag";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_TAG);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC'], 'name' => $row['NAME'],
+                'an_ref' => $row['AN_REF'], 'timestap' => $row['TIMESTAMP'], 'battery' => $row['BATTERY_STATUS']);
         }
 
         $result->close();
@@ -206,7 +263,7 @@ class Connection{
      * @return array|db_error|mysqli_stmt - l'array degli oggetti recuperati o un errore
      */
     function get_objects_by_kit($id){
-        $query = "SELECT cod, description, name FROM object JOIN object_type ON object.type_id = object_type.type_id WHERE kit_id=?";
+        $query = "SELECT cod, description, name, ob_tag FROM object JOIN object_type ON object.type_id = object_type.type_id WHERE kit_id=?";
         $statement = $this->parse_and_execute_select($query, "s", $id);
 
         if ($statement instanceof db_error)
@@ -220,7 +277,7 @@ class Connection{
         $result_array = array();
 
         while ($row = $result->fetch_array()) {
-            $result_array[] = array("cod" => $row['cod'], "obj_type" => $row['description'], "name" => $row['name'], "id" => $id);
+            $result_array[] = array("cod" => $row['cod'], "obj_type" => $row['description'], "name" => $row['name'], "id" => $row['ob_tag']);
         }
 
         $statement->close();
@@ -395,19 +452,26 @@ class Connection{
 
     /**
      * Funzione che recupera tutti i kit
+     * @param $from
+     * @param $to
      * @return array|db_error - l'array contenente i kit oppure un errore
      */
-    function get_all_kits(){
-        $query = "SELECT kit_id, description, creation_date, closing_date FROM kit";
+    function get_all_kits($from, $to){
+        $query = "SELECT kit_id, description, creation_date, closing_date FROM kit 
+                  WHERE DATE(kit.creation_date) >= ? AND DATE(kit.creation_date) <= ? ORDER BY kit.creation_date DESC";
+        $statement = $this->parse_and_execute_select($query, "ss", $from, $to);
 
-        $result = $this->connection->query($query);
+        if ($statement instanceof db_error)
+            return $statement;
 
-        if ($result === false )
-            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
 
+        $result = $statement->get_result();
         $result_array = array();
 
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = $result->fetch_array()) {
             $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
                 "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), "closing_date" => $row['closing_date'],);
         }
@@ -435,9 +499,9 @@ class Connection{
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
-                "cod" => $row['cod'], "name" => $row['name'], "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])),
-                "closing_date" => $row['closing_date'],);
+            $result_array[] = array("description" => $row['description'], "name" => $row['name'],
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), "closing_date" => $row['closing_date'],
+                'history' => $row['kit_id']);
         }
 
         $result->close();
@@ -831,6 +895,8 @@ class Connection{
             $column = $this->parse_string($errors['error']);
             if ($column === "'email'") {
                 return new db_error(db_error::$EMAIL_ALREADY_REGISTERED);
+            }else if( $column === "'description'"){
+                return new db_error(db_error::$TYPE_ALREADY_INSERTED);
             }
         } //else if ($errors['errno'] === 1452)
         //return new DbError(DbError::$FOREIGN_KEY_ERROR);
@@ -903,5 +969,5 @@ class Connection{
 }
 
 //$obj = new Connection();
-//var_dump($obj->get_types());
+//var_dump($obj->insert_type('manichini'));
 //var_dump($obj->create_kit('kitn', [1, 3, 4]));

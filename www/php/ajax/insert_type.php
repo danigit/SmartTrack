@@ -25,8 +25,12 @@ class insert_type extends cs_interaction {
 
         $this->id = $connection->insert_type($this->type);
 
-        if(is_error($this->id))
+        if(is_error($this->id)) {
+            if ($this->id->getErrorName() === 'TYPE_ALREADY_INSERTED')
+                $this->json_error('Tipologia gia\' presente');
+
             $this->json_error("Impossibile salvare il tipo");
+        }
     }
 
     protected function get_returned_data(){

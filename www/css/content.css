@@ -321,7 +321,18 @@ thead tr{
 }
 
 #error-msg-create-kit div{
-    width: 20% !important;
+    width: 40% !important;
+    margin-left: 0!important;
+    border: none!important;
+    padding: 0!important;
+}
+
+#error-msg-create-kit-from-template{
+    margin: 0 0 50px 50px!important;
+}
+
+#error-msg-create-kit-from-template div{
+    width: 40% !important;
     margin-left: 0!important;
     border: none!important;
     padding: 0!important;
@@ -560,7 +571,7 @@ thead tr{
 }
 
 #object-list-ul{
-    width: 75% !important;
+    width: 74% !important;
     margin: auto!important;
 }
 

@@ -8,32 +8,24 @@ let typeListUlFromTemplate = $('#type-list-ul-from-template');
 let objectListUlFromTemplate = $('#object-list-ul-from-template');
 let errorMsgCreateKitFromTemplate = $('#error-msg-create-kit-from-template');
 let typesCount = {};
+let isKitComplete = false;
 let typeTrace = 0;
 
 function createKitFromTemplate() {
 
+    $('#object-list-ul-from-template').empty();
+    $('#type-select-from-template option:eq(0)').prop('selected', true);
+    $('#type-select-from-template').selectmenu('refresh');
+    $('#type-select-from-template-fieldset').addClass('ui-disabled');
+    typeListUlFromTemplate.empty();
+
+    $('#see-kit-template-select').find('option').not(':first').remove();
     getKits($('#see-kit-template-select'));
 
-    templateSelection.on('change', function () {
-        $('#type-count-container p').empty();
-       let selectedTemplate = templateSelection.find(':selected').attr('id');
+    $('#see-kit-template-select option:eq(0)').prop('selected', true);
+    $('#see-kit-template-select').selectmenu('refresh');
 
-       let kitTemplateForm = new FormData();
-       kitTemplateForm.append('id', selectedTemplate);
-
-       let kitTemplatePromise = httpPost('php/ajax/get_template_info.php', kitTemplateForm, 'POST');
-
-       kitTemplatePromise.then(
-           function (data) {
-               if (data.result) {
-                   $.each(data[0], function (key, value) {
-                       typesCount[key] = {type: value['type'], number: value['number']};
-                   });
-                   $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">'+ typesCount[typeTrace].type + '</b>');
-               }
-           }
-       )
-    });
+    $('#type-count-container p').empty();
 
     let selectedType;
 
@@ -65,9 +57,9 @@ function createKitFromTemplate() {
     );
 
     //aggiorno la lista degli oggetti disponibili
-    $('#crea-kit').on('click', function () {
-        typesSelectFromTemplate.trigger('change');
-    });
+    // $('#crea-kit').on('click', function () {
+    //     typesSelectFromTemplate.trigger('change');
+    // });
 
     //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
     typesSelectFromTemplate.on('change', function () {
@@ -94,9 +86,32 @@ function createKitFromTemplate() {
         )
     });
 
-    createKitSubmitFromTemplate();
-    createKitSuspendFromTemplate();
 }
+
+createKitSubmitFromTemplate();
+createKitSuspendFromTemplate();
+
+templateSelection.on('change', function () {
+    $('#type-count-container p').empty();
+    $('#type-select-from-template-fieldset').removeClass('ui-disabled');
+    let selectedTemplate = templateSelection.find(':selected').attr('id');
+
+    let kitTemplateForm = new FormData();
+    kitTemplateForm.append('id', selectedTemplate);
+
+    let kitTemplatePromise = httpPost('php/ajax/get_template_info.php', kitTemplateForm, 'POST');
+
+    kitTemplatePromise.then(
+        function (data) {
+            if (data.result) {
+                $.each(data[0], function (key, value) {
+                    typesCount[key] = {type: value['type'], number: value['number']};
+                });
+                $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">'+ typesCount[typeTrace].type + '</b>');
+            }
+        }
+    )
+});
 
 /**
  * Funzione che inserisce un nuovo oggetto nella lista disponibili
@@ -155,16 +170,19 @@ function insertRowFromTemplate(key, value) {
                     typeTrace++;
                 }
 
-                $('#type-count-container p').text("");
-                $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">'+ typesCount[typeTrace].type + '</b>');
+                if(isKitComplete === false) {
+                    $('#type-count-container p').text("");
+                    $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">' + typesCount[typeTrace].type + '</b>');
+                }
 
                 if (typesCount[typeTrace].number === 0 && typeTrace === Object.keys(typesCount).length - 1){
+                    isKitComplete = true;
                     $('#type-count-container p').text("Il kit e' completo");
                     $('#type-count-container p').removeClass("red-color");
                     $('#type-count-container p').addClass("green-color");
                 }
             } else {
-                showError("Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
+                showError($('#error-popup-from-template'), "Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
             }
         });
 
@@ -189,12 +207,17 @@ function createKitSubmitFromTemplate() {
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
             $('#create-kit-fielset-from-template input').css('border-bottom', '1px solid #E52612');
 
-            let message = $('<div class="error-message float-left"><span>Inserire una descrizione per il kit</span></div>');
+            // let message = $('<div class="error-message float-left"><span>Inserire una descrizione per il kit</span></div>');
+
+            // if ($('.error-message').length !== 0)
+            //     errorMsgCreateKitFromTemplate.find('.error-message').remove();
+            // errorMsgCreateKitFromTemplate.append(message);
+            // errorMsgCreateKitFromTemplate.append($('<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'))
+            let message = $('<div class="error-message float-left"><span class="float-left">Inserire una descrizione per il kit</span><img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
 
             if ($('.error-message').length !== 0)
                 errorMsgCreateKitFromTemplate.find('.error-message').remove();
             errorMsgCreateKitFromTemplate.append(message);
-            errorMsgCreateKitFromTemplate.append($('<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'))
         }else {
             //aggiungo tutti i dati da inviare al server
             $.each(objectListUlFromTemplate.children(), function (key, value) {
@@ -212,7 +235,7 @@ function createKitSubmitFromTemplate() {
                 function (data) {
                     //controllo se ci sono stati dei errori nella chiamata
                     if (data.result) {
-                        showError('Kit creato', 'Il kit e\' stato creato con successo', 'success');
+                        showError($('#error-popup-from-template'), 'Kit creato', 'Il kit e\' stato creato con successo', 'success');
                         setTimeout(function () {
                             document.location.href = 'content.php';
                         }, 1500);
@@ -254,7 +277,7 @@ function createKitSuspendFromTemplate() {
             function (data) {
                 //controllo se ci sono stati degli errori nella chiamata
                 if (data.result) {
-                    showError('Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
+                    showError($('#error-popup-from-template'), 'Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
                     setTimeout(function (){
                         document.location.href = 'content.php';
                     }, 1500);

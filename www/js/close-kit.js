@@ -15,6 +15,7 @@ function closeKit() {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if(data.result){
+                $('#close-kit-body').empty();
                 let tableRow;
                 let i = 0;
 
@@ -42,7 +43,9 @@ function closeKit() {
                             sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-color border-red-1 border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').on('click', function () {
                                 //inserisco l'oggetto disperso nella lista degli oggetti dispersi
                                 missingObjects.push($(this).attr('data-name'));
-                                $(this).parent().parent().remove();
+                                $(this).addClass('red-background');
+                                $(this).removeClass('red-color');
+                                $(this).addClass('white-color');
                             });
 
                             tableCol.append(sendButton);
@@ -51,6 +54,15 @@ function closeKit() {
                     });
                     $('#close-kit-body').append(tableRow).trigger('create');
                 });
+
+                if($('#open-kit-body').children().length === 0){
+                    $('.table-empty').empty();
+                    $('.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">Nessun kit da mostrare');
+                }else{
+                    $('.table-empty').empty();
+                }
+            }else{
+                //TODO mostrare messaggio di errore chiamata
             }
         }
     );

@@ -36,6 +36,12 @@ function seeObjects() {
                 });
                 seeObjectListUl.listview();
                 seeObjectListUl.listview('refresh');
+
+                if(seeObjectListUl.children().length === 0){
+                    seeObjectListUl.append('<li class="font-large"><a class="border-red-1 border-radius-10 center-text red-color">Nessun oggetto da mostrare</a></li>');
+                    seeObjectListUl.listview();
+                    seeObjectListUl.listview('refresh');
+                }
             }
         }
     )
