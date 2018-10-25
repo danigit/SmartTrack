@@ -10,8 +10,8 @@ require_once 'db_error.php';
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
-//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
 //    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
@@ -754,9 +754,11 @@ class Connection{
             }
         }
 
-        $query = "UPDATE object LEFT JOIN `incomplete_kit` ON object.cod=incomplete_kit.object_id  
-                  SET object.kit_id = NULL
-                  WHERE incomplete_kit.object_id IS NULL AND object.kit_id = ?";
+//        $query = "UPDATE object LEFT JOIN `incomplete_kit` ON object.cod=incomplete_kit.object_id
+//                  SET object.kit_id = NULL
+//                  WHERE incomplete_kit.object_id IS NULL AND object.kit_id = ?";
+
+        $query = "UPDATE object SET object.kit_id = NULL WHERE object.kit_id = ?";
 
         $resultUpdateObjects = $this->parse_and_execute_select($query, "i", $kit_id);
 

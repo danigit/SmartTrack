@@ -172,11 +172,12 @@ function createKitSubmit() {
 
         //controllo se il kit ha una descrizione
         if($('#description').val() === ""){
-
+            $('#description').focus();
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
             $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
 
-            let message = $('<div class="error-message float-left"><span class="float-left">Inserire una descrizione per il kit</span><img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
+            let message = $('<div class="error-message float-left"><span class="float-left">Inserire descrizione kit</span>' +
+                '<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
 
             if ($('.error-message').length !== 0)
                 errorMsgCreateKit.find('.error-message').remove();

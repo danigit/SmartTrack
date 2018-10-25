@@ -42,11 +42,19 @@ function closeKit() {
                             sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-color border-red-1 ' +
                                 'border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').
                                 on('click', function () {
-                                //inserisco l'oggetto disperso nella lista degli oggetti dispersi
-                                missingObjects.push($(this).attr('data-name'));
-                                $(this).addClass('red-background');
-                                $(this).removeClass('red-color');
-                                $(this).addClass('white-color');
+                                if($(this).hasClass('red-background')){
+                                    $(this).removeClass('red-background');
+                                    $(this).removeClass('white-color');
+                                    $(this).addClass('red-color');
+                                    //inserisco l'oggetto disperso nella lista degli oggetti dispersi
+                                    missingObjects.splice($.inArray($(this).attr('data-name'), missingObjects), 1);
+                                }else{
+                                    $(this).addClass('red-background');
+                                    $(this).removeClass('red-color');
+                                    $(this).addClass('white-color');
+                                    //rimuove l'oggetto disperso nella lista degli oggetti dispersi
+                                    missingObjects.push($(this).attr('data-name'));
+                                }
                             });
 
                             tableCol.append(sendButton);
