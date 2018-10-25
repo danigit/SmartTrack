@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 02/10/18
- * Time: 17.45
+ * Developer: Daniel Surpanu
  */
 
 require_once 'cs_interaction.php';
@@ -23,7 +20,7 @@ class get_objects extends cs_interaction{
         $this->result = $connection->get_objects();
 
         if(is_error($this->result))
-            $this->json_error("Errore nel recupero degli oggetti");
+            $this->json_error("Errore durante il recupero degli oggetti");
     }
 
     protected function get_returned_data(){

@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 26/09/18
- * Time: 18.45
+ * Developer: Daniel Surpanu
  */
 
 require_once 'cs_interaction.php';

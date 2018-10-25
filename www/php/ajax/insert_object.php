@@ -35,8 +35,10 @@ class insert_object extends cs_interaction {
 
         $this->result = $connection->insert_object($this->type, $this->tag, $this->description);
 
-        if(is_error($this->result))
-            $this->json_error("Impossibile salvare l'oggetto");
+        if(is_error($this->result)) {
+            if ($this->result->getErrorName() === "OBJECT_ALREADY_INSERTED")
+                $this->json_error("Impossibile salvare l'oggetto: nome gia' presente");
+        }
     }
 
     protected function get_returned_data(){

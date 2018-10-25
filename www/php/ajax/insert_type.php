@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 02/10/18
- * Time: 14.13
+ * Developer: Daniel Surpanu
  */
 
 
@@ -17,7 +14,7 @@ class insert_type extends cs_interaction {
         $this->type = $this->validate_string('type');
 
         if($this->type === false)
-            $this->json_error('Inserisci un tipo');
+            $this->json_error('Inserisci una tipologia');
     }
 
     protected function get_db_informations(){
@@ -27,9 +24,9 @@ class insert_type extends cs_interaction {
 
         if(is_error($this->id)) {
             if ($this->id->getErrorName() === 'TYPE_ALREADY_INSERTED')
-                $this->json_error('Tipologia gia\' presente');
+                $this->json_error('Tipologia già presente');
 
-            $this->json_error("Impossibile salvare il tipo");
+            $this->json_error("Impossibile salvare la tipologia");
         }
     }
 

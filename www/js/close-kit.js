@@ -31,7 +31,6 @@ function closeKit() {
 
                         if(innerKey !== 'id'){
                             if( innerKey === 'cod'){
-                                tableRow.append('<td class="font-x-large green-color center-text bold-text">' + innerValue + '</td>');
                             }else {
                                 tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
                             }

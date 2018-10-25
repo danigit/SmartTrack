@@ -1,27 +1,36 @@
+/**
+ * Developer: Daniel Surpanu
+ */
+
+
 
 $('#add-type').on('click', function (e) {
     e.preventDefault();
+    let type = $('#type');
 
     let insertTypeMessage = $('#insert-type-message');
 
-    let type = $('#type').val();
+    if(type.val() !== "") {
+        let inputTypeForm = new FormData();
+        inputTypeForm.append('type', type.val());
 
-    let inputTypeForm = new FormData();
-    inputTypeForm.append('type', type);
+        let inputTypePromise = httpPost('php/ajax/insert_type.php', inputTypeForm, 'POST');
 
-    let inputTypePromise = httpPost('php/ajax/insert_type.php', inputTypeForm, 'POST');
-
-    inputTypePromise.then(
-        function (data) {
-            if (data.result) {
-                $('#type').val("");
-                showMessage(insertTypeMessage, 'La tipologia e\' stata inserita con successo', 'insert-object-success');
-                seeTypes();
-            }else {
-                showMessage(insertTypeMessage, 'Non e\' stato possibile inserire l\'oggetto: ' + data.message, 'insert-object-error');
+        inputTypePromise.then(
+            function (data) {
+                if (data.result) {
+                    type.val("");
+                    showMessage(insertTypeMessage, 'La tipologia è stata inserita con successo', 'insert-object-success');
+                    seeTypes();
+                    type.focus();
+                } else {
+                    showMessage(insertTypeMessage, 'Non è stato possibile inserire l\'oggetto: ' + data.message, 'insert-object-error');
+                }
             }
-        }
-    )
+        )
+    }else {
+        showMessage(insertTypeMessage, 'Inserire una descrizione', 'insert-object-error')
+    }
 });
 
 $('#update-type-popup-button').on('click', function () {
@@ -35,13 +44,13 @@ $('#update-type-popup-button').on('click', function () {
 
 $('#update-type').on('click', function (e) {
     e.preventDefault();
+
     let updateTypeMessage = $('#update-type-message');
+    let updateTypeSelect = $('#update-type-select');
+    let updateTypeInput = $('#update-type-input');
 
-    let selectedType = $('#update-type-select').find(':selected').attr('id');
-    console.log(selectedType);
-
-    let type = $('#update-type-input').val();
-    console.log(type);
+    let selectedType = updateTypeSelect.find(':selected').attr('id');
+    let type = updateTypeInput.val();
 
     let inputTypeForm = new FormData();
     inputTypeForm.append('id', selectedType);
@@ -54,16 +63,17 @@ $('#update-type').on('click', function (e) {
             function (data) {
                 if (data.result) {
                     if (data["rows"] !== 1) {
-                        showMessage(updateTypeMessage, 'Non e\' stato possibile aggiornare l\'oggetto', 'insert-object-error');
+                        showMessage(updateTypeMessage, 'Non è stato possibile aggiornare la tipologia. Errore: tipologia già presente', 'insert-object-error');
                     }else {
-                        $('#update-type-input').val("");
+                        updateTypeInput.val("");
                         $('#update-type-select option:eq(0)').prop('selected', true);
-                        $('#update-type-select').selectmenu('refresh');
-                        showMessage(updateTypeMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
+                        updateTypeSelect.selectmenu('refresh');
+                        showMessage(updateTypeMessage, 'L\'oggetto è stato aggiornato con successo', 'insert-object-success');
 
                         setTimeout(function () {
                             $('#update-type-popup').popup('close');
-                        }, 2000)
+                        }, 2000);
+
                         seeTypes();
                     }
                 }
@@ -76,5 +86,6 @@ $('#update-type').on('click', function (e) {
 
 $('#close-update-type').on('click', function (e) {
     e.preventDefault();
+
     $('#update-type-popup').popup('close');
 });

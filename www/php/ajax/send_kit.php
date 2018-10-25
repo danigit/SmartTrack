@@ -16,6 +16,7 @@ class send_kit extends cs_interaction {
     private $id, $result;
 
     protected function input_elaboration(){
+        $this->json_error('antani');
         $this->id = $this->validate_string('id');
     }
 

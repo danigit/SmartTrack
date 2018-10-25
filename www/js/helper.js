@@ -52,3 +52,39 @@ function showError(errorPopup, title, content, type) {
         elem.popup("close");
     }, 2000);
 }
+
+function setTableRowColor(i) {
+    if((i % 2) === 0) {
+        return $('<tr></tr>');
+    }else{
+        return  $('<tr class="gray-background"></tr>')
+    }
+}
+
+function showMessage(insertObject, message, type) {
+    insertObject.empty();
+    insertObject.append('<p>' + message + '</p>');
+    insertObject.addClass(type);
+
+    setTimeout(function () {
+        insertObject.empty();
+        insertObject.removeClass(type);
+    }, 2000)
+}
+
+function readBarCode(){
+    let barcodeLength = 0;
+    let fullBarcode = "";
+    let parsedCode = 0;
+
+    $('#bar-code').on('keyup', function (event) {
+        barcodeLength++;
+        if(barcodeLength === 10){
+            fullBarcode = $('#bar-code').val();
+            parsedCode = fullBarcode.substring(1, fullBarcode.length - 1);
+            console.log(parsedCode);
+            barcodeLength = 0;
+            return parsedCode;
+        }
+    })
+}

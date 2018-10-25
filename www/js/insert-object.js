@@ -1,6 +1,7 @@
 
 $('#add-object-popup').on('click', function (e) {
     e.preventDefault();
+
     let insertObjectMessage = $('#insert-object-message');
     let insertObjectTypeSelect = $('#insert-object-type-select');
 
@@ -14,8 +15,8 @@ $('#add-object-popup').on('click', function (e) {
     inputObjectForm.append('tag', selectedTag);
 
     //controllo se e' stato selezionato un tipo e un tag
-    if(selectedType === undefined || selectedTag === 'Seleziona un tag...'){
-        showMessage(insertObjectMessage, 'Selezionare un tipologia e un tag', 'insert-object-error');
+    if(selectedType === undefined || selectedTag === 'Seleziona un tag...' || $('#object-field').val() === ""){
+        showMessage(insertObjectMessage, 'Selezionare un tipologia, un tag e inserire una descrizione', 'insert-object-error');
 
         setTimeout(function () {
             insertObjectMessage.empty();
@@ -39,17 +40,6 @@ $('#add-object-popup').on('click', function (e) {
         )
     }
 });
-
-function showMessage(insertObject, message, type) {
-    insertObject.empty();
-    insertObject.append('<p>' + message + '</p>');
-    insertObject.addClass(type);
-
-    setTimeout(function () {
-        insertObject.empty();
-        insertObject.removeClass(type);
-    }, 2000)
-}
 
 function resetInput(){
     $('#object-field').val("");
@@ -81,8 +71,7 @@ function getTypes(param) {
                 $.each(data[0], function (key, value) {
                     select += '<option id="' + value['id'] + '">' + value['type'] + '</option>';
                 });
-                $(param).append(select);
-                $(param).trigger('create');
+                $(param).append(select).trigger('create');
             } else {
                 showMessage($('#insert-object-message'), data.message, 'insert-object-error');
             }
@@ -105,33 +94,13 @@ function getTags(param){
                 $.each(data[0], function (key, value) {
                     select += '<option id="' + value['id'] + '">' + value['mac'] + '</option>';
                 });
-                $(param).append(select);
-                $(param).trigger('create');
+                $(param).append(select).trigger('create');
             } else {
                 showMessage($('#insert-object-message'), data.message, 'insert-object-error');
             }
         }
     );
 }
-
-function readBarCode(){
-    let barcodeLength = 0;
-    let fullBarcode = "";
-    let parsedCode = 0;
-
-    $('#bar-code').on('keyup', function (event) {
-        barcodeLength++;
-        if(barcodeLength === 10){
-            fullBarcode = $('#bar-code').val();
-            parsedCode = fullBarcode.substring(1, fullBarcode.length - 1);
-            console.log(parsedCode);
-            barcodeLength = 0;
-            return parsedCode;
-        }
-    })
-}
-
-readBarCode();
 
 $('#close-type').on('click', function (e) {
     e.preventDefault();

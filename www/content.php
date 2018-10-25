@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: Daniel Surpanu
- * Date: 8/24/2018
- * Time: 4:53 AM
+ * Developer: Daniel Surpanu
  */
 
 if (!isset($_SESSION))
@@ -12,37 +9,8 @@ if (!isset($_SESSION))
 if (!isset($_SESSION['secure'], $_SESSION['username']))
     header('Location: index.php');
 ?>
+
 <!DOCTYPE html>
-
-<!--
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-                                   regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-                                                           specific language governing permissions and limitations
-    under the License.
--->
-
-<!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-
 <html>
     <head>
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'; media-src *; img-src 'self' data: content:;">
@@ -54,12 +22,8 @@ or more contributor license agreements.  See the NOTICE file
         <link rel="stylesheet" type="text/css" href="css/index_page.css">
         <link rel="stylesheet" type="text/css" href="css/content.css">
         <link rel="stylesheet" type="text/css" href="css/helper.css">
-        <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
 
-        <script src="../node_modules/material-design-lite/material.min.js"></script>
-<!--        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>-->
         <script src="js/default/jquery-2.2.4.js"></script>
         <script src="js/default/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -73,18 +37,19 @@ or more contributor license agreements.  See the NOTICE file
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Crea kit</a></li>
+                        <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Creazione kit</a></li>
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Cronologia kit</a></li>
-                        <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
-                        <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
+                        <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserimento tipologie</a></li>
+                        <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserimento oggetti</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div id="error-msg"></div>
+            <div id="error-msg" class="margin-top-50"></div>
 
-            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella kit disponibili</b></p></div>
+            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Tabella kit creati e non ancora chiusi</b></p></div>
+
             <div class="table-container">
                 <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
@@ -102,7 +67,7 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty">
+            <div class="open-kit-body table-empty">
             </div>
 
             <div id="error-content-popup" data-role="popup" data-overlay-theme="a" class="ui-content error-popup" data-history="false">
@@ -128,7 +93,7 @@ or more contributor license agreements.  See the NOTICE file
             <div class="select-container">
                 <form>
                     <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">
-                        <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
+                        <label for="type-select-fieldset" class="font-x-large bold-text">Seleziona una tipologia di oggetti</label>
                         <select id="type-select" data-inset="true" title="">
                             <option>Seleziona una tipologia...</option>
                         </select>
@@ -268,11 +233,9 @@ or more contributor license agreements.  See the NOTICE file
                 <table data-role="table" id="kit-objects-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                        <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
+                        <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Nome kit</th>
                         <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Descrizione ambiente</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Id ambiente</th>
                     </tr>
                     </thead>
                     <tbody id="kit-objects-body">
@@ -281,7 +244,7 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty">
+            <div class="kit-objects-body table-empty">
             </div>
         </div>
 <!--end pagina visualizzazione degli oggetti di un kit-->
@@ -344,7 +307,7 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty">
+            <div class="all-kit-body table-empty">
             </div>
 
             <div id="all-kit-error-message"></div>
@@ -381,7 +344,7 @@ or more contributor license agreements.  See the NOTICE file
                     </table>
                 </div>
 
-                <div class="table-empty"></div>
+                <div class="all-incomplete-kits-body table-empty"></div>
 
                 <div id="all-incomplete-kits-error-message"></div>
 
@@ -406,8 +369,7 @@ or more contributor license agreements.  See the NOTICE file
                 <table data-role="table" id="all-kit-history-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id kit</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome kit</th>
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
                         <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
@@ -419,13 +381,13 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty"></div>
+            <div class="all-kit-history-body table-empty"></div>
         </div>
 <!--end pagina visualizzazione della cronologia dei kit-->
 
 <!--pagina chiusura kit-->
         <div data-role="page" id="close-kit">
-            <div class="kit-create-label box-shadow-bottom">
+            <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Chiusura kit</p>
             </div>
 
@@ -439,9 +401,8 @@ or more contributor license agreements.  See the NOTICE file
                 <table data-role="table" id="close-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text"></th>
                     </tr>
                     </thead>
@@ -451,7 +412,7 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty"></div>
+            <div class="close-kit-body table-empty"></div>
 
             <div id="close-kit-popup" class="success-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <p class="error-title font-large"></p>
@@ -471,8 +432,8 @@ or more contributor license agreements.  See the NOTICE file
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#insert-type-popup" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci tipologia</a></li>
-                        <li><a href="#update-type-popup" id="update-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
+                        <li><a href="#insert-type-popup" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color bold-text">Inserisci tipologia</a></li>
+                        <li><a href="#update-type-popup" id="update-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color bold-text">Aggiorna tipologia</a></li>
                     </ul>
                 </div>
             </div>
@@ -484,11 +445,11 @@ or more contributor license agreements.  See the NOTICE file
 
             <div data-role="content">
                 <div class="list-type-label">
-                    <p class="font-x-large orange-color">Lista delle tipologie disponibili</p>
+                    <p class="font-x-large orange-color bold-text">Lista delle tipologie disponibili</p>
                 </div>
+
                 <div class="list-type-container">
                     <ul id="see-type-list-ul" data-filter="true" data-inset="true">
-
                     </ul>
                 </div>
             </div>
@@ -505,8 +466,8 @@ or more contributor license agreements.  See the NOTICE file
                         <div id="insert-type-message"></div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <div class="ui-block-a"><a href="#" id="add-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1">AGGIUNGI TIPOLOGIA</a></div>
-                            <div class="ui-block-b"><a href="#" id="close-type" class="ui-btn ui-shadow ui-corner-all red-color border-red-1">CHIUDI</a></div>
+                            <div class="ui-block-a"><a href="#" id="add-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 inset-shadow-green">AGGIUNGI TIPOLOGIA</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-type" class="ui-btn ui-shadow ui-corner-all red-color border-red-1 inset-shadow-orange">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>
@@ -529,19 +490,24 @@ or more contributor license agreements.  See the NOTICE file
                         <div id="update-type-message"></div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <div class="ui-block-a"><a href="#" id="update-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1">AGGIORNA TIPOLOGIA</a></div>
-                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color border-red-1">CHIUDI</a></div>
+                            <div class="ui-block-a"><a href="#" id="update-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 inset-shadow-green">AGGIORNA TIPOLOGIA</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-update-type" class="ui-btn ui-shadow ui-corner-all red-color border-red-1 inset-shadow-orange">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>
+            </div>
+
+            <div id="see-type-error-popup" class="error-popup" data-role="popup" data-overlay-theme="a" data-history="false">
+                <p class="error-title font-large"></p>
+                <span class="font-medium padding-10"></span>
             </div>
 
             <div data-role="popup" id="delete-type-confirm" class="confirm-delete padding-20-40" data-history="false" data-overlay-theme="a">
                 <div data-role="content">
                     <h3 class="delete-type-confirm-header center-text blue-color margin-bottom-30 font-x-large"></h3>
                     <p class="delete-type-confirm-text center-text margin-bottom-30"></p>
-                    <a href="#" class="delete-type-confirm-button width-90 margin-lr-auto border-red-1 red-color" data-role="button" data-rel="back">Elimina tipologia</a>
-                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color" data-role="button" data-rel="back">Anulla</a>
+                    <a href="#" class="delete-type-confirm-button width-90 margin-lr-auto border-red-1 red-color inset-shadow-orange" data-role="button" data-rel="back">Elimina tipologia</a>
+                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color inset-shadow-green" data-role="button" data-rel="back">Anulla</a>
                 </div>
             </div>
         </div>
@@ -568,11 +534,10 @@ or more contributor license agreements.  See the NOTICE file
 
             <div data-role="content">
                 <div class="list-type-label">
-                    <p class="font-x-large orange-color">Lista degli oggetti disponibili</p>
+                    <p class="font-x-large orange-color bold-text">Lista degli oggetti disponibili</p>
                 </div>
                 <div class="list-type-container">
                     <ul id="see-object-list-ul" data-filter="true" data-inset="true">
-
                     </ul>
                 </div>
             </div>
@@ -602,8 +567,8 @@ or more contributor license agreements.  See the NOTICE file
                         <div id="insert-object-message" class="border-radius-10"></div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <div class="ui-block-a"><a href="#" id="add-object-popup" class="ui-btn ui-shadow ui-corner-all green-color border-green-1">AGGIUNGI OGGETTO</a></div>
-                            <div class="ui-block-b"><a href="#" id="close-object-popup" class="ui-btn ui-shadow ui-corner-all red-color border-red-1">CHIUDI</a></div>
+                            <div class="ui-block-a"><a href="#" id="add-object-popup" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 inset-shadow-green">AGGIUNGI OGGETTO</a></div>
+                            <div class="ui-block-b"><a href="#" id="close-object-popup" class="ui-btn ui-shadow ui-corner-all red-color border-red-1 inset-shadow-orange">CHIUDI</a></div>
                         </div>
                     </fieldset>
                 </form>
@@ -620,7 +585,7 @@ or more contributor license agreements.  See the NOTICE file
                         </div>
 
                         <div class="ui-grid-a ui-responsive">
-                            <a href="#" id="update-object-description" class="ui-btn ui-shadow ui-corner-all green-color ui-responsive border-green-1">AGGIORNA DESCRIZIONE</a>
+                            <a href="#" id="update-object-description" class="ui-btn ui-shadow ui-corner-all green-color ui-responsive border-green-1 inset-shadow-green">AGGIORNA DESCRIZIONE</a>
                         </div>
 
                         <div id="update-object-description-message" class="border-radius-10"></div>
@@ -652,7 +617,7 @@ or more contributor license agreements.  See the NOTICE file
                         </select>
 
                         <div class="ui-grid-a ui-responsive">
-                            <a href="#" id="update-object-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 ui-responsive">AGGIORNA TIPOLOGIA</a>
+                            <a href="#" id="update-object-type" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 ui-responsive inset-shadow-green">AGGIORNA TIPOLOGIA</a>
                         </div>
 
                         <div id="update-object-type-message" class="border-radius-10"></div>
@@ -684,7 +649,7 @@ or more contributor license agreements.  See the NOTICE file
                         </select>
 
                         <div class="ui-grid-a ui-responsive">
-                            <a href="#" id="update-object-tag" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 ui-responsive">AGGIORNA TAG</a>
+                            <a href="#" id="update-object-tag" class="ui-btn ui-shadow ui-corner-all green-color border-green-1 ui-responsive inset-shadow-green">AGGIORNA TAG</a>
                         </div>
 
                         <div id="update-object-tag-message" class="border-radius-10"></div>
@@ -705,19 +670,24 @@ or more contributor license agreements.  See the NOTICE file
                 </form>
             </div>
 
+            <div id="see-objects-error-popup" class="error-popup" data-role="popup" data-overlay-theme="a" data-history="false">
+                <p class="error-title font-large"></p>
+                <span class="font-medium padding-10"></span>
+            </div>
+
             <div data-role="popup" id="delete-object-confirm" class="confirm-delete padding-20-40" data-history="false" data-overlay-theme="a">
                 <div data-role="content">
                     <h3 class="delete-object-confirm-header center-text blue-color margin-bottom-30 font-x-large"></h3>
                     <p class="delete-object-confirm-text center-text margin-bottom-30"></p>
-                    <a href="#" class="delete-object-confirm-button width-90 margin-lr-auto border-orange-1 red-color" data-role="button" data-rel="back">Elimina oggetto</a>
-                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color" data-role="button" data-rel="back">Anulla</a>
+                    <a href="#" id="delete-object-confirm-button" class="delete-object-confirm-button width-90 margin-lr-auto border-orange-1 red-color inset-shadow-orange" data-role="button" data-rel="back">Elimina oggetto</a>
+                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color inset-shadow-green" data-role="button" data-rel="back">Anulla</a>
                 </div>
             </div>
         </div>
 <!--end pgina inserimento oggetto-->
 
         <div data-role="page" id="tag-status-page">
-            <div class="kit-create-label box-shadow-bottom">
+            <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Informazioni sui tag</p>
             </div>
 
@@ -730,7 +700,6 @@ or more contributor license agreements.  See the NOTICE file
                 <table data-role="table" id="tag-status-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id tag</th>
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Mac</th>
                         <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ancora riferimento</th>
@@ -745,12 +714,12 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty"></div>
+            <div class="tag-status-body table-empty"></div>
 
         </div>
 
         <div data-role="page" id="see-kit-objects">
-            <div class="kit-create-label box-shadow-bottom">
+            <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Tabella degli oggetti del kit</p>
             </div>
 
@@ -762,7 +731,6 @@ or more contributor license agreements.  See the NOTICE file
                 <table data-role="table" id="see-kit-objects-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Id oggetto</th>
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
                         <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Tag oggetto</th>
@@ -775,7 +743,7 @@ or more contributor license agreements.  See the NOTICE file
                 </table>
             </div>
 
-            <div class="table-empty"></div>
+            <div class="see-kit-objects-body table-empty"></div>
 
         </div>
 

@@ -1,9 +1,12 @@
 /**
- * Recupero e visualizzo i kit aperti
+ * Developer: Daniel Surpanu
  */
 
 var closeKitObject = {};
 
+/**
+ * Funzione che insersce nella tabella i kit aperti
+ */
 function populateOpenKits() {
     let openKitsPromise = httpPost('php/ajax/get_open_kits.php', '', 'GET');
 
@@ -14,69 +17,70 @@ function populateOpenKits() {
                 let tableRow;
                 let i = 0;
                 $.each(data[0], function (key, value) {
-                    if((i++ % 2) === 0) {
-                        tableRow = $('<tr></tr>');
-                    }else{
-                        tableRow = $('<tr class="gray-background"></tr>')
-                    }
+                    tableRow = setTableRowColor(i++);
+
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'description' || innerKey === 'creation_date') {
                             tableRow.append('<td class="font-x-large bold-tex center-text">' + innerValue + '</td>');
                         }else if(innerKey === 'oggetti'){
                             let tableColSeeObjects = $('<td></td>');
-                            let seeObjects = $('<a href="#see-kit-objects" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color border-radius-10" data-name="' + innerValue + '">Visualizza oggetti</a>').on('click', function () {
-                                // closeKitObject['id'] = $(this).attr('data-name');
-                                // closeKitObject['row'] = $(this).parent().parent();
+                            let seeObjects = $('<a href="#see-kit-objects" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color ' +
+                                'border-radius-10 inset-shadow-green" data-name="' + innerValue + '">Visualizza oggetti</a>').on('click', function () {
                                 seeKitObjects($(this).attr('data-name'));
                             });
                             tableColSeeObjects.append(seeObjects);
                             tableRow.append(tableColSeeObjects);
                         }else if(innerKey === 'spedisci'){
-                            let tableCol = $('<td></td>');
-                            let sendButton;
-                            if(value['is_sent'] === "1") {
-                                 sendButton = positionButton(value, innerValue);
-                            }else{
-                                sendButton = sendKitButton(innerValue);
-                            }
-                            tableCol.append(sendButton);
-                            tableRow.append(tableCol);
+                            let sendButton = positionButton(value['is_sent'] === "1", value, innerValue);
+                            tableRow.append($('<td></td>').append(sendButton));
                         }else if(innerKey === 'chiudi'){
-                            let tableCol = $('<td></td>');
-                            let sendButton = $('<a href="#close-kit" class="ui-btn font-medium no-margin padding-10 border-orange-1 red-color border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
+                            let sendButton = $('<a href="#close-kit" class="ui-btn font-medium no-margin padding-10 border-orange-1 red-color inset-shadow-orange ' +
+                                'border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
                                 closeKitObject['id'] = $(this).attr('data-name');
-                                // closeKitObject['row'] = $(this).parent().parent();
                             });
-                            tableCol.append(sendButton);
-                            tableRow.append(tableCol);
+                            tableRow.append($('<td></td>').append(sendButton));
                         }
                     });
                     $('#open-kit-body').append(tableRow).trigger('create');
                 });
 
-                if($('#open-kit-body').children().length === 0){
-                    $('.table-empty').empty();
-                    $('.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">Nessun kit da mostrare');
-                }else{
-                    $('.table-empty').empty();
-                }
+                showEmptyTable($('#open-kit-body'), "Nessun kit da mostrare");
             } else {
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+                let message = $('<div class="center-text error-message"><span>Impossibile communicare con il server.<br>Errore: ' +
+                    data.message + '</span></div>');
                 if ($('.error-message').length !== 0)
                     $('#error-msg').find('.error-message').remove();
                 $('#error-msg').append(message);
+
+                showEmptyTable($('#open-kit-body'), "Nessun kit da mostrare");
             }
         }
     );
 }
 
 /**
+ * Funzione che mostra un messaggio di errore se la tabella e' vuota
+ */
+function showEmptyTable(table, message) {
+    console.log('empty table');
+    console.log(table);
+    console.log('#' + table.attr('id') + ' .table-empty');
+    if(table.children().length === 0){
+        console.log('table empty');
+        $('.' + table.attr('id') + '.table-empty').empty();
+        $('.' + table.attr('id') + '.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">' + message + '</p>');
+    }else{
+        $('.' + table.attr('id') + '.table-empty').empty();
+    }
+}
+/**
  * Funzione che gestisce la spedizione di un kit
  * @param innerValue
  * @returns {void|*|jQuery}
  */
 function sendKitButton(innerValue) {
-    return $('<a href="#" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10" data-name="' + innerValue + '">Spedisci kit</a>').on('click', function () {
+    return $('<a href="#" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10 inset-shadow-green" data-name="' +
+        innerValue + '">Spedisci kit</a>').on('click', function () {
         sendKit($(this).attr('data-name'));
         setTimeout(function (){
             $('#open-kit-body').empty();
@@ -86,38 +90,50 @@ function sendKitButton(innerValue) {
 }
 
 /**
- * Funzione che gestisce la visualizzazione della posizione degli oggetti di un kit spedito
+ * Funzione che crea e gestisce la visualizzazione della posizione degli oggetti di un kit spedito, e crea e gestisce la spedizione di un kit
+ * @param isSent
  * @param value - variabile per recuperare l'id del kit
  * @param innerValue -
  * @returns {*}
  */
-function positionButton(value, innerValue) {
-    return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10" data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
-        $('#kit-objects-body').empty();
-        let kitPositionForm = new FormData();
-        kitPositionForm.append('id', value['kit_id']);
-        let kitPositionPromise = httpPost('php/ajax/get_objects_kit_position.php', kitPositionForm, 'POST');
+function positionButton(isSent, value, innerValue) {
+    if(isSent) {
+        return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10 inset-shadow-green" ' +
+            'data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
+            $('#kit-objects-body').empty();
+            let kitPositionForm = new FormData();
+            kitPositionForm.append('id', value['spedisci']);
 
-        kitPositionPromise.then(
-            function (dataPosition) {
-                if (dataPosition.result) {
-                    $.each(dataPosition[0], function (dataKey, dataValue) {
-                        let positionTableRow = $('<tr></tr>');
-                        $.each(dataValue, function (innerDataKey, innerDataValue) {
-                            if (innerDataKey === 'kit_id' || innerDataKey === 'cod'){
-                                positionTableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerDataValue + '</td>');
-                            } else {
-                                positionTableRow.append('<td class="font-x-large center-text bold-text">' + innerDataValue + '</td>');
-                            }
+            let kitPositionPromise = httpPost('php/ajax/get_objects_kit_position.php', kitPositionForm, 'POST');
+
+            kitPositionPromise.then(
+                function (dataPosition) {
+                    if (dataPosition.result) {
+                        $.each(dataPosition[0], function (dataKey, dataValue) {
+                            let positionTableRow = $('<tr></tr>');
+                            $.each(dataValue, function (innerDataKey, innerDataValue) {
+                                if (innerDataKey !== 'kit_id' || innerDataKey !== 'cod' || innerDataKey !== 'environment') {
+                                    positionTableRow.append('<td class="font-x-large center-text bold-text">' + innerDataValue + '</td>');
+                                }
+                            });
+                            $('#kit-objects-body').append(positionTableRow);
                         });
-                        $('#kit-objects-body').append(positionTableRow);
-                    })
+                        showEmptyTable($('#kit-objects-body'), "Nessun oggetto da mostrare");
+                    }else {
+                        showEmptyTable($('#kit-objects-body'), 'Impossibile recuperare gli oggetti.<br>Errore: ' + dataPosition.message)
+                    }
                 }
-            }
-        )
-    });
+            )
+        });
+    }else {
+        return sendKitButton(innerValue);
+    }
 }
 
+/**
+ * Funzione che spedisce un kit
+ * @param id - il kit da spedire
+ */
 function sendKit(id) {
     let sendKitForm = new FormData();
     sendKitForm.append('id', id);
@@ -128,7 +144,9 @@ function sendKit(id) {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                showError($('#error-content-popup'), "Kit spedito", "Il kit e' stato spedito", "success");
+                showError($('#error-content-popup'), "Kit spedito", "Il kit è stato spedito", "success");
+            }else{
+                showError($('#error-content-popup'), 'Kit non spedito', 'Il kit non è stato spedito. Errore: ' + data.message, 'error');
             }
         }
     );

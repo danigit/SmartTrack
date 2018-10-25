@@ -11,8 +11,8 @@ mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
 //    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
-//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
     public function __construct(){
@@ -84,7 +84,7 @@ class Connection{
      * @return array|db_error - l'array dei kit recuperati oppure un errore
      */
     function get_open_kits(){
-        $query = "SELECT kit_id, description, is_sent, creation_date FROM kit WHERE closing_date IS NULL";
+        $query = "SELECT kit_id, description, is_sent, creation_date FROM kit WHERE closing_date IS NULL ORDER BY creation_date DESC ";
         $result = $this->connection->query($query);
 
         if ($result === false )
@@ -94,8 +94,8 @@ class Connection{
 
         while ($row = mysqli_fetch_assoc($result)) {
             $result_array[] = array("description" => $row['description'], "is_sent" => $row['is_sent'],
-                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), 'oggetti' => $row['kit_id'], "spedisci" => $row['kit_id'],
-                "chiudi" => $row['kit_id']);
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), 'oggetti' => $row['kit_id'],
+                "spedisci" => $row['kit_id'], "chiudi" => $row['kit_id']);
         }
 
         $result->close();
@@ -110,8 +110,6 @@ class Connection{
      * @return array|db_error - l'array dei kit recuperati oppure un errore
      */
     function get_closed_kits($from, $to){
-        var_dump($from);
-        var_dump($to);
         $query = "SELECT kit_id, description, is_sent, creation_date FROM kit 
                   WHERE kit.closing_date IS NOT NULL AND (DATE(kit.closing_date) >= ? 
                   AND DATE(kit.closing_date) <= ?) ORDER BY kit.closing_date DESC
@@ -216,7 +214,7 @@ class Connection{
         $result = $this->connection->query($query);
 
         if ($result === false )
-            return new db_error(db_error::$ERROR_ON_GET_TYPES);
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
 
         $result_array = array();
 
@@ -277,7 +275,7 @@ class Connection{
         $result_array = array();
 
         while ($row = $result->fetch_array()) {
-            $result_array[] = array("cod" => $row['cod'], "obj_type" => $row['description'], "name" => $row['name'], "id" => $row['ob_tag']);
+            $result_array[] = array("cod" => $row['cod'], "name" => $row['name'], "obj_type" => $row['description'],  "id" => $row['ob_tag']);
         }
 
         $statement->close();
@@ -425,7 +423,7 @@ class Connection{
         if($resultUpdate instanceof db_error){
             return $resultUpdate;
         }else if($resultUpdate === false)
-            return new db_error(db_error::$UPDATE_ARTICLE_ERROR);
+            return new db_error(db_error::$SEND_KIT_ERROR);
 
         return $this->connection->affected_rows;
     }
@@ -456,7 +454,34 @@ class Connection{
      * @param $to
      * @return array|db_error - l'array contenente i kit oppure un errore
      */
-    function get_all_kits($from, $to){
+    function get_all_kits(){
+        $query = "SELECT kit_id, description, creation_date, closing_date FROM kit";
+
+        $result = $this->connection->query($query);
+
+        if($result === false){
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+        }
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('kit_id' => $row['kit_id'], "description" => $row['description'],
+                "creation_date" => date('d/m/Y H:i:s', strtotime($row['creation_date'])), "closing_date" => $row['closing_date'],);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
+    /**
+     * Funzione che recupera tutti i kit
+     * @param $from
+     * @param $to
+     * @return array|db_error - l'array contenente i kit oppure un errore
+     */
+    function get_all_kits_by_date($from, $to){
         $query = "SELECT kit_id, description, creation_date, closing_date FROM kit 
                   WHERE DATE(kit.creation_date) >= ? AND DATE(kit.creation_date) <= ? ORDER BY kit.creation_date DESC";
         $statement = $this->parse_and_execute_select($query, "ss", $from, $to);
@@ -489,7 +514,7 @@ class Connection{
         $query = "SELECT k.kit_id, k.description, object.cod, object.name, k.creation_date, k.closing_date FROM 
                   (SELECT kit.kit_id, kit.description, kit.creation_date, kit.closing_date, incomplete_kit.object_id 
                   FROM incomplete_kit JOIN kit ON incomplete_kit.kit_id = kit.kit_id) as k JOIN object 
-                  ON k.object_id = object.cod";
+                  ON k.object_id = object.cod ORDER BY creation_date DESC ";
 
         $result = $this->connection->query($query);
 
@@ -666,7 +691,19 @@ class Connection{
      * @return array|db_error|mysqli_stmt
      */
     function get_objects_kit_position($id){
-        $query = "SELECT * FROM object JOIN (SELECT a.MAC, a.environment, environment.description FROM (SELECT tag.MAC, anchors.environment FROM tag JOIN anchors ON tag.AN_REF = anchors.MAC_ANCHOR) AS a JOIN environment ON a.environment = environment.env_id) AS e ON object.ob_tag = e.MAC WHERE object.kit_id = ?";
+        $query = 'SELECT obj_tag_anch_env.cod, obj_tag_anch_env.name, obj_tag_anch_env.kit_id, kit.description AS kit_descr, 
+          obj_tag_anch_env.description, obj_tag_anch_env.environment 
+	      FROM kit 
+          JOIN (SELECT * FROM object 
+            JOIN (SELECT tag_anchors.MAC, tag_anchors.environment, environment.description 
+              FROM (SELECT tag.MAC, anchors.environment 
+                FROM tag 
+                JOIN anchors ON tag.AN_REF = anchors.MAC_ANCHOR) AS tag_anchors 
+              JOIN environment ON tag_anchors.environment = environment.env_id) AS tag_anch_env 
+            ON object.ob_tag = tag_anch_env.MAC 
+            WHERE object.kit_id = ?) AS obj_tag_anch_env
+          ON kit.kit_id = obj_tag_anch_env.kit_id';
+
         $statement = $this->parse_and_execute_select($query, "i", $id);
 
         if ($statement instanceof db_error)
@@ -681,7 +718,7 @@ class Connection{
 
         while ($row = $result->fetch_array()) {
             $result_array[] = array("cod" => $row['cod'], "name" => $row['name'], "kit_id" => $row['kit_id'],
-                'kit_description' => $row['description'], 'environment' => $row['environment']);
+                'kit_description' => $row['kit_descr'], 'env_description' => $row['description'], 'environment' => $row['environment']);
         }
 
         $statement->close();
@@ -743,8 +780,8 @@ class Connection{
      * @return bool|db_error|mixed - un errore oppure l'id del tipo inserito
      */
     function insert_type($type){
-        var_dump($type);
         $query = 'INSERT INTO object_type (description) VALUES (?)';
+
         $result = $this->parse_and_execute_insert($query, "s", $type);
 
         if ($result instanceof db_error) {
@@ -753,7 +790,7 @@ class Connection{
             return $this->connection->insert_id;
         }
 
-        return new db_error(db_error::$ERROR_ON_REGISTER);
+        return new db_error(db_error::$ERROR_ON_INSERTING_TYPE);
     }
 
     /**
@@ -897,6 +934,8 @@ class Connection{
                 return new db_error(db_error::$EMAIL_ALREADY_REGISTERED);
             }else if( $column === "'description'"){
                 return new db_error(db_error::$TYPE_ALREADY_INSERTED);
+            }else if( $column === "'name'"){
+                return new db_error(db_error::$OBJECT_ALREADY_INSERTED);
             }
         } //else if ($errors['errno'] === 1452)
         //return new DbError(DbError::$FOREIGN_KEY_ERROR);

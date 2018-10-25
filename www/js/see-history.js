@@ -106,6 +106,8 @@ $('#see-kit-history-select').on('change', function () {
                         });
                         $('#all-kit-history-body').append(tableRow).trigger('create');
                     });
+
+                    showEmptyTable($('#all-incomplete-kits-body'), 'Nessun kit da mostrare');
                 }
             }
         )
@@ -132,7 +134,7 @@ $('#see-kit-history-select').on('change', function () {
                         //elaboro le righe della tabella e le visualizzo
                         $.each(value, function (innerKey, innerValue) {
                             if (innerKey === 'kit_id') {
-                                tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                                // tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
                             } else {
                                 tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
                             }

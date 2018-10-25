@@ -1,4 +1,6 @@
-
+/**
+ * Developer: Daniel Surpanu
+ */
 
 let updateObjedtDescriptionMessage = $('#update-object-description-message');
 let updateObjedtTypeMessage = $('#update-object-type-message');
@@ -51,9 +53,10 @@ function getDescriptionData(param){
                 let list = '';
                 //inserisco le tipologie nella select
                 $.each(data[0], function (key, value) {
-                    list = $('<li id="' + value['id'] + '"><a href="#" class="select-object-list">' + value['name'] + '</a></li>').on('click', function () {
-                        console.log('li pressed');
-                        $('#object-' + param + '-selected ul').append('<li class="select-object-list margin-top-15" id="' + value['id'] + '">' + value['name'] + '</li>');
+                    list = $('<li id="' + value['id'] + '"><a href="#" class="select-object-list">' + value['name'] + '</a></li>').on('click',
+                        function () {
+                        $('#object-' + param + '-selected ul').append('<li class="select-object-list margin-top-15" id="' + value['id'] + '">'
+                            + value['name'] + '</li>');
                         $('#object-' + param + '-selected ul').listview();
                         $('#object-' + param + '-selected ul').listview('refresh');
                         $('#view-object-' + param + '-container').css('display', 'none');
@@ -75,7 +78,7 @@ $('#update-object-description').on('click', function () {
     let object = $('#object-description-selected ul li').attr('id');
     let description = $('#update-object-description-input').val();
 
-    if(object !== undefined){
+    if(object !== undefined && description !== ""){
        let objectDescriptionForm = new FormData();
        objectDescriptionForm.append('id', object);
        objectDescriptionForm.append('description', description);
@@ -85,18 +88,22 @@ $('#update-object-description').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   showMessage(updateObjedtDescriptionMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
-                   setTimeout(function () {
-                       $('#update-object-description-popup').popup('close');
-                   }, 2000);
-                   seeObjects();
+                   if (data['rows'] !== 1) {
+                       showMessage(updateObjedtDescriptionMessage, 'Non è stato possibile aggiornare l\'oggetto. Errore: nome oggetto già presente', 'insert-object-error');
+                   }else{
+                       showMessage(updateObjedtDescriptionMessage, 'La descrizione è stata aggiornata con successo', 'insert-object-success');
+                       setTimeout(function () {
+                           $('#update-object-description-popup').popup('close');
+                       }, 2000);
+                       seeObjects();
+                   }
                }else {
                    showMessage(updateObjedtDescriptionMessage, data.message, 'insert-object-error');
                }
            }
        )
    }else {
-        showMessage(updateObjedtDescriptionMessage, 'Selezionare un oggetto', 'insert-object-error');
+        showMessage(updateObjedtDescriptionMessage, 'Selezionare un oggetto e inserire una descrizione', 'insert-object-error');
     }
 });
 
@@ -118,7 +125,7 @@ $('#update-object-type').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   showMessage(updateObjedtTypeMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
+                   showMessage(updateObjedtTypeMessage, 'La tipologia è stata aggiornata con successo', 'insert-object-success');
                    setTimeout(function () {
                        $('#update-object-type-popup').popup('close');
                    }, 2000);
@@ -130,7 +137,7 @@ $('#update-object-type').on('click', function () {
            }
        )
    }else {
-        showMessage(updateObjedtTypeMessage, 'Selezionare un oggetto', 'input-object-error');
+        showMessage(updateObjedtTypeMessage, 'Selezionare un oggetto e una tipologia', 'insert-object-error');
     }
 });
 
@@ -139,8 +146,8 @@ $('#update-object-tag').on('click', function () {
     let object = $('#object-tag-selected ul li').attr('id');
     let selectedTag = $('#update-object-tag-select').find(':selected').val();
 
-
-    if(object !== undefined){
+    console.log(selectedTag);
+    if(object !== undefined && selectedTag !== 'Seleziona un tag...'){
        let objectDescriptionForm = new FormData();
        objectDescriptionForm.append('id', object);
        objectDescriptionForm.append('tag', selectedTag);
@@ -150,7 +157,7 @@ $('#update-object-tag').on('click', function () {
        updateDescriptionPromise.then(
            function (data) {
                if (data.result) {
-                   showMessage(updateObjedtTagMessage, 'L\'oggetto e\' stato aggiornato con successo', 'insert-object-success');
+                   showMessage(updateObjedtTagMessage, 'Il tag è stato aggiornato con successo', 'insert-object-success');
                    setTimeout(function () {
                        $('#update-object-tag-popup').popup('close');
                    }, 2000);
@@ -162,6 +169,6 @@ $('#update-object-tag').on('click', function () {
            }
        )
    }else {
-        showMessage(updateObjedtTagMessage, 'Selezionare un tag', 'insert-object-error');
+        showMessage(updateObjedtTagMessage, 'Selezionare un tag e un oggetto', 'insert-object-error');
     }
 });

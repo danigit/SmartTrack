@@ -35,7 +35,7 @@ function seeAllKitsInsert(){
     // console.log(allKitsForm.get('from'));
     // console.log(allKitsForm.get('to'));
 
-    let allKitsPromise = httpPost('php/ajax/get_all_kits.php', allKitsForm, 'POST');
+    let allKitsPromise = httpPost('php/ajax/get_all_kits_by_date.php', allKitsForm, 'POST');
 
     allKitsPromise.then(
         function (data) {
@@ -148,7 +148,6 @@ function getClosedKits() {
     )
 }
 function seeKitHistory(id) {
-    alert(id);
     let kitHistoryForm = new FormData();
     kitHistoryForm.append('id', id);
 
@@ -170,7 +169,9 @@ function seeKitHistory(id) {
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
-                        if(innerKey === 'closing_date') {
+                        if(innerKey === 'kit_id'){
+
+                        } else if(innerKey === 'closing_date') {
                             tableRow.append('<td class="font-x-large bold-text center-text">Si</td>');
                         }else if(innerKey === 'oggetti') {
 
@@ -193,8 +194,6 @@ function seeKitHistory(id) {
 }
 function seeKitObjects(id){
 
-    console.log(window.location);
-
     let kitObjectsForm = new FormData();
     kitObjectsForm.append('id', id);
 
@@ -216,7 +215,6 @@ function seeKitObjects(id){
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'cod'){
-                            tableRow.append('<td class="font-x-large green-color bold-text center-text">' + innerValue + '</td>');
                         }else{
                             tableRow.append('<td class="font-x-large bold-text center-text">' + innerValue + '</td>');
                         }
@@ -242,7 +240,7 @@ function seeKitObjects(id){
     );
 }
 
-$('#see-incomplete-kits-button').on('click', function () {
+function getIncompleteKits() {
     let allKitsPromise = httpPost('php/ajax/get_incomplete_kits.php', '', 'GET');
 
     allKitsPromise.then(
@@ -279,11 +277,7 @@ $('#see-incomplete-kits-button').on('click', function () {
                     $('#all-incomplete-kits-body').append(tableRow).trigger('create');
                 });
 
-                if($('#all-incomplete-kits-body').children().length === 0){
-                    $('.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">Nessun kit da mostrare');
-                }else{
-                    $('.table-empty').empty();
-                }
+                showEmptyTable($('#all-incomplete-kits-body'), 'Nessun kit da mostrare');
             } else {
                 let allIncompleteKitsErrorMessage = $('#all-incomplete-kits-error-message');
 
@@ -294,4 +288,4 @@ $('#see-incomplete-kits-button').on('click', function () {
             }
         }
     );
-});
+}

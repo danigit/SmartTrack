@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 09/10/18
- * Time: 17.53
+ * Developer: Daniel Surpanu
  */
 
 require_once 'helper.php';
@@ -30,7 +27,7 @@ class update_object_type extends cs_interaction {
         $this->result = $connection->update_object_type($this->id, $this->value);
 
         if(is_error($this->result))
-            $this->json_error("Impossibile aggiornare oggettoo");
+            $this->json_error("Impossibile aggiornare la tipologia");
     }
 
     protected function get_returned_data(){

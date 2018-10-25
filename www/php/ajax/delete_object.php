@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 09/10/18
- * Time: 18.34
+ * Developer: Daniel Surpanu
  */
 
 require_once 'helper.php';

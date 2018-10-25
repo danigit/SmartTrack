@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 09/10/18
- * Time: 1.22
+ * Developer: Daniel Surpanu
  */
 
 
@@ -17,7 +14,7 @@ class update_type extends cs_interaction {
         $this->value = $this->validate_string('value');
 
         if($this->value === false)
-            $this->json_error('Inserisci un tipo');
+            $this->json_error('Inserisci una tipologia');
 
         $this->id = $this->validate_string('id');
 
@@ -31,7 +28,8 @@ class update_type extends cs_interaction {
         $this->result = $connection->update_type($this->id, $this->value);
 
         if(is_error($this->result))
-            $this->json_error("Impossibile salvare il tipo");
+            //TODO inserire il controllo se l'errore è unique column violation e notificarlo
+            $this->json_error("Impossibile salvare la tipologia");
     }
 
     protected function get_returned_data(){

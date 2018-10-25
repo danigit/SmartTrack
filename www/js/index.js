@@ -68,6 +68,10 @@ let app = {
         $('#tag-status-page').on('pagebeforeshow', function () {
             tagStatus();
         });
+
+        $('#see-incomplete-kits').on('pagebeforeshow', function () {
+            getIncompleteKits();
+        })
     }
 };
 

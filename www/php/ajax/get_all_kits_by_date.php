@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: simonabettoli
- * Date: 23/10/18
- * Time: 15:51
+ * User: surpa
+ * Date: 24/10/18
+ * Time: 23.20
  */
 
 require_once 'cs_interaction.php';
@@ -12,10 +12,11 @@ require_once 'helper.php';
 /**
  * Classe che recupera tutti i kit
  */
-class get_closed_kits extends cs_interaction{
+class get_all_kits_by_date extends cs_interaction{
     private $from, $to, $result;
 
     protected function input_elaboration(){
+
         $this->from = $this->validate_string('from');
 
         if($this->from === false)
@@ -30,7 +31,7 @@ class get_closed_kits extends cs_interaction{
     protected function get_db_informations(){
 
         $connection = $this->get_connection();
-        $this->result = $connection->get_closed_kits($this->from, $this->to);
+        $this->result = $connection->get_all_kits_by_date($this->from, $this->to);
 
         if(is_error($this->result))
             $this->json_error("Errore nel recupero dei kit");
@@ -41,5 +42,5 @@ class get_closed_kits extends cs_interaction{
     }
 }
 
-$get_all_kits = new get_closed_kits();
-$get_all_kits->execute();
+$get_all_kits_by_date = new get_all_kits_by_date();
+$get_all_kits_by_date->execute();

@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: surpa
- * Date: 09/10/18
- * Time: 17.16
+ * Developer: Daniel Surpanu
  */
 
 
@@ -31,7 +28,7 @@ class update_object_description extends cs_interaction {
         $this->result = $connection->update_object_description($this->id, $this->value);
 
         if(is_error($this->result))
-            $this->json_error("Impossibile aggiornare oggettoo");
+            $this->json_error("Impossibile aggiornare descrizione");
     }
 
     protected function get_returned_data(){

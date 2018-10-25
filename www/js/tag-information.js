@@ -9,7 +9,7 @@ function tagStatus() {
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                console.log(data);
+                $('#tag-status-body').empty();
                 let tableRow;
                 let i = 0;
                 $.each(data[0], function (key, value) {
@@ -21,7 +21,6 @@ function tagStatus() {
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'id'){
-                            tableRow.append('<td class="font-x-large green-color bold-text center-text">' + innerValue + '</td>');
                         }else if (innerKey === 'battery' && innerValue === "0") {
                             tableRow.append('<img src="../www/img/full-battery.png" class="margin-auto">');
                         }else if( innerKey === 'battery' && innerValue === "1") {
@@ -32,6 +31,7 @@ function tagStatus() {
                     });
                     $('#tag-status-body').append(tableRow).trigger('create');
                 });
+                showEmptyTable($('#tag-status-body'), 'Nessun tag da mostrare');
             } else {
                 let allKitErrorMessage = $('#all-kit-error-message');
 

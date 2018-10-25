@@ -20,6 +20,9 @@ class db_error{
     public static $ERROR_ON_RECOVERING_KIT          = 10;
     public static $ERROR_ON_SUSPENDING_KIT          = 11;
     public static $TYPE_ALREADY_INSERTED            = 12;
+    public static $OBJECT_ALREADY_INSERTED          = 13;
+    public static $SEND_KIT_ERROR                   = 14;
+    public static $ERROR_ON_INSERTING_TYPE          = 15;
     public static $ERROR_ON_CREATING_KIT            = 18;
     public static $ERROR_ON_GETTING_KIT             = 19;
     public static $ERROR_ON_GETTING_TAG             = 20;
@@ -51,9 +54,9 @@ class db_error{
             case 10: return "SET_PASSWORD_ERROR";
             case 11: return "SET_NAME_SURNAME_ERROR";
             case 12: return "TYPE_ALREADY_INSERTED";
-            case 13: return "GET_USER_EMAIL_ERROR";
-            case 14: return "GET_USERNAME_ERROR";
-            case 15: return "DUPLICATE_PASSWORD_KEY";
+            case 13: return "OBJECT_ALREADY_INSERTED";
+            case 14: return "SEND_KIT_ERROR";
+            case 15: return "ERROR_ON_INSERTING_TYPE";
             case 16: return "DUPLICATE_COOKIE_KEY";
             case 17: return "GET_USER_BY_EMAIL_ERROR";
             case 18: return "INSERT_EDIT_USER_ERROR";
