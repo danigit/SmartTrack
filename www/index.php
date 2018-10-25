@@ -52,13 +52,9 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/index_page.css">
         <link rel="stylesheet" type="text/css" href="css/helper.css">
-        <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
 
 
-        <script src="../node_modules/material-design-lite/material.min.js"></script>
-<!--        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>-->
         <script src="js/default/jquery-2.2.4.js"></script>
         <script src="js/default/jquery.mobile-1.4.5.min.js"></script>
 

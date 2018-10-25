@@ -62,9 +62,6 @@ function populateOpenKits() {
  * Funzione che mostra un messaggio di errore se la tabella e' vuota
  */
 function showEmptyTable(table, message) {
-    console.log('empty table');
-    console.log(table);
-    console.log('#' + table.attr('id') + ' .table-empty');
     if(table.children().length === 0){
         console.log('table empty');
         $('.' + table.attr('id') + '.table-empty').empty();
@@ -112,7 +109,8 @@ function positionButton(isSent, value, innerValue) {
                         $.each(dataPosition[0], function (dataKey, dataValue) {
                             let positionTableRow = $('<tr></tr>');
                             $.each(dataValue, function (innerDataKey, innerDataValue) {
-                                if (innerDataKey !== 'kit_id' || innerDataKey !== 'cod' || innerDataKey !== 'environment') {
+                                if (innerDataKey === 'kit_id' || innerDataKey === 'cod' || innerDataKey === 'environment') {
+                                }else{
                                     positionTableRow.append('<td class="font-x-large center-text bold-text">' + innerDataValue + '</td>');
                                 }
                             });

@@ -39,8 +39,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                     <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Creazione kit</a></li>
                         <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Cronologia kit</a></li>
-                        <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Inserimento tipologie</a></li>
-                        <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Inserimento oggetti</a></li>
+                        <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Gestione tipologie</a></li>
+                        <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Gestione oggetti</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
@@ -56,9 +56,10 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                         <tr class="box-shadow-bottom">
                             <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
                             <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                            <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text"></th>
-                            <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text"></th>
-                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>
+                            <th colspan="3" data-priority="4" class="font-x-large padding-10 center-text">funzionalità</th>
+                           <!--
+                            <th data-priority="5" class="font-x-large padding-10">Funzionalitá</th>
+                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>-->
                         </tr>
                     </thead>
                     <tbody id="open-kit-body">
@@ -219,7 +220,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
 <!--pagina visualizzazione degli oggetti di un kit-->
         <div data-role="page" id="see-kit-objects-position">
-            <div class="kit-create-label box-shadow-bottom">
+            <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Cronologia oggetti kit</p>
             </div>
 
@@ -521,7 +522,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                         <li><a href="#insert-object-popup" id="insert-object-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Inserisci oggetto</a></li>
                         <li><a href="#update-object-description-popup" id="update-object-description-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna descrizione</a></li>
                         <li><a href="#update-object-type-popup" id="update-object-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tipologia</a></li>
-                        <li><a href="#update-object-tag-popup" id="update-object-tag-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Aggiorna tag</a></li>
+                        <li><a href="#update-object-tag-popup" id="update-object-tag-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color">Riassoccia tag</a></li>
                         <li><a href="#tag-status-page" id="tag-status" class="ui-btn font-large blue-background white-color">Stato tag</a></li>
                     </ul>
                 </div>
@@ -720,7 +721,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
         <div data-role="page" id="see-kit-objects">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Tabella degli oggetti del kit</p>
+                <p class="font-x-large blue-color">Oggetti</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
