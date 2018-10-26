@@ -49,6 +49,7 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
+        <link rel="stylesheet" type="text/css" href="css/content.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/index_page.css">
         <link rel="stylesheet" type="text/css" href="css/helper.css">
@@ -77,9 +78,40 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
                                 <input class="" type="password" name="password" id="password" placeholder="Inserisci password">
                             </div>
                             <input type="submit" id="submit-login" data-inline="true" value="Login">
+                            <p class="oppure-p">Oppure</p>
+                            <a href="#change-password" class="change-password">Cambia password</a>
                         </fieldset>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div data-role="page" id="change-password">
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Reimposta password</p>
+            </div>
+
+            <div data-role="content" id="change-password-content">
+                <form data-ajax="false" id="change-password-form">
+                    <fieldset id="change-password-fielset">
+                        <div class="input-container">
+                            <label for="username-change-password" class="blue-color">Inserisci username</label>
+                            <input class="border-orange-1" type="text" name="username-change-password" id="username-change-password">
+                        </div>
+                        <div class="input-container">
+                            <label for="change-password" class="blue-color">Inserisci password vecchia</label>
+                            <input class="border-orange-1" type="password" name="old-password" id="old-password">
+                        </div>
+                        <div class="input-container">
+                            <label for="change-password" class="blue-color">Inserisci nuova password</label>
+                            <input class="border-orange-1" type="password" name="new-password" id="new-password">
+                        </div>
+                        <div class="input-container">
+                            <label for="change-password" class="blue-color">Renserisci nuova password</label>
+                            <input class="border-orange-1" type="password" name="re-new-password" id="re-new-password">
+                        </div>
+                        <input class="orange-background" type="submit" id="submit-password" data-inline="true" value="Login">
+                    </fieldset>
+                </form>
             </div>
         </div>
         <script src="js/login.js"></script>

@@ -112,10 +112,10 @@ $('#see-kit-history-select').on('change', function () {
             }
         )
     }else{
-
         let kitHistoryForm = new FormData();
         kitHistoryForm.append('id', kitId);
 
+        console.log('by name');
         let kitHistoryPromise = httpPost('php/ajax/get_history_by_kit.php', kitHistoryForm, 'POST');
 
         kitHistoryPromise.then(
@@ -126,6 +126,8 @@ $('#see-kit-history-select').on('change', function () {
                     let tableRow;
                     let i = 0;
                     $.each(data[0], function (key, value) {
+                        let date = value['creation_date'];
+                        console.log(date);
                         if ((i++ % 2) === 0) {
                             tableRow = $('<tr></tr>');
                         } else {
