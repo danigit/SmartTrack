@@ -74,8 +74,10 @@ abstract class cs_interaction
     }
 
     function validate_string($name, $default = false){
-        if (isset($_POST[$name]))
+        if (isset($_POST[$name])) {
+            var_dump('is set');
             return trim($_POST[$name]);
+        }
         return $default;
     }
 }

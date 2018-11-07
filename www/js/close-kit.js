@@ -32,19 +32,29 @@ function closeKit() {
                         if(innerKey !== 'id'){
                             if( innerKey === 'cod'){
                             }else {
-                                tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                             }
                         }else {
                             let tableCol = $('<td></td>');
                             let sendButton;
 
                             //creo pulsante der la segnalazione che l'oggetto e' disperso
-                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-color border-red-1 border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').on('click', function () {
-                                //inserisco l'oggetto disperso nella lista degli oggetti dispersi
-                                missingObjects.push($(this).attr('data-name'));
-                                $(this).addClass('red-background');
-                                $(this).removeClass('red-color');
-                                $(this).addClass('white-color');
+                            sendButton = $('<a href="#" class="ui-btn font-medium no-margin padding-10 red-color border-red-1 ' +
+                                'border-radius-10" data-name="' + value['cod'] + '">Oggetto disperso</a>').
+                                on('click', function () {
+                                if($(this).hasClass('red-background')){
+                                    $(this).removeClass('red-background');
+                                    $(this).removeClass('white-color');
+                                    $(this).addClass('red-color');
+                                    //inserisco l'oggetto disperso nella lista degli oggetti dispersi
+                                    missingObjects.splice($.inArray($(this).attr('data-name'), missingObjects), 1);
+                                }else{
+                                    $(this).addClass('red-background');
+                                    $(this).removeClass('red-color');
+                                    $(this).addClass('white-color');
+                                    //rimuove l'oggetto disperso nella lista degli oggetti dispersi
+                                    missingObjects.push($(this).attr('data-name'));
+                                }
                             });
 
                             tableCol.append(sendButton);

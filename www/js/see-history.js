@@ -22,9 +22,9 @@ function seeKitsHistory(first) {
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'kit_id'){
-                            tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large darkblue-color center-text">' + innerValue + '</td>');
                         }else {
-                            tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
                     $('#all-kit-history-body').append(tableRow).trigger('create');
@@ -72,9 +72,9 @@ $('#see-kit-history-select').on('change', function () {
                         //elaboro le righe della tabella e le visualizzo
                         $.each(value, function (innerKey, innerValue) {
                             if (innerKey === 'kit_id') {
-                                tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large darkblue-color center-text">' + innerValue + '</td>');
                             } else {
-                                tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                             }
                         });
                         $('#all-kit-history-body').append(tableRow).trigger('create');
@@ -99,9 +99,9 @@ $('#see-kit-history-select').on('change', function () {
                         //elaboro le righe della tabella e le visualizzo
                         $.each(value, function (innerKey, innerValue) {
                             if (innerKey === 'kit_id') {
-                                tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large darkblue-color center-text">' + innerValue + '</td>');
                             } else {
-                                tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                             }
                         });
                         $('#all-kit-history-body').append(tableRow).trigger('create');
@@ -112,10 +112,10 @@ $('#see-kit-history-select').on('change', function () {
             }
         )
     }else{
-
         let kitHistoryForm = new FormData();
         kitHistoryForm.append('id', kitId);
 
+        console.log('by name');
         let kitHistoryPromise = httpPost('php/ajax/get_history_by_kit.php', kitHistoryForm, 'POST');
 
         kitHistoryPromise.then(
@@ -126,6 +126,8 @@ $('#see-kit-history-select').on('change', function () {
                     let tableRow;
                     let i = 0;
                     $.each(data[0], function (key, value) {
+                        let date = value['creation_date'];
+                        console.log(date);
                         if ((i++ % 2) === 0) {
                             tableRow = $('<tr></tr>');
                         } else {
@@ -136,7 +138,7 @@ $('#see-kit-history-select').on('change', function () {
                             if (innerKey === 'kit_id') {
                                 // tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
                             } else {
-                                tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                             }
                         });
                         $('#all-kit-history-body').append(tableRow).trigger('create');

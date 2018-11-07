@@ -11,8 +11,8 @@ mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
 //    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
-//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
     public function __construct(){
@@ -29,7 +29,7 @@ class Connection{
 
     /**
      * Funzione che effettua il login
-     * @param $email
+     * @param $username
      * @param $password
      * @return db_error|mysqli_stmt
      */
@@ -55,6 +55,28 @@ class Connection{
         }
 
         return new db_error(db_error::$ERROR_ON_LOGIN);
+    }
+
+    /**
+     * Funzione che effettua il login
+     * @param $username
+     * @param $new
+     * @return db_error|mysqli_stmt|int
+     */
+    function reset_password( $username, $new ){
+        $hash_pass = "" . password_hash($new, PASSWORD_BCRYPT);
+
+        $query = "UPDATE users SET password=? WHERE username=? ";
+        $statement = $this->parse_and_execute_select($query, "ss", $hash_pass, $username);
+
+        if ($statement instanceof db_error)
+            return $statement;
+
+        if($statement === false){
+            return new db_error(db_error::$ERROR_ON_LOGIN);
+        }
+
+        return $this->connection->affected_rows;
     }
 
     /**
@@ -756,9 +778,11 @@ class Connection{
             }
         }
 
-        $query = "UPDATE object LEFT JOIN `incomplete_kit` ON object.cod=incomplete_kit.object_id  
-                  SET object.kit_id = NULL
-                  WHERE incomplete_kit.object_id IS NULL AND object.kit_id = ?";
+//        $query = "UPDATE object LEFT JOIN `incomplete_kit` ON object.cod=incomplete_kit.object_id
+//                  SET object.kit_id = NULL
+//                  WHERE incomplete_kit.object_id IS NULL AND object.kit_id = ?";
+
+        $query = "UPDATE object SET object.kit_id = NULL WHERE object.kit_id = ?";
 
         $resultUpdateObjects = $this->parse_and_execute_select($query, "i", $kit_id);
 
@@ -970,7 +994,9 @@ class Connection{
             $$bind_name = $params[$i];
             $bind_names[] = &$$bind_name;
         }
+
         call_user_func_array(array($statement, 'bind_param'), $bind_names);
+
         try {
             $result = $statement->execute();
             if ($result === false) {
@@ -1010,5 +1036,8 @@ class Connection{
 }
 
 //$obj = new Connection();
+//var_dump($obj->reset_password('dani', 'dan'));
+//var_dump($obj->register('dani', 'dani'));
 //var_dump($obj->insert_type('manichini'));
+//var_dump($obj->login('dani', 'dani'));
 //var_dump($obj->create_kit('kitn', [1, 3, 4]));

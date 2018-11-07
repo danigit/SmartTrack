@@ -53,22 +53,23 @@ function seeAllKitsInsert(){
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'description' || innerKey === 'creation_date') {
-                            tableRow.append('<td class="font-x-large bold-text center-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                         //segnalo i kit chiusi o aperti
                         else if(innerKey === 'closing_date'){
                             if(innerValue !== "") {
-                                tableRow.append('<td class="font-x-large bold-text center-text">Si</td>');
+                                tableRow.append('<td class="font-x-large center-text">Si</td>');
                             }else{
-                                tableRow.append('<td class="font-x-large bold-text center-text">No</td>');
+                                tableRow.append('<td class="font-x-large center-text">No</td>');
                             }
                         }
                     });
 
-                    let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color border-radius-10" data-name="' + value['kit_id'] + '">Visualizza cronologia oggetti</a>').on('click', function () {
+                    let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 ' +
+                        'green-color border-radius-10" data-name="' + value['kit_id'] + '">Visualizza</a>').
+                        on('click', function () {
                         kitObjectId['id'] = $(this).attr('data-name');
                         seeKitHistory($(this).attr('data-name'));
-                        // closeKitObject['row'] = $(this).parent().parent();
                     });
 
                     let tableElem = $('<td></td>');
@@ -126,9 +127,11 @@ function getClosedKits() {
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'closing_date') {
-                            tableRow.append('<td class="font-x-large bold-text center-text">Si</td>');
+                            tableRow.append('<td class="font-x-large center-text">Si</td>');
                         }else if(innerKey === 'oggetti') {
-                            let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color border-radius-10" data-name="' + value['kit_id'] + '">Visualizza cronologia oggetti</a>').on('click', function () {
+                            let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 ' +
+                                'green-color border-radius-10" data-name="' + value['kit_id'] + '">Visualizza</a>').
+                                on('click', function () {
                                 kitObjectId['id'] = $(this).attr('data-name');
                                 seeKitHistory($(this).attr('data-name'));
                                 // closeKitObject['row'] = $(this).parent().parent();
@@ -138,7 +141,7 @@ function getClosedKits() {
                             tableElem.append(sendButton);
                             tableRow.append(tableElem);
                         }else if(innerKey !== 'kit_id'){
-                            tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
                     $('#all-kit-body').append(tableRow).trigger('create');
@@ -147,9 +150,12 @@ function getClosedKits() {
         }
     )
 }
+
 function seeKitHistory(id) {
     let kitHistoryForm = new FormData();
     kitHistoryForm.append('id', id);
+
+    console.log('seeng history');
 
     let kitHistoryPromise = httpPost('php/ajax/get_history_by_kit.php', kitHistoryForm, 'POST');
 
@@ -160,7 +166,20 @@ function seeKitHistory(id) {
                 $('#all-kit-history-body').empty();
                 let tableRow;
                 let i = 0;
+                let date;
                 $.each(data[0], function (key, value) {
+                    if(date !== undefined && (Math.abs(new Date(value['timestamp']) - date) / 1000) > 30 ){
+                        console.log('inside date');
+                        if ((i++ % 2) === 0) {
+                            tableRow = $('<tr></tr>');
+                        } else {
+                            tableRow = $('<tr class="gray-background"></tr>')
+                        }
+                        tableRow.append('<td colspan="4" class="font-x-large center-text"><hr class="border-blue-2"></td>');
+
+                        $('#all-kit-history-body').append(tableRow).trigger('create');
+                    }
+
                     if ((i++ % 2) === 0) {
                         tableRow = $('<tr></tr>');
                     } else {
@@ -169,17 +188,19 @@ function seeKitHistory(id) {
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
-                        if(innerKey === 'kit_id'){
+
+                            if(innerKey === 'kit_id'){
 
                         } else if(innerKey === 'closing_date') {
-                            tableRow.append('<td class="font-x-large bold-text center-text">Si</td>');
+                            tableRow.append('<td class="font-x-large center-text">Si</td>');
                         }else if(innerKey === 'oggetti') {
 
                         }else {
-                            tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
                     $('#all-kit-history-body').append(tableRow).trigger('create');
+                    date = new Date(value['timestamp']);
                 });
             } else {
                 let allKitHistoryErrorMessage = $('#all-kit-history-error-message');
@@ -216,7 +237,7 @@ function seeKitObjects(id){
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'cod'){
                         }else{
-                            tableRow.append('<td class="font-x-large bold-text center-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
 
@@ -261,14 +282,14 @@ function getIncompleteKits() {
                         if(innerKey === 'history'){
 
                         }else {
-                            tableRow.append('<td class="font-x-large center-text bold-text">' + innerValue + '</td>');
+                            tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
 
-                    let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color border-radius-10" data-name="' + value['history'] + '">Visualizza cronologia oggetti</a>').on('click', function () {
-                        // kitObjectId['id'] = $(this).attr('data-name');
+                    let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 ' +
+                        'green-color border-radius-10" data-name="' + value['history'] + '">Visualizza</a>').
+                        on('click', function () {
                         seeKitHistory($(this).attr('data-name'));
-                        // closeKitObject['row'] = $(this).parent().parent();
                     });
 
                     let tableElem = $('<td></td>');

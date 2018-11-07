@@ -97,7 +97,8 @@ function insertRow(key, value) {
         list = $('<li class="margin-bottom-5"></li>');
 
         //creo il pulsante per aggiungere l'oggetto alla lista degli oggetti presenti nel kit
-        let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 border-radius-10">Aggiungi al kit</a>').on('click', function () {
+        let button = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-greenbtn border-green-1 ' +
+            'border-radius-10">Aggiungi al kit</a>').on('click', function () {
             let cod = $(this).attr('id');
             let isPresent = false;
 
@@ -112,13 +113,14 @@ function insertRow(key, value) {
 
             //se l'oggetto e' gia' presente non lo inserisco piu'
             if (!isPresent) {
-                let objectList = $('<li id="' + cod + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10 margin-right-42">' + value['name'] + '</a></li>');
+                let objectList = $('<li id="' + cod + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 ' +
+                    'border-radius-10 margin-right-42">' + value['name'] + '</a></li>');
 
                 //creo il pulsante per eliminare l'oggetto dalla lista degli oggetti presenti nel kit e aggiungerlo
                 //nella lista degli oggetti disponibili
-                let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
+                let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus ' +
+                    'border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                     $(this).parent().remove();
-                    console.log(value['name']);
                     typeListUl.append(insertRow(key, value));
                     typeListUl.listview('refresh');
                 });
@@ -170,11 +172,12 @@ function createKitSubmit() {
 
         //controllo se il kit ha una descrizione
         if($('#description').val() === ""){
-
+            $('#description').focus();
             $('html, body').animate({scrollTop: $(document).height()}, 1000);
             $('#create-kit-fielset input').css('border-bottom', '1px solid #E52612');
 
-            let message = $('<div class="error-message float-left"><span class="float-left">Inserire una descrizione per il kit</span><img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
+            let message = $('<div class="error-message float-left"><span class="float-left">Inserire descrizione kit</span>' +
+                '<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
 
             if ($('.error-message').length !== 0)
                 errorMsgCreateKit.find('.error-message').remove();
@@ -225,7 +228,6 @@ function createKitSuspend() {
         //aggiungo tutti i dati da inviare al server
         $.each(objectListUl.children(), function (key, value) {
             let obj = $(value).attr('id');
-            console.log(obj);
             suspendKitForm.append(key, obj);
             count++;
         });
@@ -270,10 +272,12 @@ function createKitRecover() {
                 $('#type-select-from-template-fieldset div').removeClass('ui-disabled');
 
                 $.each(data[0], function (key, value) {
-                    let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 border-radius-10">' + value['name'] + '</a></li>');
+                    let objectList = $('<li id="' + value['cod'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 ' +
+                        'border-radius-10">' + value['name'] + '</a></li>');
 
                     //aggiungo i pulsanti di cancellazione agli oggetti presenti nel kit
-                    let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
+                    let deleteElem = $('<a href="#" id="' + value['cod'] + '" data-name="' + value['name'] + '" class="ui-icon-redminus ' +
+                        'border-red-1 border-radius-10">Elimina dal kit</a>').on('click', function () {
                         $(this).parent().remove();
                     });
 

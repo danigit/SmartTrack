@@ -22,11 +22,11 @@ function tagStatus() {
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'id'){
                         }else if (innerKey === 'battery' && innerValue === "0") {
-                            tableRow.append('<img src="../www/img/full-battery.png" class="margin-auto">');
+                            tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/full-battery.png" class="margin-auto">');
                         }else if( innerKey === 'battery' && innerValue === "1") {
-                            tableRow.append('<img src="../www/img/low-battery.png" class="margin-auto">');
+                            tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/low-battery.png" class="margin-auto">');
                         }else{
-                                tableRow.append('<td class="font-x-large bold-text center-text">' + innerValue + '</td>');
+                                tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
                     $('#tag-status-body').append(tableRow).trigger('create');

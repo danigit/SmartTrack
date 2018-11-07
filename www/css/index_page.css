@@ -24,6 +24,7 @@
     height: 22px!important;
     display: block;
     margin: 75px auto!important;
+    margin-bottom: 35px!important;
     border: none;
     background: #FFFFFF!important;
     color: #4081AD!important;
@@ -101,4 +102,47 @@ fieldset{
     background-size: contain;
 }
 
+.oppure-p{
+    text-align: center;
+    font-size: small;
+    text-shadow: none;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.change-password{
+    text-align: center!important;
+    margin: auto!important;
+    display: block!important;
+    font-size: large!important;
+    color: white!important;
+    text-decoration: none!important;
+}
+
+#change-password-form{
+    width: 500px;
+    margin: auto;
+}
+
+#change-password-fielset .ui-input-btn{
+    display: block;
+    width: 70%;
+    margin: auto;
+}
+
+.error-message-repass{
+    width: 100%!important;
+    margin: 20px auto auto!important;
+    background: #E52612;
+    border: 1px solid #E52612;
+    padding: 5px;
+    color: white;
+    border-radius: 7px;
+}
+
+.error-message-repass span{
+    /* color: #E52612; */
+    font-size: small;
+    text-shadow: none;
+}
 /*end login page*/
