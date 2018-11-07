@@ -185,7 +185,9 @@ class Connection{
     }
 
     function get_tags_status(){
-        $query = "SELECT tag.ID, tag.MAC, tag.NAME, tag.AN_REF, tag.TIMESTAMP, tag.BATTERY_STATUS FROM tag";
+        $query = "SELECT t.ID, t.MAC, t.NAME, environment.description, t.TIMESTAMP, t.BATTERY_STATUS FROM 
+                  (SELECT tag.ID, tag.MAC, tag.NAME, anchors.ID_ANCHOR, tag.TIMESTAMP, tag.BATTERY_STATUS, anchors.environment 
+                  FROM tag JOIN anchors ON tag.AN_REF = anchors.ID_ANCHOR) as t JOIN environment ON t.environment = environment.env_id";
 
         $result = $this->connection->query($query);
 
@@ -196,7 +198,7 @@ class Connection{
 
         while ($row = mysqli_fetch_assoc($result)) {
             $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC'], 'name' => $row['NAME'],
-                'an_ref' => $row['AN_REF'], 'timestap' => $row['TIMESTAMP'], 'battery' => $row['BATTERY_STATUS']);
+                'an_ref' => $row['description'], 'timestap' => $row['TIMESTAMP'], 'battery' => $row['BATTERY_STATUS']);
         }
 
         $result->close();

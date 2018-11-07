@@ -251,12 +251,12 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
 <!--pagina visualizzazione di tutti i kit e la cronologia dei kit -->
         <div data-role="page" id="all-kits">
-            <div class="navbar-container">
-                <div data-role="navbar">
-                    <ul class="box-shadow-bottom">
-                        <li><a href="#see-incomplete-kits" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color">Visualizza stato kit incompleti</a></li>
-                    </ul>
-                </div>
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Cronologia</p>
+            </div>
+
+            <div id="incomplete-kits-button">
+                <a href="#see-incomplete-kits" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Visualizza stato kit incompleti</a></li>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -267,10 +267,11 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div id="check-all-kits-content" class="margin-top-50 margin-l-5 width-90">
                 <form>
                     <label>
-                        <input type="checkbox" name="all-objects" id="all-objects" class="blue-color">Visualizza cronologia kit chiusi
+                        <input type="checkbox" name="all-objects" id="all-objects" class="blue-color">kit chiusi
                     </label>
                 </form>
             </div>
+
 
             <div id="from-to-date" class="margin-l-5">
                 <p class="float-left blue-color bold-text font-large">Visualizza la cronologia degli oggetti dal </p>
@@ -702,7 +703,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                     <tr class="box-shadow-bottom">
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Mac</th>
                         <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ancora riferimento</th>
+                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
                         <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">L'ultimo aggiornamento</th>
                         <th data-priority="7" class="border-right-no-color font-x-large padding-10 center-text">Stato bateria</th>
                     </tr>
