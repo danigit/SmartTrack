@@ -76,6 +76,10 @@ let app = {
         $('#tag-object-correlation').on('pagebeforeshow', function () {
             getTagObjectCorrelation();
         })
+
+        $('#objects-outside-store').on('pagebeforeshow', function () {
+            getObjectsOutsideStorePosition();
+        })
     }
 };
 

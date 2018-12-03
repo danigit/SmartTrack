@@ -948,6 +948,10 @@ class Connection{
         return $this->connection->affected_rows;
     }
 
+    /**
+     * Fuzione che ritorna la correlazione tra gli oggetti e i tag ad essi associati
+     * @return array|db_error
+     */
     function get_tag_object_correlation(){
         $query = "SELECT name, ob_tag FROM object";
 
@@ -967,6 +971,30 @@ class Connection{
         return $result_array;
     }
 
+    /**
+     * Funzione che ritorna la posizione degli oggetti non associati a nessun kit che si trovano fuori dal magazino
+     * @return array|db_error
+     */
+    function get_objects_outside_store_position(){
+        $query = "SELECT * FROM object JOIN (SELECT tag.MAC, anch.description FROM tag JOIN (SELECT * FROM anchors JOIN environment 
+                  ON anchors.environment = environment.env_id WHERE environment.kit_create = 0) AS anch 
+                  ON tag.AN_REF = anch.MAC_ANCHOR) anchObj ON object.ob_tag = anchObj.MAC WHERE object.kit_id IS NULL";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_TAG);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('object' => $row['name'], 'environment' => $row['description']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati

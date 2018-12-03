@@ -257,6 +257,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="incomplete-kits-button">
                 <a href="#see-incomplete-kits" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Visualizza stato kit incompleti</a></li>
+                <a href="#objects-outside-store" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Posizione oggetti vaganti</a></li>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -763,8 +764,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="tag-object-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                         <tr class="box-shadow-bottom">
-                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Object</th>
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Tag</th>
+                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Oggetto</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Posizione</th>
                         </tr>
                     </thead>
 
@@ -777,6 +778,36 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div class="tag-object-body table-empty"></div>
         </div>
 <!--end pagina tag oggetto correlation-->
+
+<!--init pagina oggetti fuori dal magazzino-->
+        <div data-role="page" id="objects-outside-store">
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Posizione oggetti vaganti</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
+            <div class="table-container">
+                <table data-role="table" id="objects-outside-store-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                    <tr class="box-shadow-bottom">
+                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Oggetto</th>
+                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Posizione</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="objects-outside-store-body">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="objects-outside-store-body table-empty"></div>
+        </div>
+<!--end pagina oggetti furoi dal magazzino-->
 
 <!--inserimento file javascript nella pagina-->
         <script src="js/helper.js"></script>
@@ -794,6 +825,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
         <script src="js/see-history.js"></script>
         <script src="js/tag-information.js"></script>
         <script src="js/tag-object-correlation.js"></script>
+        <script src="js/get-objects-outside-store-position.js"></script>
 <!--end inserimento file javascript nella pagina-->
 
     </body>
