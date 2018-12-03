@@ -109,7 +109,7 @@ if (isset($_SESSION['secure'], $_SESSION['username']))
                             <label for="change-password" class="blue-color">Renserisci nuova password</label>
                             <input class="border-orange-1" type="password" name="re-new-password" id="re-new-password">
                         </div>
-                        <input class="orange-background" type="submit" id="submit-password" data-inline="true" value="Login">
+                        <input class="orange-background" type="submit" id="submit-password" data-inline="true" value="Cambia password">
                     </fieldset>
                 </form>
             </div>

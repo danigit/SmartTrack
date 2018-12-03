@@ -11,8 +11,8 @@ mysqli_report(MYSQLI_REPORT_STRICT);
 
 class Connection{
 //    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'smartrack', DATABASE = 'bolzano';
-    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
-//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
+//    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'root', DATABASE = 'smartTrack';
+    const PATH = 'localhost', USERNAME = 'root', PASSWORD = 'password', DATABASE = 'smartTrack';
     private $connection;
 
     public function __construct(){
@@ -89,7 +89,7 @@ class Connection{
 
         $hash_pass = "" . password_hash($password, PASSWORD_BCRYPT);
 
-        $query = 'INSERT INTO users (email, password) VALUES (?, ?)';
+        $query = 'INSERT INTO users (username, password) VALUES (?, ?)';
         $result = $this->parse_and_execute_insert($query, "ss", $email,  $hash_pass);
 
         if ($result instanceof db_error) {
@@ -208,8 +208,8 @@ class Connection{
 
     function get_tags_status(){
         $query = "SELECT t.ID, t.MAC, t.NAME, environment.description, t.TIMESTAMP, t.BATTERY_STATUS FROM 
-                  (SELECT tag.ID, tag.MAC, tag.NAME, anchors.ID_ANCHOR, tag.TIMESTAMP, tag.BATTERY_STATUS, anchors.environment 
-                  FROM tag JOIN anchors ON tag.AN_REF = anchors.ID_ANCHOR) as t JOIN environment ON t.environment = environment.env_id";
+                  (SELECT tag.ID, tag.MAC, tag.NAME, anchors.MAC_ANCHOR, tag.TIMESTAMP, tag.BATTERY_STATUS, anchors.environment 
+                  FROM tag JOIN anchors ON tag.AN_REF = anchors.MAC_ANCHOR) as t JOIN environment ON t.environment = environment.env_id";
 
         $result = $this->connection->query($query);
 
@@ -219,7 +219,7 @@ class Connection{
         $result_array = array();
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC'], 'name' => $row['NAME'],
+            $result_array[] = array('id' => $row['ID'], 'mac' => $row['MAC'],
                 'an_ref' => $row['description'], 'timestap' => $row['TIMESTAMP'], 'battery' => $row['BATTERY_STATUS']);
         }
 
@@ -1035,7 +1035,9 @@ class Connection{
     }
 }
 
+//
 //$obj = new Connection();
+//var_dump($obj->register('antani', 'antani'));
 //var_dump($obj->reset_password('dani', 'dan'));
 //var_dump($obj->register('dani', 'dani'));
 //var_dump($obj->insert_type('manichini'));

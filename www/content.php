@@ -695,7 +695,6 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                     <thead>
                     <tr class="box-shadow-bottom">
                         <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Mac</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome</th>
                         <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
                         <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">L'ultimo aggiornamento</th>
                         <th data-priority="7" class="border-right-no-color font-x-large padding-10 center-text">Stato bateria</th>
