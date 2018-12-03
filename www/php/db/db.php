@@ -948,6 +948,25 @@ class Connection{
         return $this->connection->affected_rows;
     }
 
+    function get_tag_object_correlation(){
+        $query = "SELECT name, ob_tag FROM object";
+
+        $result = $this->connection->query($query);
+
+        if ($result === false )
+            return new db_error(db_error::$ERROR_ON_GETTING_TAG);
+
+        $result_array = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $result_array[] = array('object' => $row['name'], 'tag' => $row['ob_tag']);
+        }
+
+        $result->close();
+
+        return $result_array;
+    }
+
     /**
      * Metodo che seleziona l'errore da ritornare in funzione dell'array passato come parametro
      * @param string $errors - array contenente gli ultimi errori generati

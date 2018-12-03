@@ -254,3 +254,11 @@
 .margin-r-10-px{
     margin-right: 10px!important;
 }
+
+.full-width{
+    width: 100%!important;
+}
+
+.width-50{
+    width: 50% !important;
+}

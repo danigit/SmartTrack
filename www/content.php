@@ -521,12 +521,16 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 </div>
             </div>
 
+            <div id="incomplete-kits-button">
+                <a href="#tag-object-correlation" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Associazione oggetto-tag</a></li>
+            </div>
+
             <div class="ui-grid-d center back-home-buttons">
                 <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
                 <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
             </div>
 
-            <div data-role="content">
+            <div data-role="content" class="full-width">
                 <div class="list-type-label">
                     <p class="font-x-large orange-color bold-text">Lista degli oggetti disponibili</p>
                 </div>
@@ -680,6 +684,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
         </div>
 <!--end pgina inserimento oggetto-->
 
+<!--init pagina tag status-->
         <div data-role="page" id="tag-status-page">
             <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Informazioni sui tag</p>
@@ -710,7 +715,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div class="tag-status-body table-empty"></div>
 
         </div>
+<!--end pagina tag status-->
 
+<!--init pagina kit objects-->
         <div data-role="page" id="see-kit-objects">
             <div class="kit-create-label box-shadow-bottom padding-20">
                 <p class="font-x-large blue-color">Oggetti</p>
@@ -739,6 +746,37 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div class="see-kit-objects-body table-empty"></div>
 
         </div>
+<!--end pagina kit objects-->
+
+<!--init pagina tag oggetto correlation-->
+        <div data-role="page" id="tag-object-correlation">
+            <div class="kit-create-label box-shadow-bottom padding-20">
+                <p class="font-x-large blue-color">Associazione oggetto-tag</p>
+            </div>
+
+            <div class="ui-grid-d center back-home-buttons">
+                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline" data-rel="back">Button</a></div>
+                <div class="ui-block-b"><a href="#main-content" class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
+            </div>
+
+            <div class="table-container">
+                <table data-role="table" id="tag-object-table" data-mode="reflow" class="ui-responsive">
+                    <thead>
+                        <tr class="box-shadow-bottom">
+                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Object</th>
+                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Tag</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tag-object-body">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tag-object-body table-empty"></div>
+        </div>
+<!--end pagina tag oggetto correlation-->
 
 <!--inserimento file javascript nella pagina-->
         <script src="js/helper.js"></script>
@@ -755,6 +793,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
         <script src="js/object-crud.js"></script>
         <script src="js/see-history.js"></script>
         <script src="js/tag-information.js"></script>
+        <script src="js/tag-object-correlation.js"></script>
 <!--end inserimento file javascript nella pagina-->
 
     </body>

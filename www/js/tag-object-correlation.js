@@ -1,15 +1,16 @@
 /**
  * Funzione
  */
-function tagStatus() {
+function getTagObjectCorrelation() {
 
-    let allTagsPromise = httpPost('php/ajax/get_tag_status.php', '', 'GET');
+    let allTagsPromise = httpPost('php/ajax/tag_object_correlation.php', '', 'GET');
 
     allTagsPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                $('#tag-status-body').empty();
+                console.log(data);
+                $('#tag-object-body').empty();
                 let tableRow;
                 let i = 0;
                 $.each(data[0], function (key, value) {
@@ -20,19 +21,13 @@ function tagStatus() {
                     }
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
-                        if(innerKey === 'id'){
-                        }else if (innerKey === 'battery' && innerValue === "0") {
-                            tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/full-battery.png" class="margin-auto">');
-                        }else if( innerKey === 'battery' && innerValue === "1") {
-                            tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/low-battery.png" class="margin-auto">');
-                        }else{
-                                tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
-                        }
+                        tableRow.append('<td class="font-x-large center-text width-50">' + innerValue + '</td>');
                     });
 
-                    $('#tag-status-body').append(tableRow).trigger('create');
+                    $('#tag-object-body').append(tableRow).trigger('create');
                 });
-                showEmptyTable($('#tag-status-body'), 'Nessun tag da mostrare');
+
+                showEmptyTable($('#tag-object-body'), 'Nessuna associazione da mostrare');
             } else {
                 let allKitErrorMessage = $('#all-kit-error-message');
 
