@@ -27,7 +27,7 @@ function getObjectsOutsideStorePosition() {
                     $('#objects-outside-store-body').append(tableRow).trigger('create');
                 });
 
-                showEmptyTable($('#objects-outside-store-body'), 'Nessuna associazione da mostrare');
+                showEmptyTable($('#objects-outside-store-body'), 'Nessuna oggetto da mostrare');
             } else {
                 let allKitErrorMessage = $('#all-kit-error-message');
 
