@@ -66,7 +66,7 @@ function seeAllKitsInsert(){
                     });
 
                     let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 ' +
-                        'green-color border-radius-10" data-name="' + value['kit_id'] + '">Visualizza</a>').
+                        'green-color border-radius-10" data-name="' + value['kit_id'] + '">' + language['see-history-all-kits'] + '</a>').
                         on('click', function () {
                         kitObjectId['id'] = $(this).attr('data-name');
                         seeKitHistory($(this).attr('data-name'));
@@ -287,7 +287,7 @@ function getIncompleteKits() {
                     });
 
                     let sendButton = $('<a href="#see-kits-history" class="ui-btn font-medium no-margin padding-10 border-green-1 ' +
-                        'green-color border-radius-10" data-name="' + value['history'] + '">Visualizza</a>').
+                        'green-color border-radius-10" data-name="' + value['history'] + '">' + language['see-history-button'] + '</a>').
                         on('click', function () {
                         seeKitHistory($(this).attr('data-name'));
                     });

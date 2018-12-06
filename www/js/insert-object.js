@@ -7,7 +7,9 @@ $('#add-object-popup').on('click', function (e) {
 
     let description = $('#object-field').val();
     let selectedType = insertObjectTypeSelect.find(':selected').attr('id');
-    let selectedTag = $('#insert-object-tag-select').find(':selected').val();
+    let selectedTag = $('#insert-object-tag-select').find(':selected').attr('id');
+    console.log('selected tag');
+    console.log(selectedTag);
 
     let inputObjectForm = new FormData();
     inputObjectForm.append('description', description);
@@ -15,7 +17,7 @@ $('#add-object-popup').on('click', function (e) {
     inputObjectForm.append('tag', selectedTag);
 
     //controllo se e' stato selezionato un tipo e un tag
-    if(selectedType === undefined || selectedTag === 'Seleziona un tag...' || $('#object-field').val() === ""){
+    if(selectedType === 'lan-insert-object-insert-object-type-option' || selectedTag === 'lan-insert-object-insert-object-tag-option' || $('#object-field').val() === ""){
         showMessage(insertObjectMessage, 'Selezionare un tipologia, un tag e inserire una descrizione', 'insert-object-error');
 
         setTimeout(function () {

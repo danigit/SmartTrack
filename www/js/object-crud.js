@@ -114,7 +114,7 @@ $('#update-object-type').on('click', function () {
     let selectedType = $('#update-object-type-select').find(':selected').attr('id');
     let selectedText = $('#update-object-type-select').find(':selected').val();
 
-    if(object !== undefined && selectedText !== 'Seleziona una tipologia...'){
+    if(object !== undefined && selectedType !== 'lan-insert-object-update-object-type-option'){
        let objectDescriptionForm = new FormData();
 
        objectDescriptionForm.append('id', object);
@@ -144,10 +144,9 @@ $('#update-object-type').on('click', function () {
 $('#update-object-tag').on('click', function () {
 
     let object = $('#object-tag-selected ul li').attr('id');
-    let selectedTag = $('#update-object-tag-select').find(':selected').val();
+    let selectedTag = $('#update-object-tag-select').find(':selected').attr('id');
 
-    console.log(selectedTag);
-    if(object !== undefined && selectedTag !== 'Seleziona un tag...'){
+    if(object !== undefined && selectedTag !== 'lan-insert-object-update-object-tag-option'){
        let objectDescriptionForm = new FormData();
        objectDescriptionForm.append('id', object);
        objectDescriptionForm.append('tag', selectedTag);

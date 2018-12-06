@@ -25,7 +25,7 @@ function populateOpenKits() {
                         }else if(innerKey === 'oggetti'){
                             let tableColSeeObjects = $('<td></td>');
                             let seeObjects = $('<a href="#see-kit-objects" class="ui-btn font-medium no-margin padding-10 border-green-1 green-color ' +
-                                'border-radius-10 inset-shadow-green" data-name="' + innerValue + '">Visualizza oggetti</a>').on('click', function () {
+                                'border-radius-10 inset-shadow-green" data-name="' + innerValue + '">' + language['see-objects-button'] + '</a>').on('click', function () {
                                 seeKitObjects($(this).attr('data-name'));
                             });
                             tableColSeeObjects.append(seeObjects);
@@ -35,7 +35,7 @@ function populateOpenKits() {
                             tableRow.append($('<td></td>').append(sendButton));
                         }else if(innerKey === 'chiudi'){
                             let sendButton = $('<a href="#close-kit" class="ui-btn font-medium no-margin padding-10 border-orange-1 red-color inset-shadow-orange ' +
-                                'border-radius-10" data-name="' + innerValue + '">Chiudi kit</a>').on('click', function () {
+                                'border-radius-10" data-name="' + innerValue + '">' + language['close-kit-button'] + '</a>').on('click', function () {
                                 closeKitObject['id'] = $(this).attr('data-name');
                             });
                             tableRow.append($('<td></td>').append(sendButton));
@@ -77,7 +77,7 @@ function showEmptyTable(table, message) {
  */
 function sendKitButton(innerValue) {
     return $('<a href="#" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10 inset-shadow-green" data-name="' +
-        innerValue + '">Spedisci kit</a>').on('click', function () {
+        innerValue + '">' + language['send-kit-button'] + '</a>').on('click', function () {
         sendKit($(this).attr('data-name'));
         setTimeout(function (){
             $('#open-kit-body').empty();
@@ -96,7 +96,7 @@ function sendKitButton(innerValue) {
 function positionButton(isSent, value, innerValue) {
     if(isSent) {
         return $('<a href="#see-kit-objects-position" class="ui-btn font-medium no-margin padding-10 green-color border-green-1 border-radius-10 inset-shadow-green" ' +
-            'data-name="' + innerValue + '">Visualizza posizione</a>').on('click', function () {
+            'data-name="' + innerValue + '">' + language['see-position-button'] + '</a>').on('click', function () {
             $('#kit-objects-body').empty();
             let kitPositionForm = new FormData();
             kitPositionForm.append('id', value['spedisci']);

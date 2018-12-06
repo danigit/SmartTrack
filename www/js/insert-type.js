@@ -56,7 +56,7 @@ $('#update-type').on('click', function (e) {
     inputTypeForm.append('id', selectedType);
     inputTypeForm.append('value', type);
 
-    if(type !== "" && type !== undefined && selectedType !== undefined) {
+    if(type !== "" && type !== undefined && selectedType !== 'lan-insert-type-select-type-popup') {
         let inputTypePromise = httpPost('php/ajax/update_type.php', inputTypeForm, 'POST');
 
         inputTypePromise.then(

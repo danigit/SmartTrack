@@ -38,9 +38,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
                         <li><a href="#crea-kit-page" id="crea-kit" class="ui-btn font-large blue-background white-color">Creazione kit</a></li>
-                        <li><a href="#all-kits" class="ui-btn font-large blue-background white-color">Cronologia kit</a></li>
-                        <li><a href="#insert-type" class="ui-btn font-large blue-background white-color">Gestione tipologie</a></li>
-                        <li><a href="#insert-object" class="ui-btn font-large blue-background white-color">Gestione oggetti</a></li>
+                        <li><a href="#all-kits" id="lan-cronologia-kit" class="ui-btn font-large blue-background white-color">Cronologia kit</a></li>
+                        <li><a href="#insert-type" id="lan-gestione-tipologie" class="ui-btn font-large blue-background white-color">Gestione tipologie</a></li>
+                        <li><a href="#insert-object" id='lan-gestione-oggetti' class="ui-btn font-large blue-background white-color">Gestione oggetti</a></li>
                         <li><a href="#" id="logout" class="ui-btn font-large blue-background white-color">Logout</a></li>
                     </ul>
                 </div>
@@ -48,15 +48,15 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="error-msg" class="margin-top-50"></div>
 
-            <div class="table-label"><p class="font-xx-large center-text line-height-3 blue-color"><b>Kit in uso</b></p></div>
+            <div class="table-label"><p id="lan-kit-in-uso" class="font-xx-large center-text line-height-3 blue-color"><b>Kit in uso</b></p></div>
 
             <div class="table-container">
                 <table data-role="table" id="open-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                         <tr class="box-shadow-bottom">
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
-                            <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                            <th colspan="3" data-priority="4" class="font-x-large padding-10 center-text">funzionalità</th>
+                            <th data-priority="2" id="lan-kit-in-uso-descrizione" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                            <th data-priority="3" id="lan-kit-in-uso-data-creazione" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                            <th colspan="3" data-priority="4" id="lan-kit-in-uso-funzionalita" class="font-x-large padding-10 center-text">funzionalità</th>
                            <!--
                             <th data-priority="5" class="font-x-large padding-10">Funzionalitá</th>
                             <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>-->
@@ -82,7 +82,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina creazione kit-->
         <div data-role="page" id="crea-kit-page">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Creazione kit</p>
+                <p id="lan-crea-kit-page-title" class="font-x-large blue-color">Creazione kit</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -94,9 +94,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div class="select-container">
                 <form>
                     <fieldset class="ui-field-contain" id="type-select-fieldset" data-role="controlgoup" data-inset="true">
-                        <label for="type-select-fieldset" class="font-x-large bold-text">Seleziona una tipologia di oggetti</label>
+                        <label for="type-select-fieldset" id="lan-crea-kit-seleziona-tipologia-label" class="font-x-large bold-text">Seleziona una tipologia di oggetti</label>
                         <select id="type-select" data-inset="true" title="">
-                            <option>Seleziona una tipologia...</option>
+                            <option id="lan-crea-kit-seleziona-tipologia-option">Seleziona una tipologia...</option>
                         </select>
                     </fieldset>
                 </form>
@@ -113,7 +113,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div class="kit-objects-container">
                 <div class="object-list-label">
-                    <p class="font-large blue-color center-text">Lista degli elementi selezionati per comporre il kit</p>
+                    <p id="lan-crea-kit-lista-oggetti" class="font-large blue-color center-text">Lista degli elementi selezionati per comporre il kit</p>
                 </div>
                 <ul data-role="listview" id="object-list-ul">
 
@@ -147,7 +147,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina creazione kit da template-->
         <div data-role="page" id="create-kit-from-template-page">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Creazione kit da template</p>
+                <p id="lan-create-from-template-title" class="font-x-large blue-color">Creazione kit da template</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -158,9 +158,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div class="select-container">
                 <form>
                     <fieldset class="ui-field-contain" id="see-kit-template-fielset" data-role="controlgoup" data-inset="true">
-                        <label for="see-kit-template-fielset" class="font-x-large">Seleziona un template</label>
+                        <label for="see-kit-template-fielset" id="lan-create-kit-from-template-selct-template-label" class="font-x-large">Seleziona un template</label>
                         <select id="see-kit-template-select" data-inset="true" title="">
-                            <option>Seleziona un template</option>
+                            <option id="lan-create-kit-from-template-select-template-option">Seleziona un template</option>
                         </select>
                     </fieldset>
 
@@ -169,9 +169,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                     </div>
 
                     <fieldset class="ui-field-contain ui-disabled" id="type-select-from-template-fieldset" data-role="controlgoup" data-inset="true">
-                        <label for="type-select-fieldset" class="font-x-large">Seleziona una tipologia di oggetti</label>
+                        <label for="type-select-fieldset" id="lan-create-kit-from-template-select-tipologia-label" class="font-x-large">Seleziona una tipologia di oggetti</label>
                         <select id="type-select-from-template" data-inset="true" title="">
-                            <option>Seleziona una tipologia...</option>
+                            <option id="lan-create-kit-from-templaete-select-tipologia-option">Seleziona una tipologia...</option>
                         </select>
                     </fieldset>
                 </form>
@@ -188,7 +188,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div class="kit-objects-container">
                 <div class="object-list-label">
-                    <p class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>
+                    <p id="lan-create-kit-from-template-lista-oggetti" class="font-large blue-color">Lista degli elementi selezionati per comporre il kit</p>
                 </div>
                 <ul data-role="listview" id="object-list-ul-from-template">
 
@@ -221,7 +221,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina visualizzazione degli oggetti di un kit-->
         <div data-role="page" id="see-kit-objects-position">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Cronologia oggetti kit</p>
+                <p id="lan-cronologia-oggetti" class="font-x-large blue-color">Cronologia oggetti kit</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -233,9 +233,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="kit-objects-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                        <th data-priority="3" class="border-right-no-color font-x-large padding-10 center-text">Nome kit</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Descrizione ambiente</th>
+                        <th data-priority="2" id="lan-kit-objects-position-name-object" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="3" id="lan-kit-objects-position-name-kit" class="border-right-no-color font-x-large padding-10 center-text">Nome kit</th>
+                        <th data-priority="4" id="lan-kit-objects-position-environment" class="border-right-no-color font-x-large padding-10 center-text">Descrizione ambiente</th>
                     </tr>
                     </thead>
                     <tbody id="kit-objects-body">
@@ -252,12 +252,13 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina visualizzazione di tutti i kit e la cronologia dei kit -->
         <div data-role="page" id="all-kits">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Cronologia</p>
+                <p id="lan-all-kits-title" class="font-x-large blue-color">Cronologia</p>
             </div>
 
+<!--            //TODO errore ci sono due id con lo stesso nome-->
             <div id="incomplete-kits-button">
                 <a href="#see-incomplete-kits" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Visualizza stato kit incompleti</a></li>
-                <a href="#objects-outside-store" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Posizione oggetti vaganti</a></li>
+                <a href="#objects-outside-store" id="lan-see-lost-objects" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Posizione oggetti vaganti</a></li>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -268,19 +269,19 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div id="check-all-kits-content" class="margin-top-50 margin-l-5 width-90">
                 <form>
                     <label>
-                        <input type="checkbox" name="all-objects" id="all-objects" class="blue-color">kit chiusi
+                        <input type="checkbox" name="all-objects" id="all-objects" class="blue-color"><p id="lan-all-kits-kit-chiusi" class="no-margin">kit chiusi</p>
                     </label>
                 </form>
             </div>
 
 
             <div id="from-to-date" class="margin-l-5">
-                <p class="float-left blue-color bold-text font-large">Kit creati dal </p>
+                <p id="lan-all-kits-from-date" class="float-left blue-color bold-text font-large">Kit creati dal </p>
                 <div class="float-left width-200 margin-l-5">
 <!--                    <input style="width: 200px" type="date" id="from" data-role="datebox" data-options='{"mode": "calbox", "useNewStyle":true}'>-->
                     <input type="date" id="from" >
                 </div>
-                <p class="float-left margin-l-5 blue-color bold-text font-large">al</p>
+                <p id="lan-all-kits-to-date" class="float-left margin-l-5 blue-color bold-text font-large">al</p>
                 <div class="float-left width-200 margin-l-5">
 <!--                    <input type="date" id="to" data-role="datebox" data-options='{"mode": "calbox", "useNewStyle":true}'>-->
                     <input type="date" id="to">
@@ -293,10 +294,10 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="all-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Kit chiuso</th>
-                        <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">Cronologia</th>
+                        <th data-priority="2" id="lan-all-kits-description" class="border-right-no-color font-x-large padding-10 center-text">Descrizione</th>
+                        <th data-priority="4" id="lan-all-kits-creation-date" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                        <th data-priority="5" id="lan-all-kits-closed-kits" class="border-right-no-color font-x-large padding-10 center-text">Kit chiuso</th>
+                        <th data-priority="6" id="lan-all-kits-history" class="border-right-no-color font-x-large padding-10 center-text">Cronologia</th>
                     </tr>
                     </thead>
                     <tbody id="all-kit-body">
@@ -315,7 +316,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina visualizzazione di tutti i kit incompleti-->
         <div data-role="page" id="see-incomplete-kits">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">kit incompleti</p>
+                <p id="lan-incomplete-kits-title" class="font-x-large blue-color">kit incompleti</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -328,10 +329,10 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                     <table data-role="table" id="all-incomplete-kits-table" data-mode="reflow" class="ui-responsive">
                         <thead>
                         <tr class="box-shadow-bottom">
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Descrizione kit</th>
-                            <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                            <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
-                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
+                            <th data-priority="2" id="lan-incomplete-kits-description" class="border-right-no-color font-x-large padding-10 center-text">Descrizione kit</th>
+                            <th data-priority="4" id="lan-incomplete-kits-name" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                            <th data-priority="5" id="lan-incomplete-kits-creation-date" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
+                            <th data-priority="6" id="lan-incomplete-kits-closing-date" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
                             <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>
                         </tr>
                         </thead>
@@ -352,7 +353,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina visualizzazione delle cronologia dei kit-->
         <div data-role="page" id="see-kits-history">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Cronologia kit</p>
+                <p id="lan-see-kits-history-title" class="font-x-large blue-color">Cronologia kit</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -365,10 +366,10 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="all-kit-history-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome kit</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Data</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
+                        <th data-priority="2" id="lan-see-kits-history-kit-name" class="border-right-no-color font-x-large padding-10 center-text">Nome kit</th>
+                        <th data-priority="2" id="lan-see-kits-history-object-name" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="4" id="lan-see-kits-history-date" class="border-right-no-color font-x-large padding-10 center-text">Data</th>
+                        <th data-priority="5" id="lan-see-kits-history-environment" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
                     </tr>
                     </thead>
                     <tbody id="all-kit-history-body">
@@ -384,7 +385,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--pagina chiusura kit-->
         <div data-role="page" id="close-kit">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Chiusura kit</p>
+                <p id="lan-close-kit-title" class="font-x-large blue-color">Chiusura kit</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -396,9 +397,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="close-kit-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Stato</th>
+                        <th data-priority="2" id="lan-close-kit-name" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="4" id="lan-close-kit-type" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
+                        <th data-priority="5" id="lan-close-kit-state" class="border-right-no-color font-x-large padding-10 center-text">Stato</th>
                     </tr>
                     </thead>
                     <tbody id="close-kit-body">
@@ -427,7 +428,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             <div class="navbar-container">
                 <div data-role="navbar">
                     <ul class="box-shadow-bottom">
-                        <li><a href="#insert-type-popup" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color bold-text">Inserisci tipologia</a></li>
+                        <li><a href="#insert-type-popup" id="lan-insert-type" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color bold-text">Inserisci tipologia</a></li>
                         <li><a href="#update-type-popup" id="update-type-popup-button" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn font-large blue-background white-color bold-text">Aggiorna tipologia</a></li>
                     </ul>
                 </div>
@@ -440,7 +441,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div data-role="content">
                 <div class="list-type-label">
-                    <p class="font-x-large orange-color bold-text">Lista delle tipologie disponibili</p>
+                    <p id="lan-insert-type-available-types" class="font-x-large orange-color bold-text">Lista delle tipologie disponibili</p>
                 </div>
 
                 <div class="list-type-container">
@@ -451,7 +452,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="insert-type-popup"  class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="insert-type-form">
-                    <h3 class="bold-text">Inserimento tipologia</h3>
+                    <h3 id="lan-insert-type-insert-type-popup" class="bold-text">Inserimento tipologia</h3>
 
                     <fieldset id="input-type-fielset">
                         <div class="input-type-container">
@@ -470,12 +471,12 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="update-type-popup" class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-type-form">
-                    <h3 class="bold-text">Aggiornamento tipologia</h3>
+                    <h3 id="lan-insert-type-update-type-popup" class="bold-text">Aggiornamento tipologia</h3>
 
                     <fieldset id="input-type-fielset">
 
                         <select id="update-type-select" data-inset="true" title="">
-                            <option>Seleziona una tipologia...</option>
+                            <option id="lan-insert-type-select-type-popup">Seleziona una tipologia...</option>
                         </select>
 
                         <div class="input-type-container">
@@ -501,8 +502,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <div data-role="content">
                     <h3 class="delete-type-confirm-header center-text blue-color margin-bottom-30 font-x-large"></h3>
                     <p class="delete-type-confirm-text center-text margin-bottom-30"></p>
-                    <a href="#" class="delete-type-confirm-button width-90 margin-lr-auto border-red-1 red-color inset-shadow-orange" data-role="button" data-rel="back">Elimina tipologia</a>
-                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color inset-shadow-green" data-role="button" data-rel="back">Anulla</a>
+                    <a href="#" id="lan-insert-type-delete-type" class="delete-type-confirm-button width-90 margin-lr-auto border-red-1 red-color inset-shadow-orange" data-role="button" data-rel="back">Elimina tipologia</a>
+                    <a href="#" id="lan-insert-type-cancel" class="width-90 margin-lr-auto border-green-1 green-color inset-shadow-green" data-role="button" data-rel="back">Anulla</a>
                 </div>
             </div>
         </div>
@@ -523,7 +524,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
             </div>
 
             <div id="incomplete-kits-button">
-                <a href="#tag-object-correlation" id="see-incomplete-kits-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Associazione oggetto-tag</a></li>
+                <a href="#tag-object-correlation" id="object-tag-correlation-button" class="ui-btn font-large blue-background white-color float-right border-radius-10 margin-r-10-px">Associazione oggetto-tag</a></li>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -533,7 +534,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div data-role="content" class="full-width">
                 <div class="list-type-label">
-                    <p class="font-x-large orange-color bold-text">Lista degli oggetti disponibili</p>
+                    <p id="lan-insert-object-available-objects" class="font-x-large orange-color bold-text">Lista degli oggetti disponibili</p>
                 </div>
                 <div class="list-type-container">
                     <ul id="see-object-list-ul" data-filter="true" data-inset="true">
@@ -543,16 +544,16 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="insert-object-popup"  class="insert-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="insert-type-form">
-                    <h3 class="bold-text">Inserimento oggetti</h3>
+                    <h3 id="lan-insert-object-insert-object-label" class="bold-text">Inserimento oggetti</h3>
 
                     <fieldset id="input-object-fielset">
 
                         <select id="insert-object-type-select" data-inset="true" title="">
-                            <option>Seleziona una tipologia...</option>
+                            <option id="lan-insert-object-insert-object-type-option">Seleziona una tipologia...</option>
                         </select>
 
                         <select id="insert-object-tag-select" data-inset="true" title="">
-                            <option>Seleziona un tag...</option>
+                            <option id="lan-insert-object-insert-object-tag-option">Seleziona un tag...</option>
                         </select>
 
 <!--                        <div class="input-type-container">-->
@@ -575,7 +576,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="update-object-description-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-object-description-form">
-                    <h3 class="bold-text">Aggiornamento descrizione</h3>
+                    <h3 id="lan-insert-object-update-object-description-label" class="bold-text">Aggiornamento descrizione</h3>
 
                     <fieldset id="update-object-description-fielset">
 
@@ -607,12 +608,12 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="update-object-type-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-object-type-form">
-                    <h3 class="bold-text">Aggiornamento tipologia</h3>
+                    <h3 id="lan-insert-object-update-object-type-label" class="bold-text">Aggiornamento tipologia</h3>
 
                     <fieldset id="update-object-type-fielset">
 
                         <select id="update-object-type-select" data-inset="true" title="">
-                            <option>Seleziona una tipologia...</option>
+                            <option id="lan-insert-object-update-object-type-option">Seleziona una tipologia...</option>
                         </select>
 
                         <div class="ui-grid-a ui-responsive">
@@ -639,12 +640,12 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div id="update-object-tag-popup" style="overflow-y: scroll;" class="insert-popup-350" data-role="popup" data-overlay-theme="a" data-history="false">
                 <form data-ajax="false" id="update-object-tag-form">
-                    <h3 class="bold-text">Aggiornamento tag</h3>
+                    <h3 id="lan-insert-object-update-object-tag-label" class="bold-text">Aggiornamento tag</h3>
 
                     <fieldset id="update-object-tag-fielset">
 
                         <select id="update-object-tag-select" data-inset="true" title="">
-                            <option>Seleziona un tag...</option>
+                            <option id="lan-insert-object-update-object-tag-option">Seleziona un tag...</option>
                         </select>
 
                         <div class="ui-grid-a ui-responsive">
@@ -679,7 +680,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                     <h3 class="delete-object-confirm-header center-text blue-color margin-bottom-30 font-x-large"></h3>
                     <p class="delete-object-confirm-text center-text margin-bottom-30"></p>
                     <a href="#" id="delete-object-confirm-button" class="delete-object-confirm-button width-90 margin-lr-auto border-orange-1 red-color inset-shadow-orange" data-role="button" data-rel="back">Elimina oggetto</a>
-                    <a href="#" class="width-90 margin-lr-auto border-green-1 green-color inset-shadow-green" data-role="button" data-rel="back">Anulla</a>
+                    <a href="#" id="lan-insert-object-delete-object-cancel" class="width-90 margin-lr-auto border-green-1 green-color inset-shadow-green" data-role="button" data-rel="back">Anulla</a>
                 </div>
             </div>
         </div>
@@ -688,7 +689,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--init pagina tag status-->
         <div data-role="page" id="tag-status-page">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Informazioni sui tag</p>
+                <p id="lan-tag-status-title" class="font-x-large blue-color">Informazioni sui tag</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -700,10 +701,10 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="tag-status-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Mac</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
-                        <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">L'ultimo aggiornamento</th>
-                        <th data-priority="7" class="border-right-no-color font-x-large padding-10 center-text">Stato bateria</th>
+                        <th data-priority="2" id="lan-tag-status-mac" class="border-right-no-color font-x-large padding-10 center-text">Mac</th>
+                        <th data-priority="5" id="lan-tag-status-environment" class="border-right-no-color font-x-large padding-10 center-text">Ambiente</th>
+                        <th data-priority="6" id="lan-tag-status-last-update" class="border-right-no-color font-x-large padding-10 center-text">L'ultimo aggiornamento</th>
+                        <th data-priority="7" id="lan-tag-status-battery" class="border-right-no-color font-x-large padding-10 center-text">Stato bateria</th>
                     </tr>
                     </thead>
 
@@ -721,7 +722,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--init pagina kit objects-->
         <div data-role="page" id="see-kit-objects">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Oggetti</p>
+                <p id="lan-see-kit-objects-title" class="font-x-large blue-color">Oggetti</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -732,9 +733,9 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="see-kit-objects-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
-                        <th data-priority="4" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
-                        <th data-priority="5" class="border-right-no-color font-x-large padding-10 center-text">Tag oggetto</th>
+                        <th data-priority="2" id="lan-see-kit-objects-name" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
+                        <th data-priority="4" id="lan-see-kit-objects-type" class="border-right-no-color font-x-large padding-10 center-text">Tipologia oggetto</th>
+                        <th data-priority="5" id="lan-see-kit-objects-tag" class="border-right-no-color font-x-large padding-10 center-text">Tag oggetto</th>
                     </tr>
                     </thead>
 
@@ -752,7 +753,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--init pagina tag oggetto correlation-->
         <div data-role="page" id="tag-object-correlation">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Associazione oggetto-tag</p>
+                <p id="lan-tag-object-correlation-title" class="font-x-large blue-color">Associazione oggetto-tag</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -764,8 +765,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="tag-object-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                         <tr class="box-shadow-bottom">
-                            <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Oggetto</th>
-                            <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Posizione</th>
+                            <th data-priority="1" id="lan-tag-object-correlation-object" class="border-right-no-color font-x-large padding-10 center-text">Oggetto</th>
+                            <th data-priority="2" id="lan-tag-object-correlation-tag" class="border-right-no-color font-x-large padding-10 center-text">Tag</th>
                         </tr>
                     </thead>
 
@@ -782,7 +783,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 <!--init pagina oggetti fuori dal magazzino-->
         <div data-role="page" id="objects-outside-store">
             <div class="kit-create-label box-shadow-bottom padding-20">
-                <p class="font-x-large blue-color">Posizione oggetti vaganti</p>
+                <p id="lan-objects-outside-store-title" class="font-x-large blue-color">Posizione oggetti vaganti</p>
             </div>
 
             <div class="ui-grid-d center back-home-buttons">
@@ -794,8 +795,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                 <table data-role="table" id="objects-outside-store-table" data-mode="reflow" class="ui-responsive">
                     <thead>
                     <tr class="box-shadow-bottom">
-                        <th data-priority="1" class="border-right-no-color font-x-large padding-10 center-text">Oggetto</th>
-                        <th data-priority="2" class="border-right-no-color font-x-large padding-10 center-text">Posizione</th>
+                        <th data-priority="1" id="lan-objects-outside-store-object" class="border-right-no-color font-x-large padding-10 center-text">Oggetto</th>
+                        <th data-priority="2" id="lan-objects-outside-store-position" class="border-right-no-color font-x-large padding-10 center-text">Posizione</th>
                     </tr>
                     </thead>
 
@@ -826,6 +827,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
         <script src="js/tag-information.js"></script>
         <script src="js/tag-object-correlation.js"></script>
         <script src="js/get-objects-outside-store-position.js"></script>
+        <script src="js/set-language.js"></script>
+        <script src="resources/language.js"></script>
 <!--end inserimento file javascript nella pagina-->
 
     </body>
