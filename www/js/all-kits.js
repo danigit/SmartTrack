@@ -28,14 +28,14 @@ function seeAllKitsInsert(){
     //interpreto risposta
     allKitsPromise.then(
         function (data) {
+            let allKitBody = $('#all-kit-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                let allKitBody = $('#all-kit-body');
                 allKitBody.empty();
                 let tableRow;
                 let i = 0;
                 $.each(data[0], function (key, value) {
-                    ((i++ % 2) === 0) ? tableRow = $('<tr></tr>') : tableRow = $('<tr class="gray-background"></tr>');
+                    tableRow = setTableRowColor(i++);
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
@@ -63,20 +63,9 @@ function seeAllKitsInsert(){
                     allKitBody.append(tableRow).trigger('create');
                 });
 
-                let tableEmpty = $('.table-empty');
-                if($(allKitBody).children().length === 0){
-                    tableEmpty.empty();
-                    tableEmpty.append('<p id="lan-all-kits-no-kit" class="margin-top-50 center-text font-x-large bold-text red-color">' + language['lan-all-kits-no-kit'] + '</p>');
-                }else {
-                    tableEmpty.empty();
-                }
+                showEmptyTable(allKitBody, language['no-kit-to-show']);
             } else {
-                let allKitErrorMessage = $('#all-kit-error-message');
-
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    allKitErrorMessage.find('.error-message').remove();
-                allKitErrorMessage.append(message);
+                showEmptyTable(allKitBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );
@@ -124,14 +113,15 @@ function getClosedKits() {
     //interpreto risposta
     closedKitHistoryPromise.then(
         function (data) {
+            let allKitBody = $('#all-kit-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                let allKitBody = $('#all-kit-body');
                 allKitBody.empty();
                 let tableRow, i = 0;
                 $.each(data[0], function (key, value) {
                     //coloro una riga e una no
-                    ((i++ % 2) === 0) ? tableRow = $('<tr></tr>') : tableRow = $('<tr class="gray-background"></tr>');
+                    tableRow = setTableRowColor(i++);
+
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if(innerKey === 'closing_date') {
@@ -155,12 +145,7 @@ function getClosedKits() {
                 });
                 showEmptyTable(allKitBody, language['no-kit-to-show']);
             }else {
-                let allKitHistoryErrorMessage = $('#all-kit-history-error-message');
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-
-                if ($('.error-message').length !== 0)
-                    allKitHistoryErrorMessage.find('.error-message').remove();
-                allKitHistoryErrorMessage.append(message);
+                showEmptyTable(allKitBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     )
@@ -181,22 +166,22 @@ function seeKitHistory(id) {
     //interpreto risposta
     kitHistoryPromise.then(
         function (data) {
+            let allKitHistoryBody = $('#all-kit-history-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                let allKitHistoryBody = $('#all-kit-history-body');
                 allKitHistoryBody.empty();
                 let tableRow,i = 0, date;
                 $.each(data[0], function (key, value) {
                     if(date !== undefined && (Math.abs(new Date(value['timestamp']) - date) / 1000) > 30 ){
                         //creo colori diversi per diverse righe
-                        ((i++ % 2) === 0) ? tableRow = $('<tr></tr>') : tableRow = $('<tr class="gray-background"></tr>');
+                        tableRow = setTableRowColor(i++);
                         tableRow.append('<td colspan="4" class="font-x-large center-text"><hr class="border-blue-2"></td>');
 
                         allKitHistoryBody.append(tableRow).trigger('create');
                     }
 
                     //creo colori diversi per diverse righe
-                    ((i++ % 2) === 0) ? tableRow = $('<tr></tr>') : tableRow = $('<tr class="gray-background"></tr>');
+                    tableRow = setTableRowColor(i++);
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
@@ -211,12 +196,7 @@ function seeKitHistory(id) {
                 });
                 showEmptyTable(allKitHistoryBody, language['no-kit-to-show']);
             } else {
-                let allKitHistoryErrorMessage = $('#all-kit-history-error-message');
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-
-                if ($('.error-message').length !== 0)
-                    allKitHistoryErrorMessage.find('.error-message').remove();
-                allKitHistoryErrorMessage.append(message);
+                showEmptyTable(allKitHistoryBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );
@@ -238,14 +218,15 @@ function seeKitObjects(id){
     //interpreto la risposta
     kitObjectsPromise.then(
         function (data) {
+            let seeKitObjectsBody = $('#see-kit-objects-body');
+
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                let seeKitObjectsBody = $('#see-kit-objects-body');
                 seeKitObjectsBody.empty();
                 let tableRow, i = 0;
                 $.each(data[0], function (key, value) {
                     //coloro le righe diversamente
-                    ((i++ % 2) === 0) ? tableRow = $('<tr></tr>') : tableRow = $('<tr class="gray-background"></tr>');
+                    tableRow = setTableRowColor(i++);
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
@@ -256,17 +237,9 @@ function seeKitObjects(id){
                     seeKitObjectsBody.append(tableRow).trigger('create');
                 });
 
-                if(seeKitObjectsBody.children().length === 0)
-                    $('.table-empty').append('<p id="lan-see-kit-objects-no-object" class="margin-top-50 center-text font-x-large bold-text red-color">' + language['lan-see-kit-objects-no-object'] + '</p>');
-                else
-                    $('.table-empty').empty();
+                showEmptyTable(seeKitObjectsBody, language['no-kit-to-show']);
             } else {
-                let allKitErrorMessage = $('#all-kit-error-message');
-
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    allKitErrorMessage.find('.error-message').remove();
-                allKitErrorMessage.append(message);
+                showEmptyTable(seeKitObjectsBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );
@@ -282,13 +255,14 @@ function getIncompleteKits() {
     //interpreto la risposta
     allKitsPromise.then(
         function (data) {
+            let allIncompleteKitsBody = $('#all-incomplete-kits-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 let allIncompleteKitsBody = $('#all-incomplete-kits-body');
                 allIncompleteKitsBody.empty();
                 let tableRow, i = 0;
                 $.each(data[0], function (key, value) {
-                    ((i++ % 2) === 0) ? tableRow = $('<tr></tr>') : tableRow = $('<tr class="gray-background"></tr>');
+                    tableRow = setTableRowColor(i++);
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
@@ -310,12 +284,7 @@ function getIncompleteKits() {
 
                 showEmptyTable(allIncompleteKitsBody, language['no-kit-to-show']);
             } else {
-                let allIncompleteKitsErrorMessage = $('#all-incomplete-kits-error-message');
-
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    allIncompleteKitsErrorMessage.find('.error-message').remove();
-                allIncompleteKitsErrorMessage.append(message);
+                showEmptyTable(allIncompleteKitsBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );

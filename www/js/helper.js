@@ -54,11 +54,7 @@ function showError(errorPopup, title, content, type) {
 }
 
 function setTableRowColor(i) {
-    if((i % 2) === 0) {
-        return $('<tr></tr>');
-    }else{
-        return  $('<tr class="gray-background"></tr>')
-    }
+    return ((i % 2) === 0) ? $('<tr></tr>') : $('<tr class="gray-background"></tr>');
 }
 
 function showMessage(insertObject, message, type) {
@@ -87,4 +83,17 @@ function readBarCode(){
             return parsedCode;
         }
     })
+}
+
+/**
+ * Funzione che mostra un messaggio di errore se la tabella e' vuota
+ */
+function showEmptyTable(table, message) {
+    if(table.children().length === 0){
+        console.log('table empty');
+        $('.' + table.attr('id') + '.table-empty').empty();
+        $('.' + table.attr('id') + '.table-empty').append('<p class="margin-top-50 center-text font-x-large bold-text red-color">' + message + '</p>');
+    }else{
+        $('.' + table.attr('id') + '.table-empty').empty();
+    }
 }

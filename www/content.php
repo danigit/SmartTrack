@@ -410,6 +410,8 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
 
             <div class="close-kit-body table-empty"></div>
 
+            <div id="close-kit-error-message"></div>
+
             <div id="close-kit-popup" class="success-popup" data-role="popup" data-overlay-theme="a" data-history="false">
                 <p class="error-title font-large"></p>
                 <span class="font-medium padding-10"></span>
