@@ -11,31 +11,35 @@ let typesCount = {};
 let isKitComplete = false;
 let typeTrace = 0;
 
+/**
+ * Funzione che crea un kit da template
+ */
 function createKitFromTemplate() {
 
-    $('#object-list-ul-from-template').empty();
+    typeListUlFromTemplate.empty();
     $('#type-select-from-template option:eq(0)').prop('selected', true);
-    $('#type-select-from-template').selectmenu('refresh');
+    typesSelectFromTemplate.selectmenu('refresh');
     $('#type-select-from-template-fieldset').addClass('ui-disabled');
     typeListUlFromTemplate.empty();
 
-    $('#see-kit-template-select').find('option').not(':first').remove();
-    getKits($('#see-kit-template-select'));
+    templateSelection.find('option').not(':first').remove();
+    getKits(templateSelection);
 
     $('#see-kit-template-select option:eq(0)').prop('selected', true);
-    $('#see-kit-template-select').selectmenu('refresh');
+    templateSelection.selectmenu('refresh');
 
     $('#type-count-container p').empty();
 
     let selectedType;
 
+    //invio richiesta xmlhttp
     let getTypesPromise = httpPost('php/ajax/get_types.php', '', 'GET');
 
+    //interpreto risposta
     getTypesPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-
                 $(typesSelectFromTemplate).children('option:not(:first)').remove();
 
                 let select = '';
@@ -56,22 +60,21 @@ function createKitFromTemplate() {
         }
     );
 
-    //aggiorno la lista degli oggetti disponibili
-    // $('#crea-kit').on('click', function () {
-    //     typesSelectFromTemplate.trigger('change');
-    // });
-
     //gestisco il cambio della selezione delle tipologie e l'inserimeto degli oggetti nella lista degli oggeti disponibili
     typesSelectFromTemplate.on('change', function () {
         selectedType = typesSelectFromTemplate.find(':selected').attr('id');
 
+        //recupero i dati da inviare
         let getObjectsForm = new FormData();
         getObjectsForm.append('type', selectedType);
 
+        //invio richiesta xmlhttp
         let getObjectsPromise = httpPost('php/ajax/get_objects_by_type.php', getObjectsForm, 'POST');
 
+        //interpreto risposta
         getObjectsPromise.then(
             function (data) {
+                //controllo se ci sono stati degli errori nella chiamata
                 if (data.result) {
                     //svuoto la lista delle tipologie
                     typeListUlFromTemplate.empty();
@@ -81,6 +84,12 @@ function createKitFromTemplate() {
                     });
 
                     typeListUlFromTemplate.listview('refresh');
+                }else{
+                    let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+
+                    if ($('.error-message').length !== 0)
+                        errorMsgCreateKitFromTemplate.find('.error-message').remove();
+                    errorMsgCreateKitFromTemplate.append(message);
                 }
             }
         )
@@ -88,26 +97,28 @@ function createKitFromTemplate() {
 
 }
 
-createKitSubmitFromTemplate();
-createKitSuspendFromTemplate();
-
+//gestisco il cambio del template
 templateSelection.on('change', function () {
     $('#type-count-container p').empty();
     $('#type-select-from-template-fieldset').removeClass('ui-disabled');
     let selectedTemplate = templateSelection.find(':selected').attr('id');
 
+    //racolgo i dati da inviare
     let kitTemplateForm = new FormData();
     kitTemplateForm.append('id', selectedTemplate);
 
+    //invio richiesta xmlhttp
     let kitTemplatePromise = httpPost('php/ajax/get_template_info.php', kitTemplateForm, 'POST');
 
+    //interpreto risposta
     kitTemplatePromise.then(
         function (data) {
+            //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 $.each(data[0], function (key, value) {
                     typesCount[key] = {type: value['type'], number: value['number']};
                 });
-                $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">'+ typesCount[typeTrace].type + '</b>');
+                $('#type-count-container p').append(language['insert-create-from-template'] + ' <b class="">' + typesCount[typeTrace].number + '</b> ' + language['objects-create-from-template'] + ' <b class="">'+ typesCount[typeTrace].type + '</b>');
             }
         }
     )
@@ -122,10 +133,10 @@ templateSelection.on('change', function () {
 function insertRowFromTemplate(key, value) {
     let isInKit = false;
     let list = null;
+
     $.each(objectListUlFromTemplate.children(), function (innerKey, innerValue) {
-        if (innerValue.firstChild.textContent === value['name']){
+        if (innerValue.firstChild.textContent === value['name'])
             isInKit = true;
-        }
     });
 
     if(!isInKit) {
@@ -140,9 +151,8 @@ function insertRowFromTemplate(key, value) {
 
             //controllo se l'oggetto e' gia' presente nella lista
             $.each($('#object-list-ul-from-template').children(), function (key, value) {
-                if ($(value).attr('id') === cod) {
+                if ($(value).attr('id') === cod)
                     isPresent = true;
-                }
             });
 
             //se l'oggetto e' gia' presente non lo inserisco piu'
@@ -166,23 +176,23 @@ function insertRowFromTemplate(key, value) {
 
                 typesCount[typeTrace].number = typesCount[typeTrace].number - 1;
                 console.log(Object.keys(typesCount).length);
-                if (typesCount[typeTrace].number === 0 && typeTrace < Object.keys(typesCount).length - 1){
+                if (typesCount[typeTrace].number === 0 && typeTrace < Object.keys(typesCount).length - 1)
                     typeTrace++;
-                }
 
+                let typeCountContainerP = $('#type-count-container p');
                 if(isKitComplete === false) {
-                    $('#type-count-container p').text("");
-                    $('#type-count-container p').append('Inserire <b class="">' + typesCount[typeTrace].number + '</b> oggetti della tipologia <b class="">' + typesCount[typeTrace].type + '</b>');
+                    typeCountContainerP.text("");
+                    typeCountContainerP.append(language['insert-create-from-template'] + '<b class="">' + typesCount[typeTrace].number + '</b> ' + language['objects-create-from-template'] + ' <b class="">' + typesCount[typeTrace].type + '</b>');
                 }
 
                 if (typesCount[typeTrace].number === 0 && typeTrace === Object.keys(typesCount).length - 1){
                     isKitComplete = true;
-                    $('#type-count-container p').text("Il kit e' completo");
-                    $('#type-count-container p').removeClass("red-color");
-                    $('#type-count-container p').addClass("green-color");
+                    typeCountContainerP.text("Il kit e' completo");
+                    typeCountContainerP.removeClass("red-color");
+                    typeCountContainerP.addClass("green-color");
                 }
             } else {
-                showError($('#error-popup-from-template'), "Impossibile aggiungere elemento", "L'elemento e' gia' presente tra gli oggetti di questo kit", "error");
+                showError($('#error-popup-from-template'), language['impossible-add-element'], language['element-already-in'], "error");
             }
         });
 
@@ -192,102 +202,92 @@ function insertRowFromTemplate(key, value) {
     return list;
 }
 
+//gestisco il click sul pulsante di creazione kit
+$('#create-kit-submit-from-template').on('click', function () {
+    let createKitForm = new FormData();
+    let count  = 0;
+    let descriptionFromTemplate = $('#description-from-template');
+    //controllo se il kit ha una descrizione
+    if(descriptionFromTemplate.val() === ""){
 
-/**
- * Funzione che gestisce il click sul pulsante di creazione kit
- */
-function createKitSubmitFromTemplate() {
-    $('#create-kit-submit-from-template').on('click', function () {
-        let createKitForm = new FormData();
-        let count  = 0;
+        $('html, body').animate({scrollTop: $(document).height()}, 1000);
+        $('#create-kit-fielset-from-template input').css('border-bottom', '1px solid #E52612');
 
-        //controllo se il kit ha una descrizione
-        if($('#description-from-template').val() === ""){
+        let message = $('<div class="error-message float-left"><span class="float-left">' + language['lan-insert-description'] + '</span><img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
 
-            $('html, body').animate({scrollTop: $(document).height()}, 1000);
-            $('#create-kit-fielset-from-template input').css('border-bottom', '1px solid #E52612');
-
-            // let message = $('<div class="error-message float-left"><span>Inserire una descrizione per il kit</span></div>');
-
-            // if ($('.error-message').length !== 0)
-            //     errorMsgCreateKitFromTemplate.find('.error-message').remove();
-            // errorMsgCreateKitFromTemplate.append(message);
-            // errorMsgCreateKitFromTemplate.append($('<img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="float-left insert-description-error-image">'))
-            let message = $('<div class="error-message float-left"><span class="float-left">Inserire una descrizione per il kit</span><img src="../GESTIONALEMAGAZZINO/img/alert-icon.png" class="margin-l-5 float-left insert-description-error-image"></div>');
-
-            if ($('.error-message').length !== 0)
-                errorMsgCreateKitFromTemplate.find('.error-message').remove();
-            errorMsgCreateKitFromTemplate.append(message);
-        }else {
-            //aggiungo tutti i dati da inviare al server
-            $.each(objectListUlFromTemplate.children(), function (key, value) {
-                let obj = $(value).attr('id');
-
-                createKitForm.append(key, obj);
-                count++;
-            });
-
-            createKitForm.append('count', "" + count);
-            createKitForm.append('description', $('#description-from-template').val());
-
-            let createKitPromise = httpPost('php/ajax/create_kit.php', createKitForm, 'POST');
-            createKitPromise.then(
-                function (data) {
-                    //controllo se ci sono stati dei errori nella chiamata
-                    if (data.result) {
-                        showError($('#error-popup-from-template'), 'Kit creato', 'Il kit e\' stato creato con successo', 'success');
-                        setTimeout(function () {
-                            document.location.href = 'content.php';
-                        }, 1500);
-                    }else {
-                        let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-
-                        if ($('.error-message').length !== 0)
-                            errorMsgCreateKitFromTemplate.find('.error-message').remove();
-
-                        errorMsgCreateKitFromTemplate.append(message);
-                    }
-                }
-            )
-        }
-    });
-}
-
-/**
- * Funzione che gestisce il click sul pulsante di sospensione della creazione del kit
- */
-function createKitSuspendFromTemplate() {
-    $('#create-kit-suspend-from-template').on('click', function () {
-        let suspendKitForm = new FormData();
-        let count  = 0;
-
+        if ($('.error-message').length !== 0)
+            errorMsgCreateKitFromTemplate.find('.error-message').remove();
+        errorMsgCreateKitFromTemplate.append(message);
+    }else {
         //aggiungo tutti i dati da inviare al server
         $.each(objectListUlFromTemplate.children(), function (key, value) {
             let obj = $(value).attr('id');
-            console.log(obj);
-            suspendKitForm.append(key, obj);
+
+            createKitForm.append(key, obj);
             count++;
         });
 
-        suspendKitForm.append('count', "" + count);
+        createKitForm.append('count', "" + count);
+        createKitForm.append('description', descriptionFromTemplate.val());
 
-        let createKitPromise = httpPost('php/ajax/suspend_kit.php', suspendKitForm, 'POST');
+        //invio richiesta xmlhttp
+        let createKitPromise = httpPost('php/ajax/create_kit.php', createKitForm, 'POST');
 
+        //interpreto risposta
         createKitPromise.then(
             function (data) {
-                //controllo se ci sono stati degli errori nella chiamata
+                //controllo se ci sono stati dei errori nella chiamata
                 if (data.result) {
-                    showError($('#error-popup-from-template'), 'Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
-                    setTimeout(function (){
+                    showError($('#error-popup-from-template'), language['kit-create-successfull-title'], language['kit-create-successfull-content'], 'success');
+                    setTimeout(function () {
                         document.location.href = 'content.php';
                     }, 1500);
-                }else{
+                }else {
                     let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+
                     if ($('.error-message').length !== 0)
                         errorMsgCreateKitFromTemplate.find('.error-message').remove();
+
                     errorMsgCreateKitFromTemplate.append(message);
                 }
             }
         )
+    }
+});
+
+//gestisco il click sul pulsante di sospensione della creazione del kit
+$('#create-kit-suspend-from-template').on('click', function () {
+    let suspendKitForm = new FormData();
+    let count  = 0;
+
+    //aggiungo tutti i dati da inviare al server
+    $.each(objectListUlFromTemplate.children(), function (key, value) {
+        let obj = $(value).attr('id');
+        console.log(obj);
+        suspendKitForm.append(key, obj);
+        count++;
     });
-}
+
+    suspendKitForm.append('count', "" + count);
+
+    //invio richiesta xmlhttp
+    let createKitPromise = httpPost('php/ajax/suspend_kit.php', suspendKitForm, 'POST');
+
+    //interpreto risposta
+    createKitPromise.then(
+        function (data) {
+            //controllo se ci sono stati degli errori nella chiamata
+            if (data.result) {
+                showError($('#error-popup-from-template'), 'Kit sospeso', 'Il kit e\' stato sospeso con successo', 'success');
+                setTimeout(function (){
+                    document.location.href = 'content.php';
+                }, 1500);
+            }else{
+                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
+                if ($('.error-message').length !== 0)
+                    errorMsgCreateKitFromTemplate.find('.error-message').remove();
+                errorMsgCreateKitFromTemplate.append(message);
+            }
+        }
+    )
+});
