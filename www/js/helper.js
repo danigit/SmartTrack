@@ -69,9 +69,7 @@ function showMessage(insertObject, message, type) {
 }
 
 function readBarCode(){
-    let barcodeLength = 0;
-    let fullBarcode = "";
-    let parsedCode = 0;
+    let barcodeLength = 0, fullBarcode = "", parsedCode = 0;
 
     $('#bar-code').on('keyup', function (event) {
         barcodeLength++;

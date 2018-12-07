@@ -71,11 +71,11 @@ let app = {
 
         $('#see-incomplete-kits').on('pagebeforeshow', function () {
             getIncompleteKits();
-        })
+        });
 
         $('#tag-object-correlation').on('pagebeforeshow', function () {
             getTagObjectCorrelation();
-        })
+        });
 
         $('#objects-outside-store').on('pagebeforeshow', function () {
             getObjectsOutsideStorePosition();
