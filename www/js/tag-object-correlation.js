@@ -1,42 +1,35 @@
 /**
- * Funzione
+ * Funzione che recupera la correlazione tra oggetti e tag
  */
 function getTagObjectCorrelation() {
 
+    //invio richiesta xmlhttp
     let allTagsPromise = httpPost('php/ajax/tag_object_correlation.php', '', 'GET');
 
+    //interpreto la risposta
     allTagsPromise.then(
         function (data) {
+            let tagObjectBody = $('#tag-status-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                console.log(data);
-                $('#tag-object-body').empty();
-                let tableRow;
-                let i = 0;
+                tagObjectBody.empty();
+                let tableRow, i = 0;
                 $.each(data[0], function (key, value) {
-                    if((i++ % 2) === 0) {
-                        tableRow = $('<tr></tr>');
-                    }else{
-                        tableRow = $('<tr class="gray-background"></tr>')
-                    }
+                    tableRow = setTableRowColor(i++);
+
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         tableRow.append('<td class="font-x-large center-text width-50">' + innerValue + '</td>');
                     });
 
-                    $('#tag-object-body').append(tableRow).trigger('create');
+                    tagObjectBody.append(tableRow).trigger('create');
                 });
 
-                showEmptyTable($('#tag-object-body'), 'Nessuna associazione da mostrare');
+                showEmptyTable(tagObjectBody, language['lan-no-association-to-show']);
             } else {
-                let allKitErrorMessage = $('#all-kit-error-message');
-
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    allKitErrorMessage.find('.error-message').remove();
-                allKitErrorMessage.append(message);
+                showEmptyTable(tagObjectBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );
-};
+}
 

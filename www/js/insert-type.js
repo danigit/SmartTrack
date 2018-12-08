@@ -3,45 +3,51 @@
  */
 
 
-
+//gestisco il click sul pulsante di aggiunta tipologia
 $('#add-type').on('click', function (e) {
     e.preventDefault();
     let type = $('#type');
-
     let insertTypeMessage = $('#insert-type-message');
 
     if(type.val() !== "") {
+        //recupero i dati
         let inputTypeForm = new FormData();
         inputTypeForm.append('type', type.val());
 
+        //invio richiesta xmlhttp
         let inputTypePromise = httpPost('php/ajax/insert_type.php', inputTypeForm, 'POST');
 
+        //interpreto risposta
         inputTypePromise.then(
             function (data) {
+                //constrollo se ci sono stati degli errori nella risposta
                 if (data.result) {
                     type.val("");
-                    showMessage(insertTypeMessage, 'La tipologia è stata inserita con successo', 'insert-object-success');
+                    showMessage(insertTypeMessage, language['lan-insert-type-success'], 'insert-object-success');
                     seeTypes();
                     type.focus();
                 } else {
-                    showMessage(insertTypeMessage, 'Non è stato possibile inserire l\'oggetto: ' + data.message, 'insert-object-error');
+                    showMessage(insertTypeMessage, language['lan-insert-type-error'] + data.message, 'insert-object-error');
                 }
             }
         )
     }else {
-        showMessage(insertTypeMessage, 'Inserire una descrizione', 'insert-object-error')
+        showMessage(insertTypeMessage, language['lan-insert-description'], 'insert-object-error')
     }
 });
 
+//gesticso il click sul pulsante di aggiornamento della tipologia del popup
 $('#update-type-popup-button').on('click', function () {
-    getTypes($('#update-type-select'));
+    let updateTypeSelect = $('#update-type-select');
+    getTypes(updateTypeSelect);
 
     $('#update-type-input').val("");
 
     $('#update-type-select option:eq(0)').prop('selected', true);
-    $('#update-type-select').selectmenu('refresh');
+    updateTypeSelect.selectmenu('refresh');
 });
 
+//gestisco il click sul pulsante di aggiornametnto della tipologia
 $('#update-type').on('click', function (e) {
     e.preventDefault();
 
@@ -52,23 +58,27 @@ $('#update-type').on('click', function (e) {
     let selectedType = updateTypeSelect.find(':selected').attr('id');
     let type = updateTypeInput.val();
 
+    //reccupero dati da inviare
     let inputTypeForm = new FormData();
     inputTypeForm.append('id', selectedType);
     inputTypeForm.append('value', type);
 
     if(type !== "" && type !== undefined && selectedType !== 'lan-insert-type-select-type-popup') {
+        //invio richiesta xmlhttp
         let inputTypePromise = httpPost('php/ajax/update_type.php', inputTypeForm, 'POST');
 
+        //interpreto risposta
         inputTypePromise.then(
             function (data) {
+                //controllo se ci sono stati degli errori
                 if (data.result) {
                     if (data["rows"] !== 1) {
-                        showMessage(updateTypeMessage, 'Non è stato possibile aggiornare la tipologia. Errore: tipologia già presente', 'insert-object-error');
+                        showMessage(updateTypeMessage, language['lan-update-type-error'], 'insert-object-error');
                     }else {
                         updateTypeInput.val("");
                         $('#update-type-select option:eq(0)').prop('selected', true);
                         updateTypeSelect.selectmenu('refresh');
-                        showMessage(updateTypeMessage, 'L\'oggetto è stato aggiornato con successo', 'insert-object-success');
+                        showMessage(updateTypeMessage, language['lan-update-type-success'], 'insert-object-success');
 
                         setTimeout(function () {
                             $('#update-type-popup').popup('close');
@@ -80,10 +90,11 @@ $('#update-type').on('click', function (e) {
             }
         )
     }else{
-        showMessage(updateTypeMessage, 'Seleziona una tipologia e inserisci una descrizione', 'insert-object-error');
+        showMessage(updateTypeMessage, language['lan-insert-type-empty-field-error'], 'insert-object-error');
     }
 });
 
+//gestiso il click sulla chiusura del popup di aggiornamento tipologia
 $('#close-update-type').on('click', function (e) {
     e.preventDefault();
 

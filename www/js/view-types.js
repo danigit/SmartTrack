@@ -11,10 +11,13 @@ function seeTypes() {
 
     seeTypeListUl.empty();
 
+    //invio richiesta xmlhttp
     let viewTypesPromise = httpPost('php/ajax/get_types.php', '', 'GET');
 
+    //interpreto risposta
     viewTypesPromise.then(
         function (data) {
+            //controllo se ci sono stati degli errori
             if (data.result) {
                 $.each(data[0], function (key, value) {
                     let objectList = $('<li id="' + value['id'] + '" class="font-large margin-bottom-5"><a href="#" class="border-green-1 ' +
@@ -28,16 +31,19 @@ function seeTypes() {
 
                         deleteTypeForm.append('id', value['id']);
 
-                        confirmDeleteType('Cancella tipologia', 'Sei sicuro di voler cancellare la tipologia?', 'Cancella tipologia', function () {
+                        confirmDeleteType(language['lan-delete-type-confirm-title'], language['lan-delete-type-confirm-content'], language['lan-delete-type-confirm-title'], function () {
+                            //invio richiesta xmlhttp
                             let deleteTypePromise = httpPost('php/ajax/delete_type.php', deleteTypeForm, 'POST');
 
+                            //interpreto risposta
                             deleteTypePromise.then(
                                 function (data) {
+                                    //controllo se ci sono stati degli errori
                                     if (data.result) {
                                         $(parent).remove();
                                     }else{
-                                        seeTypesErrorPopup.find('p').text("IMPOSSIBILE ELIMINARE TIPOLOGIA");
-                                        seeTypesErrorPopup.find('span').text('Non è stato possibile eliminare la tipologia. Errore: ' + data.message);
+                                        seeTypesErrorPopup.find('p').text(language['lan-impossible-to-delete-type-title']);
+                                        seeTypesErrorPopup.find('span').text(language['lan-impossible-to-delete-type-content'] + data.message);
                                         seeTypesErrorPopup.popup('open');
                                         setTimeout(function () {
                                             seeTypesErrorPopup.popup('close');
@@ -66,25 +72,9 @@ function seeTypes() {
  */
 function showNoElementInList(list) {
     if(list.children().length === 0){
-       list.append('<li class="font-large"><a class="border-red-1 border-radius-10 center-text red-color">Nessuna tipologia da mostrare</a></li>');
+       list.append('<li class="font-large"><a class="border-red-1 border-radius-10 center-text red-color">' + language['lan-no-type-to-show'] + '</a></li>');
        list.listview();
        list.listview('refresh');
     }
 }
 
-/**
- * Funzione che mostra il messaggio di conferma elim
- * @param title
- * @param content
- * @param button
- * @param callback
- */
-function confirmDeleteType(title, content, button, callback) {
-    $("#delete-type-confirm .delete-type-confirm-button").unbind('click');
-    $("#delete-type-confirm .delete-type-confirm-header").text(title);
-    $("#delete-type-confirm .delete-type-confirm-text").text(content);
-    $("#delete-type-confirm .delete-type-confirm-button").text(button).on("click", function() {
-        callback();
-    });
-    $('#delete-type-confirm').popup('open');
-}

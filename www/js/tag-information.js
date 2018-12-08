@@ -1,45 +1,36 @@
 /**
- * Funzione
+ * Funzione che recupera lo stato dei tag
  */
 function tagStatus() {
-
+    //invio richiesta xmlhttp
     let allTagsPromise = httpPost('php/ajax/get_tag_status.php', '', 'GET');
 
+    //interpreto risposta
     allTagsPromise.then(
         function (data) {
+            let tagStatusBody = $('#tag-status-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
-                $('#tag-status-body').empty();
-                let tableRow;
-                let i = 0;
+                tagStatusBody.empty();
+                let tableRow, i = 0;
                 $.each(data[0], function (key, value) {
-                    if((i++ % 2) === 0) {
-                        tableRow = $('<tr></tr>');
-                    }else{
-                        tableRow = $('<tr class="gray-background"></tr>')
-                    }
+                    tableRow = setTableRowColor(i++);
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
-                        if(innerKey === 'id'){
-                        }else if (innerKey === 'battery' && innerValue === "0") {
+                        if (innerKey === 'battery' && innerValue === "0") {
                             tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/full-battery.png" class="margin-auto">');
                         }else if( innerKey === 'battery' && innerValue === "1") {
                             tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/low-battery.png" class="margin-auto">');
-                        }else{
+                        }else if (innerKey !== 'd') {
                                 tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
 
-                    $('#tag-status-body').append(tableRow).trigger('create');
+                    tagStatusBody.append(tableRow).trigger('create');
                 });
-                showEmptyTable($('#tag-status-body'), 'Nessun tag da mostrare');
+                showEmptyTable(tagStatusBody, language['no-kit-to-show']);
             } else {
-                let allKitErrorMessage = $('#all-kit-error-message');
-
-                let message = $('<div class="center-text error-message"><span>' + data.message + '</span></div>');
-                if ($('.error-message').length !== 0)
-                    allKitErrorMessage.find('.error-message').remove();
-                allKitErrorMessage.append(message);
+                showEmptyTable(allKitHistoryBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );

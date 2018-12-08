@@ -3,15 +3,19 @@
  */
 let submitLogin = $('#submit-login');
 
+//gestisco il click sul pulsante di login
 submitLogin.on('click', function (event) {
     event.preventDefault();
 
+    //recupero dati da inviare
     let logingFormInput = new FormData();
     logingFormInput.append('username', $('#username').val());
     logingFormInput.append('password', $('#password').val());
 
+    //invio richiesta xmlhttp
     let loginPromise = httpPost('php/ajax/login.php', logingFormInput, "POST");
 
+    //interpreto risposta
     loginPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
@@ -31,18 +35,21 @@ submitLogin.on('click', function (event) {
 
 let resetPassword = $('#submit-password');
 
+//gestisco il click sul pulsante di cambio password
 resetPassword.on('click', function (event) {
     event.preventDefault();
 
+    //recupero i dati da inviare
     let resetPasswordFormInput = new FormData();
     resetPasswordFormInput.append('username', $('#username-change-password').val());
     resetPasswordFormInput.append('old', $('#old-password').val());
     resetPasswordFormInput.append('new', $('#new-password').val());
     resetPasswordFormInput.append('renew', $('#re-new-password').val());
 
-    console.log('|' + resetPasswordFormInput.get('username') + '|')
+    //invio richiesta xmlhttp
     let loginPromise = httpPost('php/ajax/reset_password.php', resetPasswordFormInput, "POST");
 
+    //interpreto risposta
     loginPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
@@ -50,7 +57,7 @@ resetPassword.on('click', function (event) {
                 if(data['affected_rows'] !== -1)
                     window.location.replace('../GESTIONALEMAGAZZINO/index.php');
                 else{
-                    let message = $('<div class="center-text error-message"><span>Impossibile cambiare la password</span></div>');
+                    let message = $('<div class="center-text error-message"><span>' + language['lan-error-on-changing-password'] + '</span></div>');
                     if ($('.error-message').length !== 0)
                         $('#login-fielset').find('.error-message').remove();
                     $('#login-fielset').prepend(message);

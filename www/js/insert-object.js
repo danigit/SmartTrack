@@ -126,6 +126,7 @@ $('#close-type').on('click', function (e) {
     $('#insert-type-popup').popup('close');
 });
 
+//gestisco il click di chiusura del popoup
 $('#close-object-popup').on('click', function (e) {
     e.preventDefault();
     $('#insert-object-popup').popup('close');

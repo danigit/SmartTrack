@@ -95,3 +95,37 @@ function showEmptyTable(table, message) {
         $('.' + table.attr('id') + '.table-empty').empty();
     }
 }
+
+/**
+ * Funzione che mostra il messaggio di conferma elim
+ * @param title
+ * @param content
+ * @param button
+ * @param callback
+ */
+function confirmDeleteType(title, content, button, callback) {
+    $("#delete-type-confirm .delete-type-confirm-button").unbind('click');
+    $("#delete-type-confirm .delete-type-confirm-header").text(title);
+    $("#delete-type-confirm .delete-type-confirm-text").text(content);
+    $("#delete-type-confirm .delete-type-confirm-button").text(button).on("click", function() {
+        callback();
+    });
+    $('#delete-type-confirm').popup('open');
+}
+
+/**
+ * Funzione che gestisce la conferma della cancellazione di un oggetto
+ * @param title - titolo popup
+ * @param content - contenuto popup
+ * @param button - testo pulsante
+ * @param callback - la funzione da chiamare
+ */
+function confirmDeleteObject(title, content, button, callback) {
+    $("#delete-object-confirm .delete-object-confirm-button").unbind('click');
+    $("#delete-object-confirm .delete-object-confirm-header").text(title);
+    $("#delete-object-confirm .delete-object-confirm-text").text(content);
+    $("#delete-object-confirm .delete-object-confirm-button").text(button).on("click.delete-type-confirm", function( e ) {
+        callback();
+    });
+    $('#delete-object-confirm').popup('open');
+}

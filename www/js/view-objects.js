@@ -2,15 +2,18 @@
  * Developer: Daniel Surpanu
  */
 
-
-
+/**
+ * Funzione che visualizza gli oggetti
+ */
 function seeObjects() {
     let seeObjectListUl = $('#see-object-list-ul');
     let seeObjectsErrorPopup = $('#see-objects-error-popup');
     seeObjectListUl.empty();
 
+    //invio richiesta smlhttp
     let viewTypesPromise = httpPost('php/ajax/get_objects.php', '', 'GET');
 
+    //interpreto la risposta
     viewTypesPromise.then(
         function (data) {
             //controllo se ci sono stati degli errori nella chiamata
@@ -24,19 +27,23 @@ function seeObjects() {
                         'border-radius-10">Elimina oggetto</a>').on('click', function () {
                         let parent = $(this).parent();
 
+                        //recupero dati da inviare
                         let deleteObjectForm = new FormData();
                         deleteObjectForm.append('id', value['id']);
 
-                        confirmDeleteObject('Cancella oggetto', 'Sei sicuro di voler cancellare l\'oggetto?', 'Cancella oggetto', function () {
+                        confirmDeleteObject(language['lan-cancel-object-confirm-title'], language['lan-cancel-object-confirm-content'], language['lan-cancel-object-confirm-title'], function () {
+                            //invio richiesta xmlhttp
                             let deleteObjectPromise = httpPost('php/ajax/delete_object.php', deleteObjectForm, 'POST');
 
+                            //interpreto risposta
                             deleteObjectPromise.then(
                                 function (data) {
+                                    //controllo se ci sono stati errori nella risposta
                                     if (data.result) {
                                         $(parent).remove();
                                     }else{
-                                        seeObjectsErrorPopup.find('p').text("IMPOSSIBILE ELIMINARE OGGETTO");
-                                        seeObjectsErrorPopup.find('span').text('Non è stato possibile eliminare l\'oggetto. Errore: ' + data.message);
+                                        seeObjectsErrorPopup.find('p').text(language['lan-impossible-eliminate-object-title']);
+                                        seeObjectsErrorPopup.find('span').text(language['lan-impossible-eliminate-object-content'] + data.message);
                                         seeObjectsErrorPopup.popup('open');
                                         setTimeout(function () {
                                             seeObjectsErrorPopup.popup('close');
@@ -53,18 +60,9 @@ function seeObjects() {
                 seeObjectListUl.listview('refresh');
 
                 showNoElementInList(seeObjectListUl);
+            }else{
+                //TODO show error message
             }
         }
     )
-}
-
-
-function confirmDeleteObject(title, content, button, callback) {
-    $("#delete-object-confirm .delete-object-confirm-button").unbind('click');
-    $("#delete-object-confirm .delete-object-confirm-header").text(title);
-    $("#delete-object-confirm .delete-object-confirm-text").text(content);
-    $("#delete-object-confirm .delete-object-confirm-button").text(button).on("click.delete-type-confirm", function( e ) {
-        callback();
-    });
-    $('#delete-object-confirm').popup('open');
 }
