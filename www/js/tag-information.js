@@ -18,10 +18,10 @@ function tagStatus() {
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
                         if (innerKey === 'battery' && innerValue === "0") {
-                            tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/full-battery.png" class="margin-auto">');
+                            tableRow.append('<img src="../www/img/full-battery.png" class="margin-auto">');
                         }else if( innerKey === 'battery' && innerValue === "1") {
-                            tableRow.append('<img src="../GESTIONALEMAGAZZINO/img/low-battery.png" class="margin-auto">');
-                        }else if (innerKey !== 'd') {
+                            tableRow.append('<img src="../www/img/low-battery.png" class="margin-auto">');
+                        }else if (innerKey !== 'id') {
                                 tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                         }
                     });
@@ -30,7 +30,7 @@ function tagStatus() {
                 });
                 showEmptyTable(tagStatusBody, language['no-kit-to-show']);
             } else {
-                showEmptyTable(allKitHistoryBody, language['no-server-response'] + ". <br> Error: " + data.message);
+                showEmptyTable(tagStatusBody, language['no-server-response'] + ". <br> Error: " + data.message);
             }
         }
     );

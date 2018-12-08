@@ -10,7 +10,7 @@ require_once 'cs_interaction.php';
 require_once 'helper.php';
 
 /**
- * Classe che recupera tutti i kit
+ * Classe che recupera la correlazione tra tag e oggetti
  */
 class tag_object_correlation extends cs_interaction{
     private $result;

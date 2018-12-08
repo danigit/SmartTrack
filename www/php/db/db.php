@@ -73,7 +73,7 @@ class Connection{
             return $statement;
 
         if($statement === false){
-            return new db_error(db_error::$ERROR_ON_LOGIN);
+            return new db_error(db_error::$ERROR_ON_RESET_PASSWORD);
         }
 
         return $this->connection->affected_rows;
@@ -206,6 +206,10 @@ class Connection{
         return $result_array;
     }
 
+    /**
+     * Funzione che recupera il stato dei tag
+     * @return array|db_error
+     */
     function get_tags_status(){
         $query = "SELECT t.ID, t.MAC, t.NAME, environment.description, t.TIMESTAMP, t.BATTERY_STATUS FROM 
                   (SELECT tag.ID, tag.MAC, tag.NAME, anchors.MAC_ANCHOR, tag.TIMESTAMP, tag.BATTERY_STATUS, anchors.environment 
@@ -447,7 +451,7 @@ class Connection{
         if($resultUpdate instanceof db_error){
             return $resultUpdate;
         }else if($resultUpdate === false)
-            return new db_error(db_error::$SEND_KIT_ERROR);
+            return new db_error(db_error::$ERROR_ON_SEND_KIT);
 
         return $this->connection->affected_rows;
     }
@@ -484,7 +488,7 @@ class Connection{
         $result = $this->connection->query($query);
 
         if($result === false){
-            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
         }
 
         $result_array = array();
@@ -514,7 +518,7 @@ class Connection{
             return $statement;
 
         if($statement === false){
-            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
         }
 
         $result = $statement->get_result();
@@ -605,7 +609,7 @@ class Connection{
             return $statement;
 
         if($statement === false){
-            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT_HISTORY);
         }
 
         $result = $statement->get_result();
@@ -621,6 +625,11 @@ class Connection{
         return $result_array;
     }
 
+    /**
+     * Funzione che recupera un template
+     * @param $id - l'id del template da recuperare
+     * @return array|db_error|mysqli_stmt
+     */
     function get_template_info($id){
         $query = "SELECT object_type.description, COUNT(object_type.description) AS num FROM 
                   (SELECT kit_history.kit_id, kit_history.object_id, object.cod, object.type_id FROM kit_history JOIN object 
@@ -633,7 +642,7 @@ class Connection{
             return $statement;
 
         if($statement === false){
-            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+            return new db_error(db_error::$ERROR_ON_GETTING_TEMPLATE);
         }
 
         $result = $statement->get_result();
@@ -664,7 +673,7 @@ class Connection{
         $result = $this->connection->query($query);
 
         if ($result === false )
-            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT_HISTORY);
 
         $result_array = array();
 
@@ -695,7 +704,7 @@ class Connection{
         $result = $this->connection->query($query);
 
         if ($result === false )
-            return new db_error(db_error::$ERROR_ON_GETTING_KIT);
+            return new db_error(db_error::$ERROR_ON_GETTING_KIT_HISTORY);
 
         $result_array = array();
 
@@ -734,7 +743,7 @@ class Connection{
             return $statement;
 
         if($statement === false){
-            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS_POSITION);
         }
 
         $result = $statement->get_result();
@@ -835,7 +844,7 @@ class Connection{
             return $this->connection->insert_id;
         }
 
-        return new db_error(db_error::$ERROR_ON_REGISTER);
+        return new db_error(db_error::$ERROR_ON_INSERTING_OBJECT);
     }
 
     /**
@@ -850,7 +859,7 @@ class Connection{
         if ($statement instanceof db_error)
             return $statement;
 
-        return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
+        return $statement->affected_rows == 1 ? true : new db_error(db_error::$ERROR_ON_DELETE_TYPE);
     }
 
      /**
@@ -865,7 +874,7 @@ class Connection{
         if ($statement instanceof db_error)
             return $statement;
 
-        return $statement->affected_rows == 1 ? true : new db_error(db_error::$DELETE_TYPE_ERROR);
+        return $statement->affected_rows == 1 ? true : new db_error(db_error::$ERROR_ON_DELETE_OBJECT);
     }
 
     /**
@@ -923,7 +932,7 @@ class Connection{
             return $resultUpdate;
 
         if($resultUpdate === false)
-            return new db_error(db_error::$ERROR_ON_UPDATING_TYPE);
+            return new db_error(db_error::$ERROR_ON_UPDATING_DESCRIPTION);
 
         return $this->connection->affected_rows;
     }
@@ -983,7 +992,7 @@ class Connection{
         $result = $this->connection->query($query);
 
         if ($result === false )
-            return new db_error(db_error::$ERROR_ON_GETTING_TAG);
+            return new db_error(db_error::$ERROR_ON_GETTING_OBJECTS);
 
         $result_array = array();
 
@@ -1004,11 +1013,11 @@ class Connection{
         if ($errors['errno'] === 1062) {
             $column = $this->parse_string($errors['error']);
             if ($column === "'email'") {
-                return new db_error(db_error::$EMAIL_ALREADY_REGISTERED);
+                return new db_error(db_error::$ERROR_ON_EMAIL_ALREADY_REGISTERED);
             }else if( $column === "'description'"){
-                return new db_error(db_error::$TYPE_ALREADY_INSERTED);
+                return new db_error(db_error::$ERROR_ON_TYPE_ALREADY_INSERTED);
             }else if( $column === "'name'"){
-                return new db_error(db_error::$OBJECT_ALREADY_INSERTED);
+                return new db_error(db_error::$ERROR_ON_OBJECT_ALREADY_INSERTED);
             }
         } //else if ($errors['errno'] === 1452)
         //return new DbError(DbError::$FOREIGN_KEY_ERROR);
@@ -1081,12 +1090,3 @@ class Connection{
         return $statement;
     }
 }
-
-//
-//$obj = new Connection();
-//var_dump($obj->register('antani', 'antani'));
-//var_dump($obj->reset_password('dani', 'dan'));
-//var_dump($obj->register('dani', 'dani'));
-//var_dump($obj->insert_type('manichini'));
-//var_dump($obj->login('dani', 'dani'));
-//var_dump($obj->create_kit('kitn', [1, 3, 4]));

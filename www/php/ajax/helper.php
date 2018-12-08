@@ -69,7 +69,12 @@ function get_user_id(){
     return $_SESSION['id'];
 }
 
-
+/**
+ * Funzione che imposta le variabili di sessione
+ * @param $id
+ * @param $username
+ * @param $is_secure
+ */
 function set_session_variables($id, $username, $is_secure){
     session_start();
     session_regenerate_id();

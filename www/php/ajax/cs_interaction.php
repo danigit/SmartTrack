@@ -2,6 +2,9 @@
 
 require_once '../db/db.php';
 
+/**
+ * Classe astratta che gestisce l'interrazione tra il client e server
+ */
 abstract class cs_interaction
 {
     private $connection;
@@ -14,6 +17,10 @@ abstract class cs_interaction
     }
 
 
+    /**
+     * Funzione che crea una connessione al database
+     * @return Connection - la connessione appena creata
+     */
     protected function get_connection(){
         if(!isset($this->connection))
             $this->connection = new Connection();
@@ -21,6 +28,9 @@ abstract class cs_interaction
         return $this->connection;
     }
 
+    /**
+     * Funzione che esegue i principali metodi nell'interrazione con il client
+     */
     function execute(){
         $this->input_elaboration();
         $this->get_db_informations();
@@ -32,6 +42,10 @@ abstract class cs_interaction
     abstract protected function get_returned_data();
 
 
+    /**
+     * Funzione che ritorna il risultato al client in formato json
+     * @param $result - il risultato in formanto json
+     */
     protected function json_result($result){
         $res = ob_get_contents();
         ob_end_clean();
@@ -44,6 +58,11 @@ abstract class cs_interaction
         die();
     }
 
+    /**
+     * Funzione che fa l'escape dei caratteri speciali html
+     * @param $result - la stringa controllata
+     * @return array|string
+     */
     private static function escape_array($result){
         if (is_numeric($result) || is_bool($result))
             return $result;
@@ -58,12 +77,18 @@ abstract class cs_interaction
         return $result;
     }
 
+    /**
+     * Funzione che segnala che la chiamata ha avuto successo e il risultato e' valido
+     */
     function json_success(){
         $result = $this->get_returned_data();
         $result['result'] = true;
         $this->json_result($result);
     }
 
+    /**
+     * Funzione che segnala che la chiamata ha avuto successo ma il risultato non e' valido
+     */
     function json_error($message, $code = 0){
         $result = array();
         $result["result"] = false;
@@ -73,6 +98,12 @@ abstract class cs_interaction
         $this->json_result($result);
     }
 
+    /**
+     * Funzione che recupera i parametri in post
+     * @param $name - nome parametro
+     * @param bool $default
+     * @return bool|string - il valore del parametro o false
+     */
     function validate_string($name, $default = false){
         if (isset($_POST[$name])) {
             var_dump('is set');
