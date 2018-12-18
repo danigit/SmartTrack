@@ -333,7 +333,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
                             <th data-priority="4" id="lan-incomplete-kits-name" class="border-right-no-color font-x-large padding-10 center-text">Nome oggetto</th>
                             <th data-priority="5" id="lan-incomplete-kits-creation-date" class="border-right-no-color font-x-large padding-10 center-text">Data creazione</th>
                             <th data-priority="6" id="lan-incomplete-kits-closing-date" class="border-right-no-color font-x-large padding-10 center-text">Data chiusura</th>
-                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text"></th>
+                            <th data-priority="6" class="border-right-no-color font-x-large padding-10 center-text">Cronologia</th>
                         </tr>
                         </thead>
                         <tbody id="all-incomplete-kits-body">
@@ -825,7 +825,7 @@ if (!isset($_SESSION['secure'], $_SESSION['username']))
         <script src="js/view-types.js"></script>
         <script src="js/view-objects.js"></script>
         <script src="js/object-crud.js"></script>
-        <script src="js/see-history.js"></script>
+<!--        <script src="js/see-history.js"></script>-->
         <script src="js/tag-information.js"></script>
         <script src="js/tag-object-correlation.js"></script>
         <script src="js/get-objects-outside-store-position.js"></script>

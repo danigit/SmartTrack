@@ -185,9 +185,10 @@ function seeKitHistory(id) {
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
+                        console.log(innerKey);
                         if(innerKey === 'closing_date')
                             tableRow.append('<td class="font-x-large center-text">Si</td>');
-                        else if (innerKey !== 'kit_id' || innerKey !== 'oggetti')
+                        else if (innerKey !== 'kit_id' && innerKey !== 'oggetti')
                             tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                     });
 
@@ -266,6 +267,7 @@ function getIncompleteKits() {
 
                     //elaboro le righe della tabella e le visualizzo
                     $.each(value, function (innerKey, innerValue) {
+                        console.log('incomplete kits antani');
                         if(innerKey !== 'history')
                             tableRow.append('<td class="font-x-large center-text">' + innerValue + '</td>');
                     });

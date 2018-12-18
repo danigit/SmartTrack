@@ -213,7 +213,8 @@ class Connection{
     function get_tags_status(){
         $query = "SELECT t.ID, t.MAC, t.NAME, environment.description, t.TIMESTAMP, t.BATTERY_STATUS FROM 
                   (SELECT tag.ID, tag.MAC, tag.NAME, anchors.MAC_ANCHOR, tag.TIMESTAMP, tag.BATTERY_STATUS, anchors.environment 
-                  FROM tag JOIN anchors ON tag.AN_REF = anchors.MAC_ANCHOR) as t JOIN environment ON t.environment = environment.env_id";
+                  FROM tag JOIN anchors ON tag.AN_REF = anchors.MAC_ANCHOR) as t JOIN environment ON t.environment = environment.env_id
+                  ORDER BY t.TIMESTAMP";
 
         $result = $this->connection->query($query);
 

@@ -129,6 +129,7 @@ $('#see-kit-history-select').on('change', function () {
 
                         //elaboro le righe della tabella e le visualizzo
                         $.each(value, function (innerKey, innerValue) {
+                            console.log(innerKey);
                             if (innerKey === 'kit_id') {
                                 // tableRow.append('<td class="font-x-large darkblue-color center-text bold-text">' + innerValue + '</td>');
                             } else {
@@ -139,7 +140,7 @@ $('#see-kit-history-select').on('change', function () {
                     });
                     showEmptyTable(allKitsHistoryBody, language['no-kit-to-show']);
                 } else {
-                    showEmptyTable(allKitHistoryBody, language['no-server-response'] + ". <br> Error: " + data.message);
+                    showEmptyTable(allKitsHistoryBody, language['no-server-response'] + ". <br> Error: " + data.message);
                 }
             }
         );

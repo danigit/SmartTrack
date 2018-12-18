@@ -9,7 +9,7 @@ function getTagObjectCorrelation() {
     //interpreto la risposta
     allTagsPromise.then(
         function (data) {
-            let tagObjectBody = $('#tag-status-body');
+            let tagObjectBody = $('#tag-object-body');
             //controllo se ci sono stati degli errori nella chiamata
             if (data.result) {
                 tagObjectBody.empty();
